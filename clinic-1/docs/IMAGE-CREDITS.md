@@ -18,7 +18,7 @@
 | `svc-gyn` | pregnant woman holding ultrasound picture | CC0 | https://www.rawpixel.com/image/3302999/free-photo-image-baby-accessories-pregnant-women-images-picture-pregnancy-accessory |
 | `svc-neuro` | Caregiver Nurse | CC0 | https://stocksnap.io/photo/caregiver-nurse-YZHPH1XOHC |
 | `svc-ent` | Ear Exam | CC0 | https://stocksnap.io/photo/ear-exam-C8QXIJZDCF |
-| `svc-eye` | Navy Ophthalmologist Conducts Eye Exam | CC0 | https://www.rawpixel.com/image/3393821/free-photo-image-eye-doctor-medical-devices |
+| `svc-eye` | Specs, glasses | CC0 | https://www.rawpixel.com/image/6037417/specs-glasses-free-public-domain-cc0-image |
 | `svc-ultrasound` | Ultrasound screen monitor medical science | CC0 | https://www.rawpixel.com/image/5803545/photo-image-public-domain-school |
 | `svc-lab` | Free scientist running blood test | CC0 | https://www.rawpixel.com/image/5922274/photo-image-background-public-domain-person |
 | `clinic` | Doctors Hospital | CC0 | https://stocksnap.io/photo/doctors-hospital-5YUFL6LC0E |

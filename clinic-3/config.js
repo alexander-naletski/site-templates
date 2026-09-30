@@ -71,7 +71,7 @@ window.SITE_CONFIG = {
     { id: "cardio", icon: "heart", title: "Кардиология", text: "Давление, аритмии, холестерин. ЭКГ и ЭхоКГ в день приёма.", price: "от 68 BYN", time: "45 мин", image: "assets/img/svc-cardio" },
     { id: "lab", icon: "flask", title: "Лаборатория", text: "Только нужные анализы — по назначению врача, без «пакетов на всякий случай».", price: "от 8 BYN", time: "от 1 дня", image: "assets/img/svc-lab" },
     { id: "eye", icon: "eye", title: "Офтальмология", text: "Проверка зрения, давление глаза, подбор очков и линз.", price: "от 60 BYN", time: "40 мин", image: "assets/img/svc-eye" },
-    { id: "diag", icon: "pulse", title: "Диагностика", text: "УЗИ, ЭКГ, Холтер, СМАД — с описанием врачом сразу после исследования.", price: "от 42 BYN", time: "20–40 мин", image: "assets/img/svc-diag" },
+    { id: "diag", icon: "pulse", title: "Диагностика", text: "УЗИ, КТ, ЭКГ, Холтер, СМАД — с описанием врачом сразу после исследования.", price: "от 42 BYN", time: "20–40 мин", image: "assets/img/svc-diag" },
     { id: "checkup", icon: "activity", title: "Чек-апы", text: "Программы по возрасту и полу на основе клинических рекомендаций.", price: "от 179 BYN", time: "2–3 часа", image: "assets/img/svc-checkup" }
   ],
 

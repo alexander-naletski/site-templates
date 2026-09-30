@@ -1,0 +1,120 @@
+/* =====================================================================
+   SKIN «Луг» — оформление в духе сайтов музыкальных фестивалей
+   (референс по принципам: flowfestival.com — музыкальный фестиваль).
+   Принципы: кислотно-жёлтый «плакатный» первый экран с графикой-штрихкодом,
+   гигантский узкий заголовок капсом, светло-серый фон и белые карточки
+   со скруглением 15px, кнопки-«таблетки», бегущая строка «лайн-апа»,
+   дата события как главный акцент, яркая цветокоррекция фото.
+   ===================================================================== */
+:root { --yellow: #fff200; --ink: #141414; --paper: #f2f2f2; --r: 15px; }
+body { background: var(--paper); }
+.section-title, .hero__title, .banner__title, .stay__title, .prog__title, .extra__title, .route__distance, .footer__big { font-family: var(--font-heading); text-transform: uppercase; letter-spacing: -.01em; }
+.section-title { font-size: clamp(44px, 6.4vw, 96px); line-height: .9; font-weight: 800; }
+.section-eyebrow { display: inline-block; background: var(--ink); color: var(--yellow); border-radius: var(--radius-pill); padding: 4px 14px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* шапка: светлая полоса, логотип-плашка, навигация «таблетками» */
+.header__main, .header__nav { background: var(--paper); }
+.logo { font-family: var(--font-heading); font-weight: 800; font-size: 30px; background: var(--ink); color: var(--yellow); padding: 2px 14px 3px; border-radius: 10px; letter-spacing: .02em; }
+.nav a { border-radius: var(--radius-pill); background: rgba(0,0,0,.05); font-weight: 500; }
+.nav a:hover, .nav a.is-active { background: var(--yellow); color: var(--ink); }
+.btn { border-radius: var(--radius-pill); font-weight: 700; }
+.btn--primary { background: var(--ink); color: #fff; }
+.btn--primary:hover { background: #333; }
+.btn--light { background: var(--yellow); color: var(--ink); }
+.btn--light:hover { background: #fff; }
+.btn--outline { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn--outline:hover { background: var(--ink); color: #fff; }
+
+/* ---------- hero: жёлтый плакат со штрихкодом ---------- */
+.hero--centered { position: relative; background: var(--yellow); padding: 56px 0 170px; margin: 0 16px; border-radius: 0 0 var(--r) var(--r); isolation: isolate; }
+.hero--centered::before { content: ""; position: absolute; inset: auto 0 0 0; height: 120px; z-index: -1; opacity: .95;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 3px, transparent 3px 9px, var(--ink) 9px 17px, transparent 17px 22px, var(--ink) 22px 24px, transparent 24px 34px, var(--ink) 34px 44px, transparent 44px 49px);
+  }
+.hero--centered .hero__content { max-width: 1100px; }
+.hero--centered .hero__title { font-size: clamp(140px, 30vw, 420px); line-height: .78; font-weight: 800; color: var(--ink); margin: 6px 0 20px; letter-spacing: -.02em; }
+.hero--centered .hero__text { color: var(--ink); font-size: 19px; max-width: 640px; font-weight: 500; }
+.hero__badge { background: var(--ink); color: #fff; box-shadow: none; font-weight: 500; }
+.hero__badge:hover { box-shadow: none; background: #333; }
+.hero__badge-tag { background: var(--yellow); color: var(--ink); font-weight: 700; }
+.hero__badge .icon { color: var(--yellow); }
+.hero--centered .hero__buttons { margin-top: 8px; }
+.hero--centered .btn--outline { background: var(--yellow); }
+.hero--centered .btn--outline:hover { background: var(--ink); }
+
+/* ---------- поиск дат ---------- */
+.finder-section { padding: 28px 0 8px; }
+.finder { border-radius: var(--r); background: #fff; box-shadow: none; }
+.finder input, .finder select { border-radius: 10px; }
+
+/* ---------- бегущая строка ---------- */
+.marquee { background: var(--ink); margin: 32px 16px 0; border-radius: var(--r); padding: 20px 0; --marquee-speed: 30s; }
+.marquee__item { font-family: var(--font-heading); text-transform: uppercase; font-size: 30px; font-weight: 800; color: #fff; padding: 0 22px; }
+.marquee__item::after { content: "✺"; color: var(--yellow); margin-left: 44px; font-size: 22px; vertical-align: 4px; }
+
+/* ---------- карточки ---------- */
+.stay, .prog, .extra, .review, .faq-item, .route__lead, .contacts__info { border-radius: var(--r); box-shadow: none; background: #fff; }
+.stay__media, .prog__media, .extra__media { border-radius: var(--r) var(--r) 0 0; }
+.stay__title, .prog__title { font-size: 34px; line-height: .95; font-weight: 800; }
+.extra__title { font-size: 26px; font-weight: 800; }
+.stay__badge, .prog__badge { background: var(--yellow); color: var(--ink); border-radius: var(--radius-pill); font-weight: 700; }
+.stay__tags li { border-radius: var(--radius-pill); background: var(--paper); }
+.stay__price strong, .prog__price strong, .extra__price { font-family: var(--font-heading); font-size: 26px; font-weight: 800; }
+.stay__media img, .prog__media img, .extra__media img, .gallery__img img { transition: transform .5s var(--ease); }
+.stay:hover .stay__media img, .prog:hover .prog__media img { transform: scale(1.04); }
+.extra__icon { background: var(--yellow); color: var(--ink); border-radius: 50%; }
+.extra__btn.is-added { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+
+/* фестивальный баннер */
+.banner-section--full { padding: 0 16px; }
+.banner--full { border-radius: var(--r); overflow: hidden; }
+.banner__eyebrow { display: inline-block; background: var(--yellow); color: var(--ink); padding: 4px 14px; border-radius: var(--radius-pill); font-weight: 700; text-transform: uppercase; font-size: 13px; }
+.banner__title { font-size: clamp(56px, 8vw, 128px); line-height: .86; color: var(--yellow); font-weight: 800; }
+
+/* праздники: 2×2, жёлтая подложка секции */
+.programs { background: var(--yellow); margin: 0 16px; border-radius: var(--r); }
+.programs .section-subtitle { color: var(--ink); }
+.programs__grid { grid-template-columns: 1fr 1fr; }
+.prog__list .icon { color: var(--ink); }
+
+/* галерея */
+.gallery__grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.gallery .work { border-radius: var(--r); overflow: hidden; background: #fff; box-shadow: none; }
+.gallery .work__title { font-weight: 700; }
+
+.review__text { font-size: 17px; }
+.avatar { background: var(--yellow); color: var(--ink); }
+.stars .star.is-on { fill: var(--ink); }
+.faq-item summary { font-weight: 700; }
+.route__distance { font-size: clamp(72px, 9vw, 140px); font-weight: 800; line-height: .85; }
+.route__icon { background: var(--yellow); color: var(--ink); border-radius: 50%; }
+.estimate { border-radius: var(--r); background: var(--yellow); }
+.pick.is-on, .pick input:checked + span { background: var(--yellow); }
+.form input, .form select, .form textarea { border-radius: 10px; }
+
+/* подвал: чёрный с жёлтым */
+.footer { background: var(--ink); color: #cfcfcf; margin: 0 16px 16px; border-radius: var(--r); }
+.footer a, .footer__title { color: #fff; }
+.footer .logo { background: var(--yellow); color: var(--ink); }
+.footer a:hover { color: var(--yellow); }
+
+@media (max-width: 900px) {
+  .programs__grid { grid-template-columns: 1fr; }
+  .gallery__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .hero--centered, .marquee, .programs, .banner-section--full { margin-left: 8px; margin-right: 8px; }
+  .banner-section--full { padding: 0; }
+  .footer { margin: 0 8px 8px; }
+  .hero--centered { padding: 36px 0 120px; }
+  .hero--centered::before { height: 80px; }
+  .hero--centered .hero__title { font-size: 44vw; }
+  .hero--centered .hero__text { font-size: 17px; }
+  .hero__badge { font-size: 13px; text-align: left; }
+  .marquee__item { font-size: 24px; }
+  .stay__title, .prog__title { font-size: 30px; }
+}
+.footer .social { background: rgba(255,255,255,.1); color: #fff; }
+.footer .social:hover { background: var(--yellow); color: var(--ink); }
+.booking__box { border-radius: var(--r); background: var(--ink); }
+.booking__box .section-title { color: var(--yellow); }
+.booking__perks .icon { color: var(--yellow); }

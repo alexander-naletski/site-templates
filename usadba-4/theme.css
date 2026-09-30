@@ -1,0 +1,60 @@
+/* =====================================================================
+   THEME «Кадр» — «киностудия»: чёрный фон, белый текст, серые плашки, моноширинные подписи, гротеск Arimo + Roboto Mono.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   Шрифты Arimo (текст и заголовки) и Roboto Mono (подписи) — SIL Open Font License (assets/fonts/OFL-LICENSE.txt).
+   ===================================================================== */
+@font-face { font-family: "Arimo"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(assets/fonts/arimo-400_700-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Arimo"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(assets/fonts/arimo-400_700-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 400 500; font-display: swap;
+  src: url(assets/fonts/robotomono-400_500-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 400 500; font-display: swap;
+  src: url(assets/fonts/robotomono-400_500-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент (кнопки, ссылки) --- */
+  --color-accent: #ffffff;
+  --color-accent-hover: #d9d9d9;
+  --color-accent-soft: #1c1c1c;
+  --color-on-accent: #000000;
+
+  /* --- Текст --- */
+  --color-heading: #ffffff;
+  --color-text: #c8c8c8;
+  --color-muted: #8a8a8a;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #000000;
+  --color-bg-soft: #111111;
+  --color-surface: #111111;
+  --color-border: #2a2a2a;
+  --color-dark: #000000;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(0, 0, 0, .92);
+  --color-field-focus: #1a1a1a;
+
+  /* --- Статусы --- */
+  --color-success: #8fd18a;
+  --color-error: #e5484d;
+  --color-rating: #ffffff;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #141414; --map-road: #ffffff; --map-park: #1f2a1f; --map-water: #18222b;
+
+  /* --- Шрифты --- */
+  --font-main: "Arimo", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Arimo", "Helvetica Neue", Arial, sans-serif;
+  --weight-heading: 700;
+
+  /* --- Скругления --- */
+  --radius-xl: 3px;
+  --radius-lg: 3px;
+  --radius-md: 3px;
+  --radius-sm: 2px;
+  --radius-pill: 999px;
+
+  /* --- Размеры --- */
+  --container: 1440px;
+  --header-h: 76px;
+}

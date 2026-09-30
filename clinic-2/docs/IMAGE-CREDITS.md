@@ -11,7 +11,7 @@
 |---|---|---|---|
 | `hero` | Black Family | CC0 | https://stocksnap.io/photo/black-family-HBADKDBJYU |
 | `about` | Ear Exam | CC0 | https://stocksnap.io/photo/ear-exam-GEL2EZASDG |
-| `banner` | Pictured: Inpatient corridor | CC0 | https://www.rawpixel.com/image/3306150/free-photo-image-hospital-hospital-facility-clinic-medical-services |
+| `banner` | (без названия) | CC0 | https://www.rawpixel.com/image/5958958/free-public-domain-cc0-photo |
 | `prog-base` | Senior Running | CC0 | https://stocksnap.io/photo/senior-running-XOPCB6KLSN |
 | `prog-men` | Senior Couple | CC0 | https://stocksnap.io/photo/senior-couple-ABEBWKIUKG |
 | `prog-women` | Yoga Mom | CC0 | https://stocksnap.io/photo/yoga-mom-1AWRISHUG0 |

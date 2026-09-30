@@ -146,7 +146,7 @@ window.SITE_CONFIG = {
       type: "banner",
       id: "banner",
       image: "assets/img/banner",
-      imageAlt: "Пациентка улыбается на приёме у врача",
+      imageAlt: "Светлый коридор клиники",
       eyebrow: "Корпоративным клиентам",
       title: "Чек-апы для сотрудников — в удобные для команды дни",
       buttonText: "Обсудить условия",

@@ -15,8 +15,8 @@
 | `svc-pediatrics` | Family Playing | CC0 | https://stocksnap.io/photo/family-playing-I8AQOA9IFG |
 | `svc-family` | Caregiver Nurse | CC0 | https://stocksnap.io/photo/caregiver-nurse-TBEMNLXLVQ |
 | `svc-vaccine` | Free needle vaccination image | CC0 | https://www.rawpixel.com/image/5907193/photo-image-public-domain-covid-vaccine |
-| `svc-home` | Free close hand lab image | CC0 | https://www.rawpixel.com/image/5921316/photo-image-public-domain-hand-person |
-| `svc-cardio` | Senior Woman | CC0 | https://stocksnap.io/photo/senior-woman-3IB4WLHMN6 |
+| `svc-home` | Geriatrics, taking blood pressure Bernard | CC0 | https://www.rawpixel.com/image/6301124/geriatrics-taking-blood-pressure |
+| `svc-cardio` | Dr. Robert Linn Bernard Gotfryd | CC0 | https://www.rawpixel.com/image/6299496/dr-robert-linn |
 | `svc-rehab` | (без названия) | CC0 | https://www.rawpixel.com/image/5947937/free-public-domain-cc0-photo |
 | `svc-baby` | Family People | CC0 | https://stocksnap.io/photo/family-people-23J7I9NZO3 |
 

@@ -1,0 +1,147 @@
+/* =====================================================================
+   SKIN «Хутор Бор» — оформление в духе сайтов аутдор-брендов снаряжения
+   (референс по принципам: snowpeak.com — японский бренд туристического снаряжения).
+   Принципы: чёрное на белом, антиква для заголовков и навигации + спокойный
+   гротеск для текста, тонкая серая полоса-объявление, полноэкранное
+   атмосферное фото с антиквой, сетка «категорий» с линейными иконками,
+   крупные фото 2 в ряд с маленькими чёрными прямоугольными кнопками,
+   цветные карточки «опыта» (лесной зелёный, ржавый, графит), тёмная полоса
+   «о бренде», квадратная сетка фото «лагеря».
+   ===================================================================== */
+:root { --forest: #2e4636; --rust: #a4502c; --graphite: #2b2b2b; --moss: #6d7358; --section-y: 96px; }
+body { font-size: 16px; }
+h1, h2, h3, .section-title, .hero__title, .banner__title, .stay__title, .prog__title, .extra__title, .statement__text { font-family: var(--font-heading); font-weight: 400; letter-spacing: -.01em; }
+.section-title { font-size: clamp(32px, 3.6vw, 48px); line-height: 1.08; }
+.section-subtitle { font-size: 16px; color: var(--color-muted); }
+.section-eyebrow { font-family: var(--font-heading); text-transform: uppercase; letter-spacing: .14em; font-size: 13px; color: var(--color-muted); }
+.demo-badge { border-radius: 2px; background: #efefeb; color: #111; font-family: var(--font-main); }
+
+/* логотип: строчная антиква + «снежинка»-звёздочка */
+.logo { font-family: var(--font-heading); font-size: 27px; font-weight: 500; letter-spacing: -.01em; color: #000; }
+.logo::before { content: "✳"; font-size: 24px; margin-right: 8px; line-height: 1; font-family: var(--font-main); }
+
+/* кнопки: прямоугольные, маленькие, капс */
+.btn { border-radius: 2px; text-transform: uppercase; letter-spacing: .08em; font-size: 13px; font-weight: 700; min-height: 44px; padding: 10px 22px; }
+.btn--primary { background: #111; color: #fff; }
+.btn--primary:hover { background: #333; box-shadow: none; }
+.btn--light { background: #fff; color: #111; min-width: 190px; }
+.btn--outline, .btn--ghost, .btn--soft { background: transparent; color: #111; box-shadow: inset 0 0 0 1px #111; border: 0; }
+.btn--outline:hover, .btn--ghost:hover, .btn--soft:hover { background: #111; color: #fff; }
+.btn--sm { min-height: 38px; font-size: 12px; padding: 8px 16px; }
+.round-btn { border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px #d9d9d4; color: #111; }
+.chip, .tab { border-radius: 2px; }
+
+/* полоса-объявление и шапка */
+.announce { background: #e5e7e9; color: #111; font-size: 13px; font-weight: 600; }
+.announce a { text-decoration: none; }
+.header { box-shadow: 0 1px 0 #e5e5e1; }
+.nav a { font-family: var(--font-heading); text-transform: uppercase; letter-spacing: .09em; font-size: 14px; color: #111; border-radius: 0; }
+.nav a:hover, .nav a.is-active { background: none; color: var(--rust); }
+
+/* ---------- hero: полноэкранное фото, антиква слева снизу ---------- */
+.hero--cover { min-height: min(88svh, 820px); }
+.hero--cover .hero__bg::after { background: linear-gradient(0deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.2) 55%, rgba(0,0,0,.1) 100%), linear-gradient(90deg, rgba(0,0,0,.35), transparent 60%); }
+.hero--cover .hero__inner { padding-bottom: 72px; }
+.hero--cover .hero__title { font-size: clamp(48px, 6.4vw, 92px); line-height: 1; font-weight: 400; }
+.hero--cover .hero__text { font-size: 18px; max-width: 520px; margin-top: 16px; opacity: .92; }
+.hero--cover .hero__buttons { margin-top: 28px; }
+
+/* ---------- полоса «свободные даты» ---------- */
+.finder-section--bar { background: #111; padding: 22px 0; }
+.finder-section--bar .finder { background: transparent; box-shadow: none; padding: 0; margin: 0; }
+.finder-section--bar .finder__title { color: #fff; font-family: var(--font-heading); font-size: 26px; font-weight: 400; margin: 0; align-self: center; }
+.finder-section--bar .finder__label { color: rgba(255,255,255,.7); }
+.finder-section--bar .finder input, .finder-section--bar .finder select { border-radius: 2px; border-color: #3a3a3a; background: #1c1c1c; color: #fff; color-scheme: dark; }
+.finder-section--bar .select .icon { color: #fff; }
+.finder-section--bar .finder__btn { background: #fff; color: #111; }
+.finder-section--bar .finder__btn:hover { background: #e9e9e4; }
+@media (min-width: 1025px) { .finder-section--bar .finder { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: end; } .finder-section--bar .finder__fields { grid-template-columns: 1.3fr 1fr 1fr .9fr auto; } }
+@media (max-width: 1024px) { .finder-section--bar .finder__title { margin-bottom: 12px; } }
+
+/* ---------- «категории»: иконки на светлом ---------- */
+.features { background: #fff; }
+.features .section-head { text-align: left; }
+.features__grid { grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e5e5e1; box-shadow: 0 0 0 1px #e5e5e1; }
+.feature { background: #fff; border-radius: 0; box-shadow: none; text-align: center; padding: 30px 16px 26px; }
+.feature:hover { transform: none; box-shadow: none; background: #f7f7f5; }
+.feature__icon { color: #111; margin-bottom: 12px; }
+.feature__icon .icon { width: 40px; height: 40px; stroke-width: 1.1; }
+.feature__title { font-family: var(--font-heading); font-size: 20px; font-weight: 400; margin-bottom: 2px; }
+.feature__text { font-size: 13px; }
+
+/* ---------- дома: крупные фото 2 в ряд ---------- */
+.stays__grid { grid-template-columns: repeat(2, 1fr); gap: 48px 24px; }
+.stay { background: transparent; box-shadow: none; border-radius: 0; }
+.stay__media { aspect-ratio: 3 / 2; border-radius: 0; }
+.stay__badge { border-radius: 2px; background: #111; color: #fff; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+.stay__body { padding: 18px 0 0; gap: 10px; }
+.stay__title { font-size: 30px; }
+.stay__facts .icon { color: #111; }
+.stay__tags li { border-radius: 2px; background: #f2f2ef; }
+.stay__price strong { font-family: var(--font-main); font-size: 20px; font-weight: 800; }
+.stay:hover .stay__media img { transform: scale(1.03); }
+
+/* ---------- опыт: цветные карточки ---------- */
+.extras__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.extra { border-radius: 0; box-shadow: none; color: #fff; }
+.extra:nth-child(4n+1) { background: var(--forest); }
+.extra:nth-child(4n+2) { background: var(--rust); }
+.extra:nth-child(4n+3) { background: var(--graphite); }
+.extra:nth-child(4n+4) { background: var(--moss); }
+.extra__media { aspect-ratio: 16 / 9; }
+.extra__body { padding: 24px 26px 26px; }
+.extra__icon { display: none; }
+.extra__title { color: #fff; font-size: 28px; }
+.extra__text { color: rgba(255,255,255,.82); font-size: 15px; }
+.extra__price { color: #fff; font-size: 18px; }
+.extra__price span { color: rgba(255,255,255,.75); }
+.extra .btn--outline-light { border-radius: 2px; }
+.extra__btn.is-added { background: #fff; color: #111; border-color: #fff; }
+
+/* ---------- полоса «о хуторе» ---------- */
+.banner--full .banner__content { max-width: 640px; }
+.banner--full .banner__title { font-size: clamp(34px, 4vw, 56px); line-height: 1.05; }
+.banner--full::after { background: linear-gradient(90deg, rgba(0,0,0,.66), rgba(0,0,0,.2)); }
+
+/* ---------- ретриты ---------- */
+.prog { border-radius: 0; box-shadow: none; background: #f7f7f5; }
+.prog__media { border-radius: 0; }
+.prog__title { font-size: 28px; }
+.prog__badge { border-radius: 2px; }
+.prog__price strong { font-family: var(--font-main); font-size: 20px; font-weight: 800; }
+
+/* ---------- манифест ---------- */
+.statement { text-align: center; background: #f7f7f5; }
+.statement__text { margin: 0 auto; font-size: clamp(34px, 4.4vw, 64px); line-height: 1.08; }
+.statement__muted { display: block; color: var(--rust); font-style: italic; }
+
+/* ---------- галерея: квадраты 4 в ряд ---------- */
+.gallery__grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.gallery .work { border-radius: 0; box-shadow: none; position: relative; background: #111; }
+.gallery .gallery__img { aspect-ratio: 1 / 1; }
+.gallery .gallery__img img { width: 100%; height: 100%; object-fit: cover; }
+.gallery .work__body { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 14px 12px; background: linear-gradient(0deg, rgba(0,0,0,.6), transparent); pointer-events: none; }
+.gallery .work__title { color: #fff; font-family: var(--font-heading); font-size: 17px; margin: 0; }
+@media (max-width: 1024px) { .gallery__grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- отзывы, вопросы, форма ---------- */
+.review { border-radius: 0; box-shadow: inset 0 0 0 1px #e5e5e1; background: #fff; }
+.avatar { border-radius: 2px; background: #111; color: #fff; }
+.faq-item { border-radius: 0; }
+.booking__box { border-radius: 0; background: #111; }
+.booking__perks .icon { color: #fff; }
+.booking .section-title { color: #fff; }
+.form input, .form select, .form textarea { border-radius: 2px; }
+.pick { border-radius: 2px; }
+.route__lead { border-radius: 0; background: #f2f2ef; }
+.route__icon { border-radius: 50%; background: #111; color: #fff; }
+.route__distance { font-weight: 400; }
+.contacts__info, .map { border-radius: 0; }
+.footer { background: #f7f7f5; }
+
+@media (max-width: 800px) {
+  .stays__grid, .extras__grid { grid-template-columns: 1fr; gap: 32px; }
+  .features__grid { grid-template-columns: repeat(2, 1fr); }
+  .stay__title { font-size: 26px; }
+  .hero--cover { min-height: 78svh; }
+}

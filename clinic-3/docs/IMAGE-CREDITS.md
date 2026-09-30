@@ -15,8 +15,8 @@
 | `svc-therapy` | Free doctor's stethoscope image | CC0 | https://www.rawpixel.com/image/5902526/photo-image-public-domain-doctor-free |
 | `svc-cardio` | Hospital, healthcare photo | CC0 | https://www.rawpixel.com/image/6041020/photo-image-public-domain-doctor-medicine |
 | `svc-lab` | Free microscope public domain CC0 | CC0 | https://www.rawpixel.com/image/5913884/free-microscope-public-domain-cc0-photo |
-| `svc-eye` | Cool glasses png drawing sticker | CC0 | https://www.rawpixel.com/image/6271717/png-frames-sticker |
-| `svc-diag` | (без названия) | CC0 | https://www.rawpixel.com/image/5949441/free-public-domain-cc0-photo |
+| `svc-eye` | Reading Glasses | CC0 | https://stocksnap.io/photo/reading-glasses-ZY79KSA2I1 |
+| `svc-diag` | staff member Blue Star Hospital | CC0 | https://www.rawpixel.com/image/3373486/free-photo-image-apparel-cc0-clothing |
 | `svc-checkup` | iPhone and Blue Stethoscope | CC0 | https://www.rawpixel.com/image/5967077/iphone-and-blue-stethoscope |
 
 Шрифты: Geologica (вариативный 300–500, в `assets/fonts/`) — SIL Open Font License 1.1 (файлы OFL-LICENSE.txt рядом со шрифтами).

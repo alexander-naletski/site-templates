@@ -1,0 +1,140 @@
+/* =====================================================================
+   SKIN «Тихая» — оформление в духе независимых журналов о стиле жизни
+   (референс по принципам: kinfolk.com — журнал о «медленной жизни»).
+   Принципы: много воздуха, молочный фон и шалфейные плоскости, лёгкая
+   антиква прописными для обложки и логотипа, центрированный «номер
+   выпуска», маленькие подписи гротеском, тонкие линии вместо карточек,
+   фото без скруглений, нумерация «01 / 05» как в оглавлении журнала.
+   ===================================================================== */
+:root { --sage: #dbded5; --milk: #fbfaf6; --line: #cfcfc4; --section-y: 104px; }
+body { font-size: 15.5px; background: var(--milk); letter-spacing: .005em; }
+h1, h2, h3, .section-title, .hero__title, .banner__title, .stay__title, .extra__title, .prog__title, .statement__text { font-family: var(--font-heading); font-weight: 300; letter-spacing: -.005em; }
+.section-head { text-align: center; margin-left: auto; margin-right: auto; }
+.section-head .section-subtitle { margin-left: auto; margin-right: auto; }
+.section-title { font-size: clamp(30px, 3.4vw, 46px); line-height: 1.1; text-transform: uppercase; }
+.section-subtitle { font-size: 15px; color: var(--color-muted); max-width: 560px; }
+.section-eyebrow { font-family: var(--font-main); text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--color-heading); font-weight: 400; }
+.demo-badge { border-radius: 0; background: var(--sage); color: #111; font-family: var(--font-main); text-transform: none; }
+
+/* логотип: разреженная антиква прописными */
+.logo { font-family: var(--font-heading); font-weight: 400; font-size: 28px; letter-spacing: .34em; margin-right: -.34em; color: #111; }
+.header { background: var(--milk); box-shadow: none; }
+.header.is-scrolled { box-shadow: 0 1px 0 var(--line); }
+.nav a { font-size: 13.5px; color: #111; border-radius: 0; font-weight: 400; }
+.nav a:hover, .nav a.is-active { background: none; text-decoration: underline; text-underline-offset: 5px; }
+
+/* кнопки: тонкие, прямоугольные */
+.btn { border-radius: 0; font-weight: 400; min-height: 44px; padding: 10px 24px; font-size: 14px; letter-spacing: .02em; }
+.btn--primary { background: #111; color: #fff; }
+.btn--primary:hover { background: #3a3a3a; box-shadow: none; }
+.btn--ghost, .btn--outline, .btn--soft { background: transparent; color: #111; box-shadow: inset 0 0 0 1px #111; border: 0; }
+.btn--ghost:hover, .btn--outline:hover, .btn--soft:hover { background: #111; color: #fff; }
+.round-btn { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px #111; color: #111; }
+.chip, .tab { border-radius: 0; }
+
+/* ---------- обложка: центрированный заголовок + 2 фото ---------- */
+.hero--editorial { padding-top: 40px; text-align: center; }
+.hero--editorial .hero__eyebrow { font-family: var(--font-heading); font-weight: 300; background: none; padding: 0; text-transform: uppercase; font-size: clamp(20px, 2.4vw, 34px); letter-spacing: .02em; color: #111; margin-bottom: 4px; }
+.hero--editorial .hero__title { font-size: clamp(44px, 6.4vw, 96px); text-transform: uppercase; line-height: 1; }
+.hero--editorial .hero__row { flex-direction: column; align-items: center; gap: 24px; margin-top: 24px; }
+.hero--editorial .hero__text { max-width: 560px; font-size: 16px; color: var(--color-text); }
+.hero--editorial .hero__grid { grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+.hero--editorial .hero__img { aspect-ratio: 4 / 5; }
+.hero--editorial .hero__cap { justify-content: center; text-transform: none; font-size: 13px; }
+.hero--editorial .hero__cap-label { min-width: 0; }
+.hero--editorial .hero__cap-label::after { content: " / 02"; }
+
+/* ---------- вступление ---------- */
+.statement { text-align: center; }
+.statement .section-eyebrow { margin-bottom: 20px; }
+.statement__text { margin: 0 auto; font-size: clamp(24px, 2.6vw, 36px); line-height: 1.3; max-width: 900px; }
+.statement__sub { margin: 24px auto 0; font-size: 15px; }
+
+/* ---------- комнаты: «материалы номера» ---------- */
+.stays { background: var(--sage); }
+.stays--rows .stays__grid { gap: 0; }
+.stays--rows .stay { background: transparent; box-shadow: none; border-radius: 0; border-top: 1px solid rgba(0,0,0,.18); padding: 40px 0; grid-template-columns: 1fr 1fr; gap: 48px; }
+.stays--rows .stay:last-child { border-bottom: 1px solid rgba(0,0,0,.18); }
+.stays--rows .stay__media { border-radius: 0; min-height: 420px; }
+.stays--rows .stay__body { padding: 0; }
+.stay__num { font-family: var(--font-heading); font-size: 15px; color: #111; }
+.stay__num::after { content: " / 05"; color: var(--color-muted); }
+.stays--rows .stay__title { font-size: clamp(30px, 3vw, 44px); text-transform: uppercase; }
+.stay__facts .icon { color: #111; }
+.stay__tags li { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px rgba(0,0,0,.25); }
+.stay__badge { border-radius: 0; background: var(--milk); }
+.stay__price strong { font-family: var(--font-heading); font-weight: 400; font-size: 26px; }
+.stays__note { text-align: center; }
+
+/* ---------- широкая фотография ---------- */
+.banner--full .banner__title { font-family: var(--font-heading); text-transform: uppercase; font-weight: 300; font-size: clamp(40px, 6vw, 88px); }
+.banner--full .banner__text { font-size: 16px; }
+
+/* ---------- ритуалы ---------- */
+.extras__grid { gap: 40px 24px; }
+.extra { background: transparent; box-shadow: none; border-radius: 0; }
+.extra__media { aspect-ratio: 4 / 5; }
+.extra--featured .extra__media { aspect-ratio: auto; height: 100%; min-height: 360px; }
+.extra--featured { grid-row: span 2; }
+.extra__body { padding: 16px 0 0; }
+.extra__title { font-size: 24px; }
+.extra__icon { display: none; }
+.extra__price { font-weight: 500; font-size: 15px; }
+.extras__grid { grid-template-columns: repeat(4, 1fr); }
+.extra--featured { grid-column: span 2; }
+.extra--featured .extra__body { padding-top: 16px; }
+.extra__btn.is-added { background: #111; color: #fff; }
+
+/* ---------- события ---------- */
+.programs { background: var(--sage); }
+.prog { background: transparent; box-shadow: none; border-radius: 0; }
+.prog__media { border-radius: 0; aspect-ratio: 4 / 5; }
+.prog__body { padding: 16px 0 0; }
+.prog__title { font-size: 26px; text-transform: uppercase; }
+.prog__price strong { font-family: var(--font-heading); font-weight: 400; }
+
+/* ---------- сад ---------- */
+.gallery--mosaic .work { border-radius: 0; }
+.gallery--mosaic .gallery__grid { grid-auto-rows: 240px; }
+
+/* ---------- письма гостей ---------- */
+.reviews { background: var(--milk); }
+.review { border-radius: 0; background: transparent; box-shadow: none; border-top: 1px solid #111; padding: 24px 0 0; }
+.review__text { font-family: var(--font-heading); font-size: 19px; line-height: 1.5; font-weight: 300; }
+.stars .star.is-on { fill: #111; }
+.avatar { border-radius: 0; background: var(--sage); color: #111; }
+
+/* ---------- вопросы, форма, дорога ---------- */
+.faq-item { border-radius: 0; background: transparent; box-shadow: none; border-bottom: 1px solid var(--line); }
+.booking__box { border-radius: 0; background: var(--sage); color: #111; }
+.booking__box .section-title, .booking .section-title { color: #111; }
+.booking__subtitle, .booking__call { color: #333; }
+.booking__call a { color: #111; }
+.booking__perks .icon { color: #111; }
+.booking .form { background: var(--milk); }
+.form input, .form select, .form textarea, .pick { border-radius: 0; }
+.route__lead { border-radius: 0; background: var(--sage); }
+.route__icon { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px #111; color: #111; }
+.route__distance { font-weight: 300; }
+.contacts { background: var(--sage); }
+.contacts__info, .map { border-radius: 0; }
+.footer { background: var(--milk); }
+.footer__big { font-family: var(--font-heading); font-weight: 300; letter-spacing: .3em; text-align: center; font-size: clamp(56px, 15vw, 220px); text-indent: .3em; }
+
+@media (max-width: 1024px) {
+  .extras__grid { grid-template-columns: 1fr 1fr; }
+  .extra--featured { grid-row: auto; }
+  .extra--featured .extra__media { height: auto; min-height: 0; aspect-ratio: 16 / 10; }
+}
+@media (max-width: 800px) {
+  .stays--rows .stay { grid-template-columns: 1fr; gap: 20px; padding: 28px 0; }
+  .stays--rows .stay__media { min-height: 0; }
+  .hero--editorial .hero__grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 36px; }
+  .hero--editorial .hero__cap { font-size: 12px; }
+}
+@media (max-width: 600px) {
+  .extras__grid { grid-template-columns: 1fr; }
+  .extra--featured { grid-column: auto; }
+  .extra__media { aspect-ratio: 4 / 3; }
+  .logo { font-size: 22px; }
+}

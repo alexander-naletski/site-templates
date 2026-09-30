@@ -10,7 +10,7 @@
 | Файл(ы) в assets/img | Название источника | Лицензия | Страница источника |
 |---|---|---|---|
 | `hero-dash` | Car Dashboard | CC0 | https://stocksnap.io/photo/car-dashboard-G3UYYCGBTS |
-| `band-tools` | NRCS snow survey shop at the headquarters | CC0 | https://www.rawpixel.com/image/3334995/free-photo-image-garage-bozeman-cc0 |
+| `band-tools` | Carpenter toolkit displayed showing tools | CC0 | https://www.rawpixel.com/image/3237401/free-photo-image-hammer-wood-creative-commons |
 | `about-classic` | Vintage Car | CC0 | https://stocksnap.io/photo/vintage-car-8GOX2SVCC3 |
 | `band-interior` | Steeringwheel Dashboard | CC0 | https://stocksnap.io/photo/steeringwheel-dashboard-BGGSU20EI6 |
 | `ba-headlight-before`, `ba-headlight-after` | Car headlight | CC0 | https://www.rawpixel.com/image/6023493/car-headlight-free-public-domain-cc0-photo |

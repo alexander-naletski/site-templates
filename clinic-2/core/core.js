@@ -206,6 +206,7 @@
       '<div class="container hero__inner"><div class="hero__content">' +
         (s.eyebrow ? '<p class="hero__eyebrow">' + esc(s.eyebrow) + "</p>" : "") + heroTitle(s) +
         (s.text ? '<p class="hero__text">' + esc(s.text) + "</p>" : "") + heroButtons(s) +
+        (s.list && s.list.length ? '<ul class="hero__list">' + s.list.map(function (l) { return '<li><a href="' + esc(l.href || "#booking") + '"' + (l.service ? ' data-service="' + esc(l.service) + '"' : "") + '><span class="hero__list-text">' + esc(l.text) + "</span>" + (l.note ? '<span class="hero__list-note">' + esc(l.note) + "</span>" : "") + "</a></li>"; }).join("") + "</ul>" : "") +
       "</div>" + (s.caption ? '<p class="hero__caption">' + esc(s.caption) + "</p>" : "") + "</div></section>";
   };
   /* Журнальный: огромный заголовок + сетка фото с подписями */
@@ -359,7 +360,7 @@
   };
 
   R.gallery = function (s) {
-    return '<section class="section gallery" id="' + esc(s.id) + '"><div class="container">' +
+    return '<section class="section gallery' + (s.variant ? " gallery--" + esc(s.variant) : "") + (s.lightbox ? " gallery--zoom" : "") + '" id="' + esc(s.id) + '"><div class="container">' +
       head(s, s.note && C.demo ? '<p class="section-note">' + esc(s.note) + "</p>" : "") +
       '<div class="gallery__grid">' + (s.items || []).map(function (g, i) {
         var media = g.before && g.after
@@ -370,8 +371,9 @@
               '<span class="ba__handle" aria-hidden="true"><span class="ba__knob">' + icon("chevronLeft") + icon("chevronRight") + "</span></span>" +
               '<input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнить до и после: ' + esc(g.title) + '">' +
             "</div>"
+          : s.lightbox ? '<button type="button" class="gallery__img gallery__zoom" data-lb data-lb-title="' + esc(g.title) + '" aria-label="Открыть фото: ' + esc(g.title) + '">' + img(g.image, g.alt || g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + '<span class="gallery__zoom-icon" aria-hidden="true">' + icon("expand") + "</span></button>"
           : '<div class="gallery__img">' + img(g.image, g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + "</div>";
-        return '<figure class="work card reveal" style="--d:' + i * 60 + 'ms">' + media + '<figcaption class="work__body"><h3 class="work__title">' + esc(g.title) + "</h3>" + (g.text ? '<p class="work__text">' + esc(g.text) + "</p>" : "") + "</figcaption></figure>";
+        return '<figure class="work card reveal' + (g.size ? " work--" + esc(g.size) : "") + '" style="--d:' + (i % 4) * 60 + 'ms">' + media + '<figcaption class="work__body"><h3 class="work__title">' + esc(g.title) + "</h3>" + (g.text ? '<p class="work__text">' + esc(g.text) + "</p>" : "") + "</figcaption></figure>";
       }).join("") + "</div></div></section>";
   };
 
@@ -425,14 +427,15 @@
       }).join("") + "</div></div></section>";
   };
 
-  var LABEL_DEFAULTS = { name: "Ваше имя", phone: "Телефон", car: "Автомобиль", service: "Услуга", servicePlaceholder: "Выберите услугу", serviceOther: "Другое / не знаю", date: "Дата", time: "Время", timeAny: "Любое", comment: "Комментарий" };
+  var LABEL_DEFAULTS = { name: "Ваше имя", phone: "Телефон", car: "Автомобиль", service: "Услуга", servicePlaceholder: "Выберите услугу", serviceOther: "Другое / не знаю", date: "Дата", time: "Время", timeAny: "Любое", comment: "Комментарий",
+    dateout: "Выезд", adults: "Взрослые", kids: "Дети", extras: "Добавить к отдыху", estimate: "Предварительный расчёт", total: "Итого", onRequest: "по запросу" };
   function labels(s) { var L = {}, k; for (k in LABEL_DEFAULTS) L[k] = (s.labels && s.labels[k]) || LABEL_DEFAULTS[k]; return L; }
   R.booking = function (s) {
     var L = labels(s);
     var today = new Date();
     function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-    var max = new Date(today.getTime() + (s.maxDaysAhead || 60) * 864e5);
-    return '<section class="section booking" id="' + esc(s.id) + '"><div class="container"><div class="booking__box reveal">' +
+    var max = new Date(today.getTime() + (s.maxDaysAhead || 60) * 864e5), stay = s.mode === "stay";
+    return '<section class="section booking' + (stay ? " booking--stay" : "") + '" id="' + esc(s.id) + '"><div class="container"><div class="booking__box reveal">' +
       '<div class="booking__intro">' + eyebrow(s) + '<h2 class="section-title">' + esc(s.title) + "</h2>" +
         (s.subtitle ? '<p class="booking__subtitle">' + esc(s.subtitle) + "</p>" : "") +
         (s.perks ? '<ul class="booking__perks">' + s.perks.map(function (p) { return "<li>" + icon("checkCircle") + "<span>" + esc(p) + "</span></li>"; }).join("") + "</ul>" : "") +
@@ -442,14 +445,14 @@
       '<form class="form" id="booking-form" novalidate data-endpoint="' + esc(s.endpoint || "") + '">' +
         field("name", L.name, '<input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="60" placeholder="Иван">') +
         field("phone", L.phone, '<input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="' + esc(s.phoneMask || "+375 (__) ___-__-__") + '" data-mask="' + esc(s.phoneMask || "") + '">') +
-        (s.carField === false ? "" : field("car", L.car, '<input id="f-car" name="car" type="text"' + (s.carOptional ? "" : " required") + ' minlength="2" maxlength="80" placeholder="' + esc(s.carPlaceholder || "") + '"' + (s.carError ? ' data-error="' + esc(s.carError) + '"' : "") + ">", s.carOptional)) +
+        (s.carField === false || stay ? "" : field("car", L.car, '<input id="f-car" name="car" type="text"' + (s.carOptional ? "" : " required") + ' minlength="2" maxlength="80" placeholder="' + esc(s.carPlaceholder || "") + '"' + (s.carError ? ' data-error="' + esc(s.carError) + '"' : "") + ">", s.carOptional)) +
         field("service", L.service, '<div class="select"><select id="f-service" name="service" required><option value="">' + esc(L.servicePlaceholder) + "</option>" +
           services().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") +
           (function () { var pr = programItems(); return pr.length ? '<optgroup label="' + esc(pr[0].group || "Программы") + '">' + pr.map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") + "</optgroup>" : ""; })() + '<option value="other">' + esc(L.serviceOther) + "</option></select>" + icon("chevronDown") + "</div>") +
-        '<div class="form__row">' +
+        (stay ? stayFields(s, L, today, max, iso) : '<div class="form__row">' +
           field("date", L.date, '<input id="f-date" name="date" type="date" required min="' + iso(today) + '" max="' + iso(max) + '" data-closed="' + esc((s.closedWeekdays || []).join(",")) + '">') +
           field("time", L.time, '<div class="select"><select id="f-time" name="time"><option value="">' + esc(L.timeAny) + "</option>" + (s.timeSlots || []).map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div>", true) +
-        "</div>" +
+        "</div>") +
         field("comment", L.comment, '<textarea id="f-comment" name="comment" rows="3" maxlength="500" placeholder="' + esc(s.commentPlaceholder || "") + '"></textarea>', true) +
         '<label class="checkbox"><input type="checkbox" name="consent" required checked><span class="checkbox__box">' + icon("check") + "</span><span>" + esc(s.consentText || "Согласен на обработку данных") + "</span></label>" +
         '<p class="field__error" data-error-for="consent" role="alert"></p>' +
@@ -542,20 +545,10 @@
   /* Первый экран с «поиском записи» (стиль авиакомпании): фото + виджет «направление / дата / время» */
   HERO.search = function (s) {
     var f = s.finder || {};
-    var bk = (C.sections || []).filter(function (x) { return x.type === "booking"; })[0] || {};
     return '<section class="hero hero--search" id="' + esc(s.id || "top") + '"><div class="container">' +
       '<div class="hero__media">' + img(s.image, s.imageAlt, { eager: true, sizes: "(max-width: 1400px) 100vw, 1360px", w: 1024, h: 576 }) +
         '<div class="hero__content">' + (s.eyebrow ? '<p class="hero__eyebrow">' + esc(s.eyebrow) + "</p>" : "") + heroTitle(s) + (s.text ? '<p class="hero__text">' + esc(s.text) + "</p>" : "") + heroButtons(s) + "</div></div>" +
-      '<form class="finder reveal" data-finder novalidate aria-label="' + esc(f.title || "Быстрая запись") + '">' +
-        (f.title ? '<p class="finder__title">' + esc(f.title) + "</p>" : "") +
-        '<div class="finder__fields">' +
-          '<div class="finder__field"><label class="finder__label" for="fd-service">' + esc(f.serviceLabel || "Направление") + '</label><div class="select"><select id="fd-service">' +
-            '<option value="">' + esc(f.servicePlaceholder || "Любое") + "</option>" + services().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") +
-            programItems().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div></div>" +
-          '<div class="finder__field"><label class="finder__label" for="fd-date">' + esc(f.dateLabel || "Дата") + '</label><input id="fd-date" type="date" data-closed="' + esc((bk.closedWeekdays || []).join(",")) + '"></div>' +
-          (bk.timeSlots && f.time !== false ? '<div class="finder__field"><label class="finder__label" for="fd-time">' + esc(f.timeLabel || "Время") + '</label><div class="select"><select id="fd-time"><option value="">' + esc(f.timeAny || "Любое") + "</option>" + bk.timeSlots.map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div></div>" : "") +
-          '<button class="btn btn--primary finder__btn" type="submit">' + icon("search") + "<span>" + esc(f.buttonText || "Найти время") + "</span></button>" +
-        "</div>" + (f.note ? '<p class="finder__note">' + esc(f.note) + "</p>" : "") + "</form></div></section>";
+      finderForm(f) + "</div></section>";
   };
   /* Крупный список ссылок со стрелками (стиль автобренда) */
   R.links = function (s) {
@@ -588,6 +581,132 @@
       (s.title ? '<h2 class="section-title">' + esc(s.title) + "</h2>" : "") +
       (s.paragraphs || []).map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") + "</div></section>";
   };
+
+
+  /* ===================== v1.4: усадьба / загородный комплекс ===================== */
+  function plural(n, f) { n = Math.abs(n) % 100; var n1 = n % 10; return n > 10 && n < 20 ? f[2] : n1 > 1 && n1 < 5 ? f[1] : n1 === 1 ? f[0] : f[2]; }
+  function bookingSection() { return (C.sections || []).filter(function (x) { return x.type === "booking"; })[0] || {}; }
+  function stayMode() { return bookingSection().mode === "stay"; }
+  function maxGuestsOf(v) { return v ? (+v.guests || 0) + (+v.extraBeds || 0) : 0; }
+  function extrasItems() {
+    var out = [];
+    (C.sections || []).forEach(function (x) { if (x.type === "extras" && !x.hidden) (x.items || []).forEach(function (e) { if (e.id) out.push(e); }); });
+    return out;
+  }
+  function stayPrice(v) { return v.price || (v.night ? "от " + money(v.night, C.currency) : ""); }
+  /* Домики / номера: вместимость, площадь, удобства, цена за сутки. Данные — из массива services. */
+  R.stays = function (s) {
+    var v = s.variant || "grid", rail = v === "rail";
+    return '<section class="section stays stays--' + esc(v) + '" id="' + esc(s.id || "stays") + '"><div class="container">' +
+      (rail ? rowHead(s, "домики") : head(s)) +
+      '<div class="stays__grid"' + (rail ? ' data-rail tabindex="0" aria-label="Домики, прокручиваются по горизонтали"' : "") + ">" + services().map(function (h, i) {
+        var mg = maxGuestsOf(h);
+        var facts = [
+          h.guests ? [ "users", "до " + mg + " " + plural(mg, ["гостя", "гостей", "гостей"]) + (h.extraBeds ? " (" + h.guests + " + " + h.extraBeds + " доп.)" : "") ] : null,
+          h.beds ? ["bed", h.beds] : null, h.area ? ["home", h.area] : null
+        ].filter(Boolean);
+        return '<article class="stay reveal" style="--d:' + (i % 3) * 60 + 'ms">' +
+          '<div class="stay__media">' + img(h.image, h.imageAlt || h.title, { sizes: rail ? "(max-width: 700px) 84vw, 40vw" : "(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw", w: 1024, h: 768 }) + (h.badge ? '<span class="stay__badge">' + esc(h.badge) + "</span>" : "") + "</div>" +
+          '<div class="stay__body">' + (s.showNum ? '<span class="stay__num">' + String(i + 1).padStart(2, "0") + "</span>" : "") +
+            '<h3 class="stay__title">' + esc(h.title) + "</h3>" +
+            (facts.length ? '<ul class="stay__facts">' + facts.map(function (f) { return "<li>" + icon(f[0]) + "<span>" + esc(f[1]) + "</span></li>"; }).join("") + "</ul>" : "") +
+            (h.text ? '<p class="stay__text">' + esc(h.text) + "</p>" : "") +
+            (h.amenities && h.amenities.length ? '<ul class="stay__tags">' + h.amenities.map(function (a) { return "<li>" + esc(a) + "</li>"; }).join("") + "</ul>" : "") +
+            '<div class="stay__foot"><div class="stay__price"><strong>' + esc(stayPrice(h)) + "</strong>" + (h.night ? "<span>" + esc(s.perNight || "за сутки") + "</span>" : "") +
+              (h.weekend ? '<small>' + esc(s.weekendLabel || "Пт–Сб") + ": " + esc(money(h.weekend, C.currency)) + "</small>" : "") + "</div>" +
+              '<a class="btn btn--' + esc(s.buttonStyle || "primary") + ' stay__btn" href="#booking" data-service="' + esc(h.id) + '">' + esc(s.buttonText || "Выбрать даты") + "</a></div>" +
+          "</div></article>";
+      }).join("") + "</div>" + (s.note ? '<p class="stays__note">' + esc(s.note) + "</p>" : "") + "</div></section>";
+  };
+  /* Баня и дополнительные услуги: кнопка «Добавить» отмечает услугу в форме бронирования */
+  R.extras = function (s) {
+    var v = s.variant || "cards", canAdd = stayMode();
+    return '<section class="section extras extras--' + esc(v) + '" id="' + esc(s.id || "extras") + '"><div class="container">' + head(s) +
+      '<div class="extras__grid">' + (s.items || []).map(function (e, i) {
+        return '<article class="extra' + (e.featured ? " extra--featured" : "") + ' reveal" style="--d:' + (i % 3) * 60 + 'ms">' +
+          (e.image && v !== "list" ? '<div class="extra__media">' + img(e.image, e.imageAlt || e.title, { sizes: e.featured ? "(max-width: 700px) 100vw, 66vw" : "(max-width: 700px) 100vw, 33vw", w: 1024, h: 768 }) + "</div>" : "") +
+          '<div class="extra__body">' + (e.icon ? '<span class="extra__icon">' + icon(e.icon) + "</span>" : "") +
+            '<div class="extra__main"><h3 class="extra__title">' + esc(e.title) + "</h3>" + (e.text ? '<p class="extra__text">' + esc(e.text) + "</p>" : "") + "</div>" +
+            '<div class="extra__foot"><p class="extra__price">' + esc(e.price || "") + (e.unit ? " <span>" + esc(e.unit) + "</span>" : "") + "</p>" +
+              (canAdd && e.id ? '<button type="button" class="btn btn--' + esc(s.buttonStyle || "soft") + ' btn--sm extra__btn" data-extra="' + esc(e.id) + '" aria-pressed="false"><span class="extra__add">' + icon("plus") + esc(s.addText || "К брони") + '</span><span class="extra__added">' + icon("check") + esc(s.addedText || "Добавлено") + "</span></button>"
+                : '<a class="btn btn--' + esc(s.buttonStyle || "soft") + ' btn--sm" href="#booking">' + esc(s.buttonText || "Заказать") + "</a>") +
+            "</div></div></article>";
+      }).join("") + "</div>" + (s.note ? '<p class="extras__note">' + esc(s.note) + "</p>" : "") + "</div></section>";
+  };
+  /* Как добраться: расстояние, способы, координаты, ссылки на навигаторы */
+  R.route = function (s) {
+    return '<section class="section route" id="' + esc(s.id || "route") + '"><div class="container">' + head(s) +
+      '<div class="route__grid"><div class="route__lead reveal">' +
+        (s.distance ? '<p class="route__distance">' + esc(s.distance) + "</p>" : "") + (s.distanceNote ? '<p class="route__dnote">' + esc(s.distanceNote) + "</p>" : "") +
+        (contacts().address ? '<p class="route__addr">' + icon("pin") + "<span>" + esc(contacts().address) + "</span></p>" : "") +
+        (s.coords ? '<div class="route__coords"><span>GPS: <b>' + esc(s.coords) + '</b></span><button type="button" class="route__copy" data-copy="' + esc(s.coords) + '" data-copied="' + esc(s.copiedText || "Скопировано") + '">' + esc(s.copyText || "Копировать") + "</button></div>" : "") +
+        (s.links && s.links.length ? '<div class="route__links">' + s.links.map(function (l, i) { return '<a class="btn btn--' + (i ? "ghost" : "primary") + ' btn--sm" href="' + esc(l.href) + '" target="_blank" rel="noopener">' + icon(l.icon || "navigation") + esc(l.text) + "</a>"; }).join("") + "</div>" : "") +
+      "</div>" +
+      '<ol class="route__list">' + (s.items || []).map(function (r, i) {
+        return '<li class="route__item reveal" style="--d:' + i * 60 + 'ms"><span class="route__icon">' + icon(r.icon || "car") + '</span><div><h3 class="route__title">' + esc(r.title) + "</h3>" + (r.meta ? '<p class="route__meta">' + esc(r.meta) + "</p>" : "") + '<p class="route__text">' + esc(r.text) + "</p></div></li>";
+      }).join("") + "</ol>" + (s.note && C.demo ? '<p class="route__note">' + esc(s.note) + "</p>" : "") + "</div></div></section>";
+  };
+  /* Форма «даты / гости» (в hero-поиске или отдельной полосой) */
+  var finderIdx = 0;
+  function finderForm(f, cls) {
+    var bk = bookingSection(), sfx = finderIdx++ ? "-" + finderIdx : "", stay = bk.mode === "stay";
+    var sel = '<div class="finder__field finder__field--svc"><label class="finder__label" for="fd-service' + sfx + '">' + esc(f.serviceLabel || (stay ? "Домик" : "Направление")) + '</label><div class="select"><select id="fd-service' + sfx + '" data-fd="service">' +
+      '<option value="">' + esc(f.servicePlaceholder || "Любое") + "</option>" + services().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") +
+      programItems().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div></div>";
+    var fields;
+    if (stay) {
+      var mg = Math.max.apply(null, [1].concat(services().map(maxGuestsOf)));
+      var gOpts = ""; for (var g = 1; g <= mg; g++) gOpts += '<option value="' + g + '"' + (g === (f.guestsDefault || 2) ? " selected" : "") + ">" + g + " " + plural(g, ["гость", "гостя", "гостей"]) + "</option>";
+      fields = (f.service === false ? "" : sel) +
+        '<div class="finder__field"><label class="finder__label" for="fd-in' + sfx + '">' + esc(f.dateLabel || "Заезд") + '</label><input id="fd-in' + sfx + '" type="date" data-fd="date"></div>' +
+        '<div class="finder__field"><label class="finder__label" for="fd-out' + sfx + '">' + esc(f.dateOutLabel || "Выезд") + '</label><input id="fd-out' + sfx + '" type="date" data-fd="dateout"></div>' +
+        '<div class="finder__field"><label class="finder__label" for="fd-guests' + sfx + '">' + esc(f.guestsLabel || "Гости") + '</label><div class="select"><select id="fd-guests' + sfx + '" data-fd="adults">' + gOpts + "</select>" + icon("chevronDown") + "</div></div>";
+    } else {
+      fields = sel.replace(' finder__field--svc', '') +
+        '<div class="finder__field"><label class="finder__label" for="fd-date' + sfx + '">' + esc(f.dateLabel || "Дата") + '</label><input id="fd-date' + sfx + '" type="date" data-fd="date" data-closed="' + esc((bk.closedWeekdays || []).join(",")) + '"></div>' +
+        (bk.timeSlots && f.time !== false ? '<div class="finder__field"><label class="finder__label" for="fd-time' + sfx + '">' + esc(f.timeLabel || "Время") + '</label><div class="select"><select id="fd-time' + sfx + '" data-fd="time"><option value="">' + esc(f.timeAny || "Любое") + "</option>" + bk.timeSlots.map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div></div>" : "");
+    }
+    return '<form class="finder' + (stay ? " finder--stay" : "") + (f.service === false ? " finder--nosvc" : "") + (cls ? " " + cls : "") + ' reveal" data-finder novalidate aria-label="' + esc(f.title || (stay ? "Проверить даты" : "Быстрая запись")) + '">' +
+      (f.title ? '<p class="finder__title">' + esc(f.title) + "</p>" : "") +
+      '<div class="finder__fields">' + fields +
+        '<button class="btn btn--' + esc(f.buttonStyle || "primary") + ' finder__btn" type="submit">' + icon(stay ? "calendar" : "search") + "<span>" + esc(f.buttonText || (stay ? "Проверить даты" : "Найти время")) + "</span></button>" +
+      "</div>" + (f.note ? '<p class="finder__note">' + esc(f.note) + "</p>" : "") + "</form>";
+  }
+  R.finder = function (s) {
+    return '<section class="finder-section' + (s.variant ? " finder-section--" + esc(s.variant) : "") + '" id="' + esc(s.id || "dates") + '"><div class="container">' + finderForm(s) + "</div></section>";
+  };
+  function lightboxHTML() {
+    var any = (C.sections || []).some(function (x) { return x.type === "gallery" && x.lightbox && !x.hidden; });
+    if (!any) return "";
+    return '<div class="lightbox" id="lightbox" hidden aria-hidden="true"><div class="lightbox__overlay" data-lb-close></div>' +
+      '<div class="lightbox__panel" role="dialog" aria-modal="true" aria-label="Просмотр фото" tabindex="-1">' +
+        '<figure class="lightbox__fig"><img class="lightbox__img" alt="" width="1024" height="683"><figcaption class="lightbox__cap"><span class="lightbox__title"></span><span class="lightbox__count"></span></figcaption></figure>' +
+        '<button type="button" class="round-btn lightbox__nav lightbox__prev" aria-label="Предыдущее фото" data-lb-prev>' + icon("chevronLeft") + "</button>" +
+        '<button type="button" class="round-btn lightbox__nav lightbox__next" aria-label="Следующее фото" data-lb-next>' + icon("chevronRight") + "</button>" +
+        '<button type="button" class="icon-btn lightbox__close" aria-label="Закрыть" data-lb-close>' + icon("close") + "</button>" +
+      "</div></div>";
+  }
+  function stepperField(name, label, min, max, val, optional) {
+    return '<div class="field" data-field="' + name + '"><label class="field__label" for="f-' + name + '">' + esc(label) + (optional ? ' <span class="field__opt">' + esc(optional) + "</span>" : "") + "</label>" +
+      '<div class="stepper" data-stepper><button type="button" class="round-btn" aria-label="Меньше: ' + esc(label) + '" data-step="-1">' + icon("minus") + "</button>" +
+      '<input id="f-' + name + '" name="' + name + '" type="number" inputmode="numeric" min="' + min + '" max="' + max + '" value="' + val + '">' +
+      '<button type="button" class="round-btn" aria-label="Больше: ' + esc(label) + '" data-step="1">' + icon("plus") + "</button></div>" +
+      '<p class="field__error" data-error-for="' + name + '" role="alert"></p></div>';
+  }
+  function stayFields(s, L, today, max, iso) {
+    var mg = Math.max.apply(null, [2].concat(services().map(maxGuestsOf)));
+    if (programItems().length && s.groupMax) mg = Math.max(mg, s.groupMax);
+    var ex = extrasItems();
+    return '<div class="form__row">' +
+        field("date", L.date, '<input id="f-date" name="date" type="date" required min="' + iso(today) + '" max="' + iso(max) + '">') +
+        field("dateout", L.dateout, '<input id="f-dateout" name="dateout" type="date" required min="' + iso(new Date(today.getTime() + 864e5)) + '">') +
+      "</div>" +
+      '<div class="form__row">' + stepperField("adults", L.adults, 1, mg, s.adultsDefault || 2) + stepperField("kids", L.kids, 0, mg, 0, s.kidsNote || "до 12 лет") + "</div>" +
+      (ex.length ? '<fieldset class="field extras-pick"><legend class="field__label">' + esc(L.extras) + ' <span class="field__opt">необязательно</span></legend><div class="extras-pick__grid">' +
+        ex.map(function (e) { return '<label class="pick"><input type="checkbox" name="extras" value="' + esc(e.id) + '"><span class="pick__box">' + icon("check") + '</span><span class="pick__text"><span class="pick__title">' + esc(e.short || e.title) + '</span><span class="pick__price">' + esc(e.price || "") + "</span></span></label>"; }).join("") +
+        "</div></fieldset>" : "") +
+      '<div class="estimate" data-estimate aria-live="polite" hidden></div>';
+  }
 
   /* ---------- footer ---------- */
   function renderFooter() {
@@ -652,16 +771,19 @@
     /* обновляем то, что зависит от текущей даты */
     $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
     var dt = doc.getElementById("f-date");
-    var fd = doc.getElementById("fd-date"); if (fd) { var bk2 = (C.sections || []).filter(function (x) { return x.type === "booking"; })[0] || {}; fd.min = isoDate(new Date()); fd.max = isoDate(new Date(Date.now() + (bk2.maxDaysAhead || 60) * 864e5)); }
+    var bk2 = bookingSection();
+    $$('[data-finder] input[type="date"]').forEach(function (fd) { fd.min = isoDate(new Date(Date.now() + (fd.getAttribute("data-fd") === "dateout" ? 864e5 : 0))); fd.max = isoDate(new Date(Date.now() + ((bk2.maxDaysAhead || 60) + (fd.getAttribute("data-fd") === "dateout" ? 30 : 0)) * 864e5)); });
+    var dto = doc.getElementById("f-dateout"); if (dto) dto.min = isoDate(new Date(Date.now() + 864e5));
     if (dt) { var bk = (C.sections || []).filter(function (x) { return x.type === "booking"; })[0] || {}; dt.min = isoDate(new Date()); dt.max = isoDate(new Date(Date.now() + (bk.maxDaysAhead || 60) * 864e5)); }
   }
   function renderHTML() {
+    finderIdx = 0;
     return renderHeader() + '<main id="main">' +
       (C.sections || []).filter(function (s) { return !s.hidden && R[s.type]; }).map(function (s) { return R[s.type](s); }).join("") +
-      "</main>" + renderFooter() + renderMobileBar() + renderDrawer() + renderCallback();
+      "</main>" + renderFooter() + renderMobileBar() + renderDrawer() + renderCallback() + lightboxHTML();
   }
   function isoDate(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-  var CORE_VERSION = "1.3.0";
+  var CORE_VERSION = "1.4.1";
   function configHash() {
     var str = CORE_VERSION + JSON.stringify(C), h = 5381;
     for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
@@ -990,10 +1112,24 @@
       date: function (v, el) {
         if (!v) return "Выберите дату";
         if (el.min && v < el.min) return "Дата уже прошла";
-        if (el.max && v > el.max) return "Запись доступна не дальше " + el.max.split("-").reverse().join(".");
+        if (el.max && v > el.max) return (form.elements.dateout ? "Бронирование открыто до " : "Запись доступна не дальше ") + el.max.split("-").reverse().join(".");
         var closed = (el.getAttribute("data-closed") || "").split(",").filter(Boolean).map(Number);
         var p = v.split("-"); var wd = new Date(+p[0], +p[1] - 1, +p[2]).getDay();
         if (closed.indexOf(wd) > -1) return "В этот день мы не работаем";
+      },
+      dateout: function (v) {
+        var din = form.elements.date, bs = bookingSection(), n;
+        if (!v) return isProgram(form.elements.service.value) ? undefined : "Выберите дату выезда";
+        if (!din || !din.value) return;
+        n = nightsBetween(din.value, v);
+        if (n <= 0) return "Выезд должен быть позже заезда";
+        if (n < (bs.minNights || 1)) return "Минимальный срок — " + bs.minNights + " " + plural(bs.minNights, ["ночь", "ночи", "ночей"]);
+        if (n > (bs.maxNights || 30)) return "Не больше " + (bs.maxNights || 30) + " ночей — для долгого проживания позвоните нам";
+      },
+      adults: function (v) {
+        var a = Math.round(+v || 0), k = Math.round(+((form.elements.kids || {}).value || 0)), st = findStay(form.elements.service.value), cap = maxGuestsOf(st);
+        if (a < 1) return "Нужен хотя бы один взрослый";
+        if (st && cap && a + k > cap) return "В «" + st.title + "» — до " + cap + " " + plural(cap, ["гостя", "гостей", "гостей"]) + ". Выберите домик побольше или два домика";
       },
       consent: function (v, el) { if (!el.checked) return "Нужно согласие на обработку данных"; }
     };
@@ -1021,7 +1157,11 @@
       Object.keys(V).forEach(function (name) { if (form.elements[name] && !check(name) && !firstBad) firstBad = form.elements[name]; });
       var status = $(".form__status", form);
       if (firstBad) { firstBad.focus(); if (status) status.textContent = ""; return; }
-      var data = {}; $$("input, select, textarea", form).forEach(function (el) { if (el.name) data[el.name] = el.type === "checkbox" ? el.checked : el.value.trim(); });
+      var data = {}; $$("input, select, textarea", form).forEach(function (el) {
+        if (!el.name) return;
+        if (el.type === "checkbox" && el.name !== "consent") { data[el.name] = data[el.name] || []; if (el.checked) data[el.name].push(el.value); }
+        else data[el.name] = el.type === "checkbox" ? el.checked : el.value.trim();
+      });
       var endpoint = form.getAttribute("data-endpoint");
       var submit = $('[type="submit"]', form);
       submit.disabled = true; submit.classList.add("is-loading");
@@ -1039,17 +1179,27 @@
   function initBooking() {
     var form = $("#booking-form"); if (!form) return;
     var wrap = form.parentNode, success = $(".form-success", wrap);
+    if (form.elements.dateout) initStayBooking(form);
     initForm(form, function (data) {
       var svcSel = form.elements.service;
       var bs = (C.sections || []).filter(function (x) { return x.type === "booking"; })[0] || {}, L = labels(bs);
       var rows = [[L.name, data.name], [L.phone, data.phone.replace(/ /g, "\u00a0")], data.car ? [L.car, data.car] : null, [L.service, svcSel.options[svcSel.selectedIndex].text],
         [L.date, data.date.split("-").reverse().join(".") + (data.time ? ", " + data.time : "")]];
+      if (bs.mode === "stay") {
+        var r = stayCalc(form), kids = +data.kids || 0;
+        rows = [[L.name, data.name], [L.phone, data.phone.replace(/ /g, "\u00a0")], [L.service, svcSel.options[svcSel.selectedIndex].text],
+          [bs.datesLabel || "Даты", data.dateout ? ruDate(data.date) + " — " + ruDate(data.dateout) + " · " + r.nights + " " + plural(r.nights, ["ночь", "ночи", "ночей"]) : ruDate(data.date)],
+          [bs.guestsLabel || "Гости", data.adults + " " + plural(+data.adults, ["взрослый", "взрослых", "взрослых"]) + (kids ? " + " + kids + " " + plural(kids, ["ребёнок", "ребёнка", "детей"]) : "")],
+          r.extras.length ? [L.extras, r.extras.map(function (e) { return e.short || e.title; }).join(", ")] : null,
+          r.stay && r.stay.night ? [L.total, (r.extrasUnknown ? "от " : "") + money(r.total, C.currency)] : null];
+      }
       $(".form-success__summary", success).innerHTML = rows.filter(Boolean).map(function (r) { return "<div><dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("");
       form.hidden = true; success.hidden = false; success.focus({ preventScroll: true });
       var top = wrap.getBoundingClientRect().top; if (top < 80) wrap.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
     });
     $("[data-form-reset]", success).addEventListener("click", function () {
       form.reset(); $$(".field", form).forEach(function (f) { f.classList.remove("has-error"); });
+      if (form._update) { form._update(); syncExtraButtons(form); }
       $$(".field__error", form).forEach(function (p) { p.textContent = ""; });
       success.hidden = true; form.hidden = false; form.elements.name.focus();
     });
@@ -1057,7 +1207,7 @@
     doc.addEventListener("click", function (e) {
       var a = e.target.closest("[data-service]"); if (!a) return;
       var sel = form.elements.service, id = a.getAttribute("data-service");
-      if ($('option[value="' + id + '"]', sel)) { sel.value = id; setError(form, "service", ""); }
+      if ($('option[value="' + id + '"]', sel)) { sel.value = id; setError(form, "service", ""); sel.dispatchEvent(new Event("change", { bubbles: true })); }
       if (!form.hidden) setTimeout(function () { var nm = form.elements.name; if (!nm.value && window.innerWidth > 1024) nm.focus({ preventScroll: true }); }, reduceMotion ? 0 : 700);
     });
   }
@@ -1073,15 +1223,151 @@
   }
 
   function initFinder() {
-    var f = $("[data-finder]"), form = $("#booking-form"); if (!f || !form) return;
-    f.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var sv = $("#fd-service", f).value, dt = $("#fd-date", f).value, tm = $("#fd-time", f);
-      if (sv && $('option[value="' + sv + '"]', form.elements.service)) { form.elements.service.value = sv; setError(form, "service", ""); }
-      if (dt) { form.elements.date.value = dt; form.elements.date.dispatchEvent(new Event("change", { bubbles: true })); }
-      if (tm && tm.value) form.elements.time.value = tm.value;
-      var target = doc.getElementById("booking"); if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-      setTimeout(function () { if (!form.hidden) { var nm = form.elements.name; if (!nm.value) nm.focus({ preventScroll: true }); } }, reduceMotion ? 0 : 700);
+    var form = $("#booking-form"); if (!form) return;
+    $$("[data-finder]").forEach(function (f) {
+      var g = function (k) { return $('[data-fd="' + k + '"]', f); };
+      var fin = g("date"), fout = g("dateout");
+      if (fin && fout) fin.addEventListener("change", function () {
+        if (!fin.value) return; var d = parseISO(fin.value); d.setDate(d.getDate() + 1); fout.min = isoDate(d);
+        if (!fout.value || fout.value <= fin.value) { d.setDate(d.getDate() + (bookingSection().minNights || 1) - 1); fout.value = isoDate(d); }
+      });
+      f.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var sv = g("service"), tm = g("time"), ad = g("adults");
+        if (sv && sv.value && $('option[value="' + sv.value + '"]', form.elements.service)) { form.elements.service.value = sv.value; setError(form, "service", ""); form.elements.service.dispatchEvent(new Event("change", { bubbles: true })); }
+        if (fin && fin.value) { form.elements.date.value = fin.value; form.elements.date.dispatchEvent(new Event("change", { bubbles: true })); }
+        if (fout && fout.value && form.elements.dateout) { form.elements.dateout.value = fout.value; form.elements.dateout.dispatchEvent(new Event("change", { bubbles: true })); }
+        if (ad && form.elements.adults) { form.elements.adults.value = ad.value; form.elements.kids.value = 0; form.elements.adults.dispatchEvent(new Event("change", { bubbles: true })); }
+        if (tm && tm.value && form.elements.time) form.elements.time.value = tm.value;
+        var target = form.closest("section"); if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+        setTimeout(function () { if (!form.hidden) { var nm = form.elements.name; if (!nm.value) nm.focus({ preventScroll: true }); } }, reduceMotion ? 0 : 700);
+      });
+    });
+  }
+
+  /* ---------- v1.4: бронирование по датам ---------- */
+  function parseISO(v) { if (!v) return null; var p = v.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function nightsBetween(a, b) { var x = parseISO(a), y = parseISO(b); return x && y ? Math.round((y - x) / 864e5) : 0; }
+  function ruDate(v) { return v ? v.split("-").reverse().join(".") : ""; }
+  function isProgram(id) { return !!id && programItems().some(function (p) { return p.id === id; }); }
+  function findStay(id) { return services().filter(function (v) { return v.id === id; })[0] || null; }
+  function extraById(id) { return extrasItems().filter(function (e) { return e.id === id; })[0] || null; }
+  /* per: "night" — за каждую ночь, "guest" — с человека, "guestNight" — с человека за ночь, иначе — разово */
+  function extraMult(e, n, g) { n = Math.max(1, n); g = Math.max(1, g); return e.per === "night" ? n : e.per === "guest" ? g : e.per === "guestNight" ? n * g : 1; }
+  function stayCalc(form) {
+    var st = findStay(form.elements.service.value), din = form.elements.date.value, dout = form.elements.dateout.value;
+    var n = din && dout ? nightsBetween(din, dout) : 0, guests = (+form.elements.adults.value || 0) + (+form.elements.kids.value || 0);
+    var base = 0, wk = 0;
+    if (st && st.night && n > 0) for (var i = 0; i < n; i++) { var d = parseISO(din); d.setDate(d.getDate() + i); var w = d.getDay() === 5 || d.getDay() === 6; if (w) wk++; base += w && st.weekend ? st.weekend : st.night; }
+    var ex = [], exSum = 0, exUnknown = false;
+    $$('input[name="extras"]:checked', form).forEach(function (c) {
+      var e = extraById(c.value); if (!e) return; ex.push(e);
+      if (e.cost == null) { exUnknown = true; return; }
+      exSum += e.cost * extraMult(e, n, guests);
+    });
+    return { stay: st, nights: n, weekendNights: wk, guests: guests, base: base, extras: ex, extrasSum: exSum, extrasUnknown: exUnknown, total: base + exSum };
+  }
+  function initStayBooking(form) {
+    var bs = bookingSection(), L = labels(bs), box = $("[data-estimate]", form);
+    var din = form.elements.date, dout = form.elements.dateout, sel = form.elements.service;
+    var minN = bs.minNights || 1;
+    function addDays(v, k) { var d = parseISO(v); d.setDate(d.getDate() + k); return isoDate(d); }
+    function capacity() { var st = findStay(sel.value); return st && st.guests ? maxGuestsOf(st) : +form.elements.adults.getAttribute("data-max0"); }
+    ["adults", "kids"].forEach(function (n) { var el = form.elements[n]; el.setAttribute("data-max0", el.max); });
+    function clampSteppers() {
+      var cap = capacity();
+      $$("[data-stepper]", form).forEach(function (w) {
+        var inp = $("input", w), mn = +inp.min, v = Math.round(+inp.value || 0);
+        inp.max = inp.name === "kids" ? Math.max(0, cap - 1) : cap;
+        v = Math.max(mn, Math.min(+inp.max, v)); if (String(v) !== inp.value) inp.value = v;
+        $('[data-step="-1"]', w).disabled = v <= mn; $('[data-step="1"]', w).disabled = v >= +inp.max || ((+form.elements.adults.value || 0) + (+form.elements.kids.value || 0)) >= cap;
+      });
+    }
+    function update() {
+      clampSteppers();
+      if (!box) return;
+      var r = stayCalc(form), cur = C.currency;
+      if (!r.nights || r.nights < 0 || !r.stay) { box.hidden = true; box.innerHTML = ""; return; }
+      var rows = [];
+      if (r.stay.night) rows.push([esc(r.stay.title) + ", " + r.nights + " " + plural(r.nights, ["ночь", "ночи", "ночей"]) + (r.weekendNights && r.stay.weekend ? " <small>(" + r.weekendNights + " " + plural(r.weekendNights, ["выходная", "выходные", "выходных"]) + ")</small>" : ""), money(r.base, cur)]);
+      r.extras.forEach(function (e) { rows.push([esc(e.short || e.title), e.cost == null ? esc(L.onRequest || "по запросу") : money(e.cost * extraMult(e, r.nights, r.guests), cur)]); });
+      box.hidden = false;
+      box.innerHTML = '<p class="estimate__title">' + esc(L.estimate) + "</p><ul>" + rows.map(function (x) { return "<li><span>" + x[0] + "</span><span>" + x[1] + "</span></li>"; }).join("") + "</ul>" +
+        (r.stay.night ? '<p class="estimate__total"><span>' + esc(L.total || "Итого") + "</span><strong>" + (r.extrasUnknown ? "от " : "") + money(r.total, cur) + "</strong></p>" : '<p class="estimate__total"><span>' + esc(L.total || "Итого") + "</span><strong>" + esc(L.onRequest || "по запросу") + "</strong></p>") +
+        (bs.estimateNote ? '<p class="estimate__note">' + esc(bs.estimateNote) + "</p>" : "");
+    }
+    din.addEventListener("change", function () {
+      if (!din.value) return;
+      dout.min = addDays(din.value, 1);
+      if (!dout.value || dout.value <= din.value) { dout.value = addDays(din.value, minN); setError(form, "dateout", ""); }
+      update();
+    });
+    [dout, sel, form.elements.adults, form.elements.kids].forEach(function (el) { el.addEventListener("change", update); el.addEventListener("input", update); });
+    sel.addEventListener("change", function () { var f = form.querySelector('[data-field="adults"]'); if (f && f.classList.contains("has-error")) setTimeout(function () { form.elements.adults.dispatchEvent(new Event("blur")); }, 0); });
+    $$("[data-stepper]", form).forEach(function (w) {
+      var inp = $("input", w);
+      $$("[data-step]", w).forEach(function (b) { b.addEventListener("click", function () { inp.value = (+inp.value || 0) + +b.getAttribute("data-step"); inp.dispatchEvent(new Event("change", { bubbles: true })); update(); var f = form.querySelector('[data-field="adults"]'); if (f && f.classList.contains("has-error")) setError(form, "adults", validators(form).adults(form.elements.adults.value)); }); });
+    });
+    $$('input[name="extras"]', form).forEach(function (c) { c.addEventListener("change", function () { syncExtraButtons(form); update(); }); });
+    form._update = update;
+    update();
+  }
+  function syncExtraButtons(form) {
+    $$("[data-extra]").forEach(function (b) {
+      var c = form && $('input[name="extras"][value="' + b.getAttribute("data-extra") + '"]', form), on = !!(c && c.checked);
+      b.setAttribute("aria-pressed", String(on)); b.classList.toggle("is-added", on);
+    });
+  }
+  function initExtras() {
+    var form = $("#booking-form"); if (!form) return;
+    doc.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-extra]"); if (!b) return;
+      var c = $('input[name="extras"][value="' + b.getAttribute("data-extra") + '"]', form); if (!c) return;
+      c.checked = !c.checked; c.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    syncExtraButtons(form);
+  }
+  function initLightbox() {
+    var lb = $("#lightbox"); if (!lb) return;
+    var panel = $(".lightbox__panel", lb), im = $(".lightbox__img", lb), cap = $(".lightbox__title", lb), cnt = $(".lightbox__count", lb), list = [], idx = 0, lastFocus;
+    function show(i) {
+      idx = (i + list.length) % list.length; var it = list[idx];
+      im.src = it.src; im.alt = it.alt; cap.textContent = it.title; cnt.textContent = (idx + 1) + " / " + list.length;
+    }
+    function open(group, i) {
+      list = $$("[data-lb]", group).map(function (b) { var g = $("img", b); return { src: g.getAttribute("src"), alt: g.getAttribute("alt") || "", title: b.getAttribute("data-lb-title") || g.getAttribute("alt") || "" }; });
+      lastFocus = doc.activeElement; show(i); lb.hidden = false; lb.setAttribute("aria-hidden", "false"); lockScroll(true);
+      requestAnimationFrame(function () { lb.classList.add("is-open"); }); setTimeout(function () { panel.focus(); }, 30);
+    }
+    function close() {
+      if (lb.hidden) return;
+      lb.classList.remove("is-open"); lb.setAttribute("aria-hidden", "true"); lockScroll(false);
+      setTimeout(function () { lb.hidden = true; im.removeAttribute("src"); }, reduceMotion ? 0 : 200);
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    doc.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-lb]"); if (!b) return;
+      var group = b.closest("section") || doc; open(group, $$("[data-lb]", group).indexOf(b));
+    });
+    $$("[data-lb-close]", lb).forEach(function (b) { b.addEventListener("click", close); });
+    $("[data-lb-prev]", lb).addEventListener("click", function () { show(idx - 1); });
+    $("[data-lb-next]", lb).addEventListener("click", function () { show(idx + 1); });
+    doc.addEventListener("keydown", function (e) {
+      if (lb.hidden) return;
+      if (e.key === "Escape") close(); else if (e.key === "ArrowLeft") show(idx - 1); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "Tab") trap(e, panel);
+    });
+    var x0 = null;
+    panel.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    panel.addEventListener("touchend", function (e) { if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1)); x0 = null; }, { passive: true });
+  }
+  function initCopy() {
+    $$("[data-copy]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var t = b.getAttribute("data-copy"), label = b.textContent;
+        function ok() { b.textContent = b.getAttribute("data-copied") || "Скопировано"; b.classList.add("is-done"); setTimeout(function () { b.textContent = label; b.classList.remove("is-done"); }, 1600); }
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(ok, ok);
+        else { var ta = doc.createElement("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; doc.body.appendChild(ta); ta.select(); try { doc.execCommand("copy"); } catch (e) {} doc.body.removeChild(ta); ok(); }
+      });
     });
   }
 
@@ -1089,6 +1375,7 @@
     build();
     initHeader(); initDrawer(); initModal(); initHero(); initReviews(); initTabs();
     initBeforeAfter(); initSpotlight(); initCalc(); initFaq(); initReveal(); initCounters(); initBooking(); initFinder(); initCallback();
+    initExtras(); initLightbox(); initCopy();
     /* если в адресе есть #якорь — прокрутить после рендера */
     if (location.hash && location.hash.length > 1) { var t = doc.getElementById(location.hash.slice(1)); if (t) setTimeout(function () { t.scrollIntoView(); }, 0); }
   }

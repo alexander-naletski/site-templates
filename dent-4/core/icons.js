@@ -1,5 +1,27 @@
 /* Набор линейных SVG-иконок (24×24, stroke). Добавляйте свои по образцу. */
 window.SITE_ICONS = {
+  /* v1.4 — усадьба / загородный отдых */
+  bed: '<path d="M3 18V6M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="2"/>',
+  flame: '<path d="M12 22a7 7 0 0 0 7-7c0-3-2-5.5-3.5-7-.4 2-1.5 3-2.5 3.5.5-3-1-6.5-4-8.5.3 3-1.5 5-3 7A7.3 7.3 0 0 0 5 15a7 7 0 0 0 7 7Z"/><path d="M12 22a3 3 0 0 0 3-3c0-2-1.5-3-3-4.5-1.5 1.5-3 2.5-3 4.5a3 3 0 0 0 3 3Z"/>',
+  tree: '<path d="M12 2 6 10h3l-4 6h14l-4-6h3Z"/><path d="M12 16v6"/>',
+  waves: '<path d="M2 7c2 0 2-1.5 4-1.5S8 7 10 7s2-1.5 4-1.5S16 7 18 7s2-1.5 4-1.5"/><path d="M2 12.5c2 0 2-1.5 4-1.5s2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/><path d="M2 18c2 0 2-1.5 4-1.5S8 18 10 18s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/>',
+  utensils: '<path d="M4 2v7a3 3 0 0 0 3 3v10M10 2v7a3 3 0 0 1-3 3M7 2v6"/><path d="M20 15V2a5 5 0 0 0-4 5v6a2 2 0 0 0 2 2h2Zm0 0v7"/>',
+  bus: '<rect x="4" y="3" width="16" height="15" rx="2"/><path d="M4 11h16M8 18v3M16 18v3"/><circle cx="8" cy="14.5" r=".8" fill="currentColor"/><circle cx="16" cy="14.5" r=".8" fill="currentColor"/>',
+  train: '<rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9" cy="13.5" r=".8" fill="currentColor"/><circle cx="15" cy="13.5" r=".8" fill="currentColor"/>',
+  wifi: '<path d="M2 8.5a15 15 0 0 1 20 0M5 12a10.5 10.5 0 0 1 14 0M8.5 15.5a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/>',
+  parking: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/>',
+  paw: '<circle cx="5.5" cy="10" r="2"/><circle cx="9.5" cy="5.5" r="2"/><circle cx="14.5" cy="5.5" r="2"/><circle cx="18.5" cy="10" r="2"/><path d="M8 17.5c0-2.5 2-5 4-5s4 2.5 4 5c0 2-1.5 3-4 3s-4-1-4-3Z"/>',
+  bike: '<circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17 9 9h6l3.5 8M9 9 12 17l3-8M13 6h3"/>',
+  fish: '<path d="M2 12s3.5-6 10-6 9.5 6 9.5 6-3 6-9.5 6S2 12 2 12Z"/><path d="M2 12l-.5-4M2 12l-.5 4"/><circle cx="16" cy="11" r=".8" fill="currentColor"/>',
+  rings: '<circle cx="9" cy="14" r="6"/><circle cx="15" cy="14" r="6"/><path d="m10 3 2 3 2-3"/>',
+  music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  snow: '<path d="M12 2v20M4 6l16 12M20 6 4 18"/><path d="m9 3 3 2 3-2M9 21l3-2 3 2"/>',
+  camera: '<path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="4"/>',
+  mountain: '<path d="m3 20 6-11 4 6 2-3 6 8Z"/><circle cx="17" cy="6" r="2"/>',
+  kid: '<circle cx="12" cy="5" r="2.5"/><path d="M8 22v-6l-2-5 6 1 6-1-2 5v6M12 12v4"/>',
+  gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13M12 8c-2-3-6-3-6-.5S12 8 12 8Zm0 0c2-3 6-3 6-.5S12 8 12 8Z"/>',
+  expand: '<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',
   /* v1.3 — медицина */
   search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
   stethoscope: '<path d="M5 3v5a5 5 0 0 0 10 0V3"/><path d="M5 3h2M13 3h2"/><path d="M10 13v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="11" r="2"/>',
