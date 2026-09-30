@@ -201,7 +201,7 @@ h1, h2, h3 { letter-spacing: -.022em; }
 .booking__call a { font-family: var(--font-mono); font-weight: 500; font-size: 20px; }
 .booking__form-wrap { background: #131417; box-shadow: inset 0 0 0 1px var(--color-border); border-radius: 14px; color: var(--color-text); }
 .field__label { font-weight: 500; font-size: 13px; color: var(--color-text); }
-.field input, .field select, .field textarea { background: #0a0b0c; border-color: var(--color-border); border-radius: 8px; min-height: 46px; font-size: 15px; color-scheme: dark; }
+.field input, .field select, .field textarea { background: #0a0b0c; border-color: var(--color-border); border-radius: 8px; min-height: 46px; font-size: 16px; color-scheme: dark; }
 .field input::placeholder, .field textarea::placeholder { color: #5b5f68; }
 .field input:hover, .field select:hover, .field textarea:hover { border-color: #34373f; }
 .field input:focus, .field select:focus, .field textarea:focus { box-shadow: 0 0 0 3px rgba(123,131,247,.2); }

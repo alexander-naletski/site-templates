@@ -42,6 +42,12 @@
     return '<a class="' + cls + '" href="' + esc(b.href || "#") + '"' + (b.service ? ' data-service="' + esc(b.service) + '"' : "") + ">" + esc(b.text) + "</a>";
   }
   function eyebrow(s) { return s.eyebrow ? '<p class="section-eyebrow">' + esc(s.eyebrow) + "</p>" : ""; }
+  /* Согласие на обработку ПД: по умолчанию НЕ отмечено + ссылка на политику (privacy.html) */
+  function privacyHref() { return (C.privacy && C.privacy.href) || "privacy.html"; }
+  function consentBox(text) {
+    return '<label class="checkbox checkbox--consent"><input type="checkbox" name="consent" required><span class="checkbox__box">' + icon("check") + "</span><span>" +
+      esc(text || "Согласен(на) на обработку персональных данных") + ' в соответствии с <a class="checkbox__link" href="' + esc(privacyHref()) + '" target="_blank" rel="noopener">Политикой обработки персональных данных</a></span></label>';
+  }
   function head(s, extra) {
     if (!s.title && !s.subtitle) return "";
     return '<div class="section-head reveal">' + eyebrow(s) +
@@ -50,7 +56,13 @@
       (extra || "") + "</div>";
   }
   function demoBadge() { return C.demo ? '<span class="demo-badge" title="Демонстрационные данные">пример</span>' : ""; }
-  function services() { return C.services || []; }
+  function services() { return C.services || menuServices(); }
+  /* v1.5: если services не заданы — быстрые ссылки строятся из категорий меню */
+  function menuServices() {
+    var out = [];
+    (C.sections || []).forEach(function (x) { if (x.type === "menu" && !x.hidden) (x.categories || []).forEach(function (c) { if (c.id) out.push({ id: c.id, title: c.title, icon: c.icon || "utensils", price: c.note || "", href: "#" + (x.id || "menu") }); }); });
+    return out;
+  }
   function contacts() { return C.contacts || {}; }
   function navLinks(list) { return (list || []).map(function (l) { return '<a href="' + esc(l.href) + '">' + esc(l.text) + "</a>"; }).join(""); }
   function tel(href, text, cls) { return '<a class="' + (cls || "") + '" href="tel:' + esc(href) + '">' + esc(text) + "</a>"; }
@@ -86,14 +98,14 @@
     var top = '<div class="topbar"><div class="container topbar__inner">' +
       '<nav class="topbar__links" aria-label="Дополнительное меню">' + (t.links || []).map(function (l) { return '<a href="' + esc(l.href) + '">' + esc(l.text) + "</a>"; }).join("") + "</nav>" +
       '<div class="topbar__right">' +
-        (c.hoursShort ? '<span class="topbar__hours">' + icon("clock") + esc(c.hoursShort) + "</span>" : "") +
+        (c.hoursShort ? '<span class="topbar__hours">' + icon("clock") + (c.schedule ? '<span data-open-status data-short>' + esc(c.hoursShort) + "</span>" : esc(c.hoursShort)) + "</span>" : "") +
         (c.phone ? tel(c.phoneHref, c.phone, "topbar__phone") : "") +
         (t.callbackText ? '<button type="button" class="topbar__callback" data-open-callback>' + esc(t.callbackText) + "</button>" : "") +
       "</div></div></div>";
 
     var svcMenu = '<div class="svc-menu" id="svc-menu" hidden><div class="container"><div class="svc-menu__grid">' +
       services().map(function (s) {
-        return '<a class="svc-menu__item" href="#booking" data-service="' + esc(s.id) + '">' +
+        return '<a class="svc-menu__item" href="' + esc(s.href || "#booking") + '" data-service="' + esc(s.id) + '">' +
           '<span class="svc-menu__icon">' + icon(s.icon) + "</span>" +
           '<span class="svc-menu__body"><span class="svc-menu__title">' + esc(s.title) + "</span>" +
           (s.price ? '<span class="svc-menu__price">' + esc(s.price) + "</span>" : "") + "</span></a>";
@@ -126,7 +138,7 @@
         '<div class="drawer__head">' + logo() + '<button class="icon-btn" type="button" aria-label="Закрыть меню" data-close-drawer>' + icon("close") + "</button></div>" +
         '<nav class="drawer__nav" aria-label="Мобильное меню">' + (C.nav || []).concat(C.navRight || []).map(function (l) { return '<a href="' + esc(l.href) + '" data-close-drawer>' + esc(l.text) + icon("chevronRight") + "</a>"; }).join("") + "</nav>" +
         '<div class="drawer__svc"><p class="drawer__label">' + esc(C.servicesButton || "Услуги") + '</p><div class="drawer__chips">' +
-          services().map(function (s) { return '<a class="chip" href="#booking" data-service="' + esc(s.id) + '" data-close-drawer>' + esc(s.title) + "</a>"; }).join("") + "</div></div>" +
+          services().map(function (s) { return '<a class="chip" href="' + esc(s.href || "#booking") + '" data-service="' + esc(s.id) + '" data-close-drawer>' + esc(s.title) + "</a>"; }).join("") + "</div></div>" +
         '<div class="drawer__contacts">' +
           (c.phone ? tel(c.phoneHref, c.phone, "drawer__phone") : "") +
           (c.hoursShort ? '<p class="drawer__meta">' + esc(c.hoursShort) + "</p>" : "") +
@@ -141,7 +153,7 @@
   function heroTitle(s) {
     return '<h1 class="hero__title">' + esc(s.title) + (s.titleAccent ? ' <span class="hero__accent">' + esc(s.titleAccent) + "</span>" : "") + "</h1>";
   }
-  function heroButtons(s) { return s.buttons && s.buttons.length ? '<div class="hero__buttons">' + s.buttons.map(function (b) { return btn(b); }).join("") + "</div>" : ""; }
+  function heroButtons(s) { return (s.openStatus && contacts().schedule ? '<p class="hero__status"><span data-open-status></span></p>' : "") + (s.buttons && s.buttons.length ? '<div class="hero__buttons">' + s.buttons.map(function (b) { return btn(b); }).join("") + "</div>" : ""); }
   var HERO = {};
   /* По центру: бейдж, крупный заголовок и «интерфейс» (mockup) — стиль SaaS */
   HERO.centered = function (s) {
@@ -175,12 +187,12 @@
   };
   /* Коллаж: цветной фон, крупные фото и огромный заголовок поверх (стиль мебельного бренда) */
   HERO.collage = function (s) {
-    var im = s.images || [];
-    return '<section class="hero hero--collage" id="' + esc(s.id || "top") + '"><div class="container hero__stage">' +
+    var im = s.images || [], ctr = s.layout === "center";
+    return '<section class="hero hero--collage' + (ctr ? " hero--collage-center" : "") + '" id="' + esc(s.id || "top") + '"><div class="container hero__stage">' +
       im.map(function (x, i) { return '<figure class="hero__pic hero__pic--' + (i + 1) + '">' + img(x.image, x.alt, { eager: i === 0, sizes: i === 0 ? "(max-width: 700px) 100vw, 60vw" : "(max-width: 700px) 50vw, 25vw", w: 1024, h: 768 }) + "</figure>"; }).join("") +
-      '<div class="hero__content">' + (s.eyebrow ? '<p class="hero__eyebrow">' + esc(s.eyebrow) + "</p>" : "") + heroTitle(s) + "</div>" +
+      '<div class="hero__content">' + (s.eyebrow ? '<p class="hero__eyebrow">' + esc(s.eyebrow) + "</p>" : "") + heroTitle(s) + (ctr ? (s.text ? '<p class="hero__text">' + esc(s.text) + "</p>" : "") + heroButtons(s) : "") + "</div>" +
       (s.side ? '<p class="hero__side" aria-hidden="true">' + esc(s.side) + "</p>" : "") +
-      "</div>" + (s.text || s.buttons ? '<div class="container hero__below">' + (s.text ? '<p class="hero__text">' + esc(s.text) + "</p>" : "") + heroButtons(s) + "</div>" : "") + "</section>";
+      "</div>" + (!ctr && (s.text || s.buttons) ? '<div class="container hero__below">' + (s.text ? '<p class="hero__text">' + esc(s.text) + "</p>" : "") + heroButtons(s) + "</div>" : "") + "</section>";
   };
   function mockup(m) {
     return '<div class="mock" role="group" aria-label="' + esc(m.label || "Пример интерфейса") + '"><div class="mock__bar"><span class="mock__dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="mock__url">' + esc(m.window || "") + "</span></div>" +
@@ -233,6 +245,7 @@
               (sl.eyebrow ? '<p class="hero__eyebrow">' + esc(sl.eyebrow) + "</p>" : "") +
               (i === 0 ? "<h1 class=\"hero__title\">" : '<h2 class="hero__title">') + esc(sl.title) + (i === 0 ? "</h1>" : "</h2>") +
               (sl.text ? '<p class="hero__text">' + esc(sl.text) + "</p>" : "") +
+              (sl.openStatus && contacts().schedule ? '<p class="hero__status"><span data-open-status></span></p>' : "") +
               '<div class="hero__buttons">' + (sl.buttons || []).map(function (b) { return btn(b); }).join("") + "</div>" +
             "</div>" +
             '<div class="hero__media">' + img(sl.image, sl.imageAlt, { eager: i === 0, sizes: "(max-width: 900px) 100vw, 55vw", w: 1024, h: 768 }) + "</div>" +
@@ -372,8 +385,8 @@
               '<input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнить до и после: ' + esc(g.title) + '">' +
             "</div>"
           : s.lightbox ? '<button type="button" class="gallery__img gallery__zoom" data-lb data-lb-title="' + esc(g.title) + '" aria-label="Открыть фото: ' + esc(g.title) + '">' + img(g.image, g.alt || g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + '<span class="gallery__zoom-icon" aria-hidden="true">' + icon("expand") + "</span></button>"
-          : '<div class="gallery__img">' + img(g.image, g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + "</div>";
-        return '<figure class="work card reveal' + (g.size ? " work--" + esc(g.size) : "") + '" style="--d:' + (i % 4) * 60 + 'ms">' + media + '<figcaption class="work__body"><h3 class="work__title">' + esc(g.title) + "</h3>" + (g.text ? '<p class="work__text">' + esc(g.text) + "</p>" : "") + "</figcaption></figure>";
+          : '<div class="gallery__img">' + img(g.image, g.alt || g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + "</div>";
+        return '<figure class="work card reveal' + (g.size ? " work--" + esc(g.size) : "") + '" style="--d:' + (i % 4) * 60 + 'ms">' + media + '<figcaption class="work__body"><h3 class="work__title">' + (g.href && !s.lightbox ? '<a class="work__link" href="' + esc(g.href) + '">' + esc(g.title) + "</a>" : esc(g.title)) + "</h3>" + (g.text ? '<p class="work__text">' + esc(g.text) + "</p>" : "") + "</figcaption></figure>";
       }).join("") + "</div></div></section>";
   };
 
@@ -428,13 +441,14 @@
   };
 
   var LABEL_DEFAULTS = { name: "Ваше имя", phone: "Телефон", car: "Автомобиль", service: "Услуга", servicePlaceholder: "Выберите услугу", serviceOther: "Другое / не знаю", date: "Дата", time: "Время", timeAny: "Любое", comment: "Комментарий",
-    dateout: "Выезд", adults: "Взрослые", kids: "Дети", extras: "Добавить к отдыху", estimate: "Предварительный расчёт", total: "Итого", onRequest: "по запросу" };
+    guests: "Гости", timePlaceholder: "--:--", dateout: "Выезд", adults: "Взрослые", kids: "Дети", extras: "Добавить к отдыху", estimate: "Предварительный расчёт", total: "Итого", onRequest: "по запросу" };
   function labels(s) { var L = {}, k; for (k in LABEL_DEFAULTS) L[k] = (s.labels && s.labels[k]) || LABEL_DEFAULTS[k]; return L; }
   R.booking = function (s) {
     var L = labels(s);
     var today = new Date();
     function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-    var max = new Date(today.getTime() + (s.maxDaysAhead || 60) * 864e5), stay = s.mode === "stay";
+    var max = new Date(today.getTime() + (s.maxDaysAhead || 60) * 864e5), stay = s.mode === "stay", table = s.mode === "table";
+    if (table) return tableBooking(s, L, today, max, iso);
     return '<section class="section booking' + (stay ? " booking--stay" : "") + '" id="' + esc(s.id) + '"><div class="container"><div class="booking__box reveal">' +
       '<div class="booking__intro">' + eyebrow(s) + '<h2 class="section-title">' + esc(s.title) + "</h2>" +
         (s.subtitle ? '<p class="booking__subtitle">' + esc(s.subtitle) + "</p>" : "") +
@@ -454,7 +468,7 @@
           field("time", L.time, '<div class="select"><select id="f-time" name="time"><option value="">' + esc(L.timeAny) + "</option>" + (s.timeSlots || []).map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div>", true) +
         "</div>") +
         field("comment", L.comment, '<textarea id="f-comment" name="comment" rows="3" maxlength="500" placeholder="' + esc(s.commentPlaceholder || "") + '"></textarea>', true) +
-        '<label class="checkbox"><input type="checkbox" name="consent" required checked><span class="checkbox__box">' + icon("check") + "</span><span>" + esc(s.consentText || "Согласен на обработку данных") + "</span></label>" +
+        consentBox(s.consentText) +
         '<p class="field__error" data-error-for="consent" role="alert"></p>' +
         '<button class="btn btn--primary btn--lg btn--block" type="submit"><span class="btn__label">' + esc(s.submitText || "Отправить") + '</span><span class="btn__spinner" aria-hidden="true"></span></button>' +
         '<p class="form__status" role="status" aria-live="polite"></p>' +
@@ -463,6 +477,37 @@
       '<div class="form-success" hidden tabindex="-1"><span class="form-success__icon">' + icon("check") + '</span><h3 class="form-success__title">' + esc(s.successTitle || "Спасибо!") + '</h3><p class="form-success__text">' + esc(s.successText || "") + '</p><dl class="form-success__summary"></dl><button type="button" class="btn btn--soft" data-form-reset>Новая заявка</button></div>' +
       "</div></div></div></section>";
   };
+  /* v1.5: бронирование столика — дата, время, гости, формат (зал / банкет) */
+  function tableBooking(s, L, today, max, iso) {
+    var zones = s.zones || [], pr = programItems(), gm = s.groupMax || 12;
+    var body =
+        field("name", L.name, '<input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="60" placeholder="Иван">') +
+        field("phone", L.phone, '<input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="' + esc(s.phoneMask || "+375 (__) ___-__-__") + '" data-mask="' + esc(s.phoneMask || "") + '">') +
+        '<div class="form__row form__row--3">' +
+          field("date", L.date, '<input id="f-date" name="date" type="date" required min="' + iso(today) + '" max="' + iso(max) + '" data-closed="' + esc((s.closedWeekdays || []).join(",")) + '">') +
+          field("time", L.time, '<div class="select"><select id="f-time" name="time" required><option value="">' + esc(L.timePlaceholder || "--:--") + "</option>" + (s.timeSlots || []).map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div>") +
+          stepperField("guests", L.guests || "Гости", 1, gm, s.guestsDefault || 2) +
+        "</div>" +
+        (zones.length || pr.length ? field("service", L.service, '<div class="select"><select id="f-service" name="service"><option value="">' + esc(L.servicePlaceholder) + "</option>" +
+          zones.map(function (z) { var id = z.id || z, t = z.title || z; return '<option value="' + esc(id) + '">' + esc(t) + "</option>"; }).join("") +
+          (pr.length ? '<optgroup label="' + esc(pr[0].group || "События") + '">' + pr.map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") + "</optgroup>" : "") +
+          "</select>" + icon("chevronDown") + "</div>", true) : "") +
+        field("comment", L.comment, '<textarea id="f-comment" name="comment" rows="3" maxlength="500" placeholder="' + esc(s.commentPlaceholder || "") + '"></textarea>', true) +
+        consentBox(s.consentText) +
+        '<p class="field__error" data-error-for="consent" role="alert"></p>' +
+        '<button class="btn btn--primary btn--lg btn--block" type="submit"><span class="btn__label">' + esc(s.submitText || "Забронировать") + '</span><span class="btn__spinner" aria-hidden="true"></span></button>' +
+        '<p class="form__status" role="status" aria-live="polite"></p>' +
+        (C.demo && !s.endpoint ? '<p class="form__demo">Демо-режим: заявка не отправляется, данные никуда не передаются.</p>' : "");
+    return '<section class="section booking booking--table" id="' + esc(s.id) + '"><div class="container"><div class="booking__box reveal">' +
+      '<div class="booking__intro">' + eyebrow(s) + '<h2 class="section-title">' + esc(s.title) + "</h2>" +
+        (s.subtitle ? '<p class="booking__subtitle">' + esc(s.subtitle) + "</p>" : "") +
+        (s.perks ? '<ul class="booking__perks">' + s.perks.map(function (p) { return "<li>" + icon("checkCircle") + "<span>" + esc(p) + "</span></li>"; }).join("") + "</ul>" : "") +
+        (contacts().phone ? '<div class="booking__call"><span>' + esc(s.callText || "Или позвоните:") + "</span>" + tel(contacts().phoneHref, contacts().phone) + "</div>" : "") +
+      "</div>" +
+      '<div class="booking__form-wrap"><form class="form" id="booking-form" novalidate data-mode="table" data-endpoint="' + esc(s.endpoint || "") + '">' + body + "</form>" +
+      '<div class="form-success" hidden tabindex="-1"><span class="form-success__icon">' + icon("check") + '</span><h3 class="form-success__title">' + esc(s.successTitle || "Спасибо!") + '</h3><p class="form-success__text">' + esc(s.successText || "") + '</p><dl class="form-success__summary"></dl><button type="button" class="btn btn--soft" data-form-reset>' + esc(s.resetText || "Новая бронь") + "</button></div>" +
+      "</div></div></div></section>";
+  }
   function field(name, label, control, optional) {
     return '<div class="field" data-field="' + name + '"><label class="field__label" for="f-' + name + '">' + esc(label) + (optional ? ' <span class="field__opt">необязательно</span>' : "") + "</label>" + control + '<p class="field__error" data-error-for="' + name + '" role="alert"></p></div>';
   }
@@ -478,7 +523,7 @@
           infoRow("pin", "Адрес", esc(c.address) + (c.addressNote ? '<span class="info-row__sub">' + esc(c.addressNote) + "</span>" : "")) +
           infoRow("phone", "Телефон", (c.phone ? tel(c.phoneHref, c.phone) : "") + (c.phone2 ? "<br>" + tel(c.phone2Href, c.phone2) : "")) +
           (c.email ? infoRow("mail", "E-mail", '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + "</a>") : "") +
-          infoRow("clock", "Режим работы", (c.hours || []).map(function (h) { return '<span class="hours-row"><span>' + esc(h.days) + "</span><span>" + esc(h.time) + "</span></span>"; }).join("")) +
+          infoRow("clock", "Режим работы", (c.schedule ? '<span class="open-status" data-open-status></span>' : "") + (c.hours || []).map(function (h) { return '<span class="hours-row"><span>' + esc(h.days) + "</span><span>" + esc(h.time) + "</span></span>"; }).join("")) +
           socials("contacts__socials") +
           '<a class="btn btn--primary btn--block" href="#booking">' + esc((C.cta && C.cta.text) || "Записаться") + "</a>" +
         "</div>" +
@@ -649,11 +694,21 @@
   /* Форма «даты / гости» (в hero-поиске или отдельной полосой) */
   var finderIdx = 0;
   function finderForm(f, cls) {
-    var bk = bookingSection(), sfx = finderIdx++ ? "-" + finderIdx : "", stay = bk.mode === "stay";
+    var bk = bookingSection(), sfx = finderIdx++ ? "-" + finderIdx : "", stay = bk.mode === "stay", table = bk.mode === "table";
     var sel = '<div class="finder__field finder__field--svc"><label class="finder__label" for="fd-service' + sfx + '">' + esc(f.serviceLabel || (stay ? "Домик" : "Направление")) + '</label><div class="select"><select id="fd-service' + sfx + '" data-fd="service">' +
       '<option value="">' + esc(f.servicePlaceholder || "Любое") + "</option>" + services().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") +
       programItems().map(function (v) { return '<option value="' + esc(v.id) + '">' + esc(v.title) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div></div>";
     var fields;
+    if (table) {
+      var tg = ""; for (var q = 1; q <= Math.min(bk.groupMax || 12, f.guestsMax || 10); q++) tg += '<option value="' + q + '"' + (q === (f.guestsDefault || 2) ? " selected" : "") + ">" + q + " " + plural(q, ["гость", "гостя", "гостей"]) + "</option>";
+      fields = '<div class="finder__field"><label class="finder__label" for="fd-date' + sfx + '">' + esc(f.dateLabel || "Дата") + '</label><input id="fd-date' + sfx + '" type="date" data-fd="date"></div>' +
+        '<div class="finder__field"><label class="finder__label" for="fd-time' + sfx + '">' + esc(f.timeLabel || "Время") + '</label><div class="select"><select id="fd-time' + sfx + '" data-fd="time"><option value="">' + esc(f.timeAny || "Любое") + "</option>" + (bk.timeSlots || []).map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("") + "</select>" + icon("chevronDown") + "</div></div>" +
+        '<div class="finder__field"><label class="finder__label" for="fd-guests' + sfx + '">' + esc(f.guestsLabel || "Гости") + '</label><div class="select"><select id="fd-guests' + sfx + '" data-fd="guests">' + tg + "</select>" + icon("chevronDown") + "</div></div>";
+      return '<form class="finder finder--table' + (cls ? " " + cls : "") + ' reveal" data-finder novalidate aria-label="' + esc(f.title || "Забронировать столик") + '">' +
+        (f.title ? '<p class="finder__title">' + esc(f.title) + "</p>" : "") +
+        '<div class="finder__fields">' + fields + '<button class="btn btn--' + esc(f.buttonStyle || "primary") + ' finder__btn" type="submit">' + icon("calendar") + "<span>" + esc(f.buttonText || "Найти столик") + "</span></button></div>" +
+        (f.note ? '<p class="finder__note">' + esc(f.note) + "</p>" : "") + "</form>";
+    }
     if (stay) {
       var mg = Math.max.apply(null, [1].concat(services().map(maxGuestsOf)));
       var gOpts = ""; for (var g = 1; g <= mg; g++) gOpts += '<option value="' + g + '"' + (g === (f.guestsDefault || 2) ? " selected" : "") + ">" + g + " " + plural(g, ["гость", "гостя", "гостей"]) + "</option>";
@@ -708,11 +763,92 @@
       '<div class="estimate" data-estimate aria-live="polite" hidden></div>';
   }
 
+  /* ===================== v1.5: общепит ===================== */
+  var MENU_TAG_ICONS = { "веган": "leaf", "вегетарианское": "leaf", "вег": "leaf", "острое": "flame", "хит": "star", "новинка": "sparkles", "без глютена": "wheat", "без лактозы": "drop" };
+  function menuItem(it, v, i) {
+    var tags = (it.tags || []).map(function (t) { var ic = MENU_TAG_ICONS[String(t).toLowerCase()]; return '<li class="dish__tag">' + (ic ? icon(ic) : "") + esc(t) + "</li>"; }).join("");
+    var meta = (it.weight ? '<span class="dish__weight">' + esc(it.weight) + "</span>" : "");
+    if (v === "list") {
+      return '<li class="dish dish--line reveal" style="--d:' + (i % 4) * 50 + 'ms"><div class="dish__line"><h4 class="dish__title">' + esc(it.title) + (it.badge ? ' <span class="dish__badge">' + esc(it.badge) + "</span>" : "") + '</h4><span class="dish__dots" aria-hidden="true"></span><span class="dish__price">' + esc(it.price || "") + "</span></div>" +
+        (it.text || meta ? '<p class="dish__text">' + esc(it.text || "") + (meta ? " " + meta : "") + "</p>" : "") + (tags ? '<ul class="dish__tags">' + tags + "</ul>" : "") + "</li>";
+    }
+    return '<li class="dish' + (it.featured ? " dish--featured" : "") + ' reveal" style="--d:' + (i % 4) * 50 + 'ms">' +
+      (it.image ? '<div class="dish__media">' + img(it.image, it.imageAlt || it.title, { sizes: "(max-width: 600px) 50vw, (max-width: 1100px) 33vw, 25vw", w: 640, h: 480 }) + (it.badge ? '<span class="dish__badge">' + esc(it.badge) + "</span>" : "") + "</div>" : "") +
+      '<div class="dish__body"><h4 class="dish__title">' + esc(it.title) + (!it.image && it.badge ? ' <span class="dish__badge">' + esc(it.badge) + "</span>" : "") + "</h4>" +
+        (it.text ? '<p class="dish__text">' + esc(it.text) + "</p>" : "") + (tags ? '<ul class="dish__tags">' + tags + "</ul>" : "") +
+        '<div class="dish__foot"><span class="dish__price">' + esc(it.price || "") + "</span>" + meta + "</div></div></li>";
+  }
+  /* Меню: категории (вкладки), блюда с фото, весом, ценой и метками. variant: "grid" (карточки с фото) | "list" (строки с точками) */
+  R.menu = function (s) {
+    var cats = s.categories || [], v = s.variant || "grid", id = s.id || "menu", tabs = s.tabs !== false && cats.length > 1;
+    return '<section class="section menu menu--' + esc(v) + '" id="' + esc(id) + '"><div class="container">' + head(s) +
+      (tabs ? '<div class="tabs menu__tabs" role="tablist" aria-label="' + esc(s.tabsLabel || "Разделы меню") + '">' + cats.map(function (c, i) {
+        return '<button type="button" class="tab' + (i === 0 ? " is-active" : "") + '" role="tab" id="mtab-' + esc(id) + '-' + i + '" aria-controls="mpanel-' + esc(id) + '-' + i + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '" data-tab="' + i + '"' + (c.id ? ' data-cat="' + esc(c.id) + '"' : "") + ">" + esc(c.title) + "</button>";
+      }).join("") + "</div>" : "") +
+      cats.map(function (c, i) {
+        return '<div class="menu__panel"' + (tabs ? ' role="tabpanel" id="mpanel-' + esc(id) + '-' + i + '" aria-labelledby="mtab-' + esc(id) + '-' + i + '"' + (i === 0 ? "" : " hidden") : "") + ">" +
+          (!tabs ? '<h3 class="menu__cat">' + esc(c.title) + "</h3>" : "") + (c.note ? '<p class="menu__note">' + esc(c.note) + "</p>" : "") +
+          '<ul class="menu__grid">' + (c.items || []).map(function (it, k) { return menuItem(it, v, k); }).join("") + "</ul></div>";
+      }).join("") +
+      (s.note || s.buttonText ? '<div class="menu__foot">' + (s.note ? '<p class="menu__foot-note">' + esc(s.note) + "</p>" : "") + (s.buttonText ? btn({ text: s.buttonText, href: s.buttonHref || "#order", style: s.buttonStyle || "primary" }) : "") + "</div>" : "") +
+      "</div></section>";
+  };
+  /* Доставка и самовывоз: текст, пункты, кнопки сервисов доставки, фото */
+  R.order = function (s) {
+    return '<section class="section order' + (s.variant ? " order--" + esc(s.variant) : "") + '" id="' + esc(s.id || "order") + '"><div class="container"><div class="order__box reveal">' +
+      '<div class="order__content">' + eyebrow(s) + '<h2 class="section-title order__title">' + esc(s.title) + "</h2>" + (s.text ? '<p class="order__text">' + esc(s.text) + "</p>" : "") +
+        (s.points && s.points.length ? '<ul class="order__points">' + s.points.map(function (p) { return '<li><span class="order__icon">' + icon(p.icon || "check") + "</span><span>" + esc(p.text) + "</span></li>"; }).join("") + "</ul>" : "") +
+        (s.buttons && s.buttons.length ? '<div class="order__buttons">' + s.buttons.map(function (b) { var ext = /^https?:/.test(b.href || ""); return '<a class="btn btn--' + esc(b.style || "primary") + '" href="' + esc(b.href || "#contacts") + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + (b.icon ? icon(b.icon) : "") + esc(b.text) + "</a>"; }).join("") + "</div>" : "") +
+        (s.note ? '<p class="order__note">' + esc(s.note) + "</p>" : "") +
+      "</div>" + (s.image ? '<div class="order__media">' + img(s.image, s.imageAlt, { sizes: "(max-width: 900px) 100vw, 50vw", w: 1024, h: 768 }) + "</div>" : "") +
+      "</div></div></section>";
+  };
+  function isoDate0(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  /* Открыто / закрыто сейчас — по contacts.schedule: 7 элементов (0 — воскресенье), ["08:00","22:00"] или null (выходной) */
+  function openStatusText(short) {
+    var sc = contacts().schedule; if (!sc) return null;
+    var now = new Date(), m = now.getHours() * 60 + now.getMinutes();
+    function mins(t) { var p = t.split(":"); return +p[0] * 60 + +p[1]; }
+    function day(i) { var d = sc[(i + 7) % 7]; return d && d.length === 2 ? d : null; }
+    var t = day(now.getDay()), y = day(now.getDay() - 1);
+    if (y && mins(y[1]) <= mins(y[0]) && m < mins(y[1])) return { open: true, text: (short ? "Открыто до " : "Сейчас открыто · до ") + y[1] };
+    if (t) { var o = mins(t[0]), c = mins(t[1]), cross = c <= o; if (m >= o && (cross || m < c)) return { open: true, text: (short ? "Открыто до " : "Сейчас открыто · до ") + t[1] }; if (m < o) return { open: false, text: (short ? "Откроемся в " : "Сейчас закрыто · откроемся в ") + t[0] }; }
+    for (var k = 1; k <= 7; k++) { var n = day(now.getDay() + k); if (n) return { open: false, text: (short ? "Закрыто · " : "Сейчас закрыто · откроемся ") + (k === 1 ? "завтра в " : ["в вс", "в пн", "во вт", "в ср", "в чт", "в пт", "в сб"][(now.getDay() + k) % 7] + " в ") + n[0] }; }
+    return null;
+  }
+  function initOpenStatus() {
+    $$("[data-open-status]").forEach(function (el) { var st = openStatusText(el.hasAttribute("data-short")); if (!st) return; el.textContent = st.text; el.classList.add("open-status"); el.classList.toggle("is-open", st.open); el.classList.toggle("is-closed", !st.open); });
+  }
+  /* Слоты времени: прошедшие на сегодня — недоступны; slotsByDay — свои слоты по дням недели */
+  function initTableBooking(form) {
+    var bs = bookingSection(), din = form.elements.date, tsel = form.elements.time, base = bs.timeSlots || [];
+    function slots() {
+      var list = base, cur = tsel.value, d = din.value ? parseISO(din.value) : null;
+      if (d && bs.slotsByDay && bs.slotsByDay[d.getDay()]) list = bs.slotsByDay[d.getDay()];
+      var lim = -1; if (din.value === isoDate0(new Date())) { var l = new Date(Date.now() + (bs.leadMinutes == null ? 60 : bs.leadMinutes) * 6e4); lim = l.getHours() * 60 + l.getMinutes(); if (l.getDate() !== new Date().getDate()) lim = 24 * 60; }
+      var ph = tsel.options[0].outerHTML, any = false;
+      tsel.innerHTML = ph + list.map(function (t) { var p = t.split(":"), off = +p[0] * 60 + +p[1] < lim; if (!off) any = true; return "<option" + (off ? " disabled" : "") + (t === cur && !off ? " selected" : "") + ">" + esc(t) + "</option>"; }).join("");
+      tsel.options[0].textContent = din.value && !any ? (bs.noSlotsText || "На этот день мест нет") : ((bs.labels && bs.labels.timePlaceholder) || "--:--");
+    }
+    form._slots = slots;
+    din.addEventListener("change", slots); slots();
+    var st = $('[data-field="guests"] [data-stepper]', form);
+    if (st) {
+      var inp = $("input", st), mx = +inp.max;
+      var note = doc.createElement("p"); note.className = "field__hint"; note.setAttribute("data-group-note", ""); note.hidden = true;
+      note.textContent = bs.groupMaxText || ("Для компании больше " + mx + " человек — позвоните нам");
+      var row = st.closest(".form__row"); if (row) row.insertAdjacentElement("afterend", note); else st.closest(".field").appendChild(note);
+      var upd = function () { var v = Math.round(+inp.value || 0); $('[data-step="-1"]', st).disabled = v <= 1; $('[data-step="1"]', st).disabled = v >= mx; note.hidden = v < mx; };
+      st.addEventListener("click", function (e) { var b = e.target.closest("[data-step]"); if (!b) return; inp.value = Math.max(1, Math.min(mx, Math.round(+inp.value || 0) + +b.getAttribute("data-step"))); inp.dispatchEvent(new Event("change", { bubbles: true })); upd(); });
+      inp.addEventListener("change", upd); inp.addEventListener("input", upd); upd();
+    }
+  }
+
   /* ---------- footer ---------- */
   function renderFooter() {
     var f = C.footer || {}, c = contacts();
     var cols = (f.columns || []).map(function (col) {
-      var links = col.links === "services" ? services().map(function (s) { return { text: s.title, href: "#services" }; }) : (col.links || []);
+      var links = col.links === "services" ? services().map(function (s) { return { text: s.title, href: s.href || "#services" }; }) : (col.links || []);
       return '<div class="footer__col"><p class="footer__title">' + esc(col.title) + "</p><ul>" + links.map(function (l) { return '<li><a href="' + esc(l.href) + '">' + esc(l.text) + "</a></li>"; }).join("") + "</ul></div>";
     }).join("");
     var contactCol = '<div class="footer__col footer__col--contacts"><p class="footer__title">Связаться с нами</p>' +
@@ -723,7 +859,7 @@
     return '<footer class="footer"><div class="container">' +
       '<div class="footer__top"><div class="footer__brand">' + logo() + ((C.brand || {}).tagline ? '<p class="footer__tagline">' + esc(C.brand.tagline) + "</p>" : "") + socials("footer__socials") + "</div>" + cols + contactCol + "</div>" +
       '<div class="footer__bottom">' +
-        '<div class="footer__legal">' + (f.legal || []).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + "</div>" +
+        '<div class="footer__legal">' + (f.legal || []).map(function (l) { return "<span>" + esc(l) + "</span>"; }).join("") + '<a class="footer__privacy" href="' + esc(privacyHref()) + '">Политика обработки персональных данных</a></div>' +
         '<p class="footer__copy">© <span data-year>' + new Date().getFullYear() + "</span> " + esc(f.copyright || "") + "</p>" +
         (C.demo && f.demoNote ? '<p class="footer__demo">' + esc(f.demoNote) + "</p>" : "") +
       "</div>" + (f.bigText ? '<p class="footer__big" aria-hidden="true">' + esc(f.bigText) + "</p>" : "") + "</div></footer>";
@@ -747,6 +883,7 @@
         '<form class="form" id="callback-form" novalidate>' +
           '<div class="field" data-field="cbname"><label class="field__label" for="f-cbname">Имя</label><input id="f-cbname" name="cbname" type="text" autocomplete="name" required minlength="2" maxlength="60" placeholder="Иван"><p class="field__error" data-error-for="cbname" role="alert"></p></div>' +
           '<div class="field" data-field="cbphone"><label class="field__label" for="f-cbphone">Телефон</label><input id="f-cbphone" name="cbphone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="' + mask + '" data-mask="' + mask + '"><p class="field__error" data-error-for="cbphone" role="alert"></p></div>' +
+          '<div class="field field--consent" data-field="consent">' + consentBox(cb.consentText || bk.consentText) + '<p class="field__error" data-error-for="consent" role="alert"></p></div>' +
           '<button class="btn btn--primary btn--lg btn--block" type="submit">' + esc(cb.button || "Жду звонка") + "</button>" +
           '<p class="form__status" role="status" aria-live="polite"></p>' +
         "</form></div></div>";
@@ -783,7 +920,7 @@
       "</main>" + renderFooter() + renderMobileBar() + renderDrawer() + renderCallback() + lightboxHTML();
   }
   function isoDate(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-  var CORE_VERSION = "1.4.1";
+  var CORE_VERSION = "1.5.0";
   function configHash() {
     var str = CORE_VERSION + JSON.stringify(C), h = 5381;
     for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
@@ -803,15 +940,23 @@
   function $(s, r) { return (r || doc).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || doc).querySelectorAll(s)); }
 
-  var lockCount = 0;
+  /* Блокировка прокрутки фона. На сенсорных (iOS Safari игнорирует overflow:hidden) —
+     фиксируем body и восстанавливаем позицию после закрытия. */
+  var lockCount = 0, lockY = 0, coarse = window.matchMedia && matchMedia("(hover: none) and (pointer: coarse)").matches;
   function lockScroll(on) {
+    var was = lockCount > 0;
     lockCount = Math.max(0, lockCount + (on ? 1 : -1));
-    doc.documentElement.classList.toggle("is-locked", lockCount > 0);
+    var now = lockCount > 0, html = doc.documentElement, bs = doc.body.style;
+    html.classList.toggle("is-locked", now);
+    if (!coarse || was === now) return;
+    if (now) { lockY = window.pageYOffset || 0; bs.position = "fixed"; bs.top = -lockY + "px"; bs.left = "0"; bs.right = "0"; bs.width = "100%"; }
+    else { bs.position = bs.top = bs.left = bs.right = bs.width = ""; html.style.scrollBehavior = "auto"; window.scrollTo(0, lockY); html.style.scrollBehavior = ""; }
   }
 
   function initHeader() {
     var header = $("#header"), bar = $("#mobile-bar"), ticking = false;
     function update() {
+      if (lockCount > 0 && coarse) { ticking = false; return; }
       var y = window.scrollY || window.pageYOffset;
       header.classList.toggle("is-scrolled", y > 50);
       if (bar) bar.classList.toggle("is-visible", y > 480);
@@ -1108,7 +1253,19 @@
       phone: function (v, el) { if (!v.trim()) return "Укажите телефон"; if (el._complete && !el._complete()) return "Введите номер полностью"; },
       cbphone: function (v, el) { if (!v.trim()) return "Укажите телефон"; if (el._complete && !el._complete()) return "Введите номер полностью"; },
       car: function (v, el) { if (!el.required && !v.trim()) return; if (v.trim().length < 2) return el.getAttribute("data-error") || "Укажите марку и модель"; },
-      service: function (v) { if (!v) return "Выберите услугу"; },
+      service: function (v, el) { if (!v && el.required !== false && el.hasAttribute("required")) return "Выберите услугу"; },
+      time: function (v, el) {
+        if (form.getAttribute("data-mode") !== "table") return;
+        if (!v) return "Выберите время";
+        var d = form.elements.date.value, bs = bookingSection();
+        if (d && d === isoDate(new Date())) { var lim = new Date(Date.now() + (bs.leadMinutes == null ? 60 : bs.leadMinutes) * 6e4), p = v.split(":"); if (+p[0] * 60 + +p[1] < lim.getHours() * 60 + lim.getMinutes()) return "На сегодня — не раньше " + String(lim.getHours()).padStart(2, "0") + ":" + String(lim.getMinutes()).padStart(2, "0") + ". Или позвоните нам"; }
+        void el;
+      },
+      guests: function (v) {
+        var g = Math.round(+v || 0), bs = bookingSection(), gm = bs.groupMax || 12;
+        if (g < 1) return "Укажите число гостей";
+        if (g > gm) return bs.groupMaxText || ("Для компании больше " + gm + " человек — выберите банкет или позвоните нам");
+      },
       date: function (v, el) {
         if (!v) return "Выберите дату";
         if (el.min && v < el.min) return "Дата уже прошла";
@@ -1180,11 +1337,17 @@
     var form = $("#booking-form"); if (!form) return;
     var wrap = form.parentNode, success = $(".form-success", wrap);
     if (form.elements.dateout) initStayBooking(form);
+    if (form.getAttribute("data-mode") === "table") initTableBooking(form);
     initForm(form, function (data) {
       var svcSel = form.elements.service;
       var bs = (C.sections || []).filter(function (x) { return x.type === "booking"; })[0] || {}, L = labels(bs);
       var rows = [[L.name, data.name], [L.phone, data.phone.replace(/ /g, "\u00a0")], data.car ? [L.car, data.car] : null, [L.service, svcSel.options[svcSel.selectedIndex].text],
         [L.date, data.date.split("-").reverse().join(".") + (data.time ? ", " + data.time : "")]];
+      if (bs.mode === "table") {
+        rows = [[L.name, data.name], [L.phone, data.phone.replace(/ /g, "\u00a0")], [bs.whenLabel || "Когда", ruDate(data.date) + ", " + data.time],
+          [L.guests, data.guests + " " + plural(+data.guests, ["гость", "гостя", "гостей"])],
+          svcSel && data.service ? [L.service, svcSel.options[svcSel.selectedIndex].text] : null];
+      }
       if (bs.mode === "stay") {
         var r = stayCalc(form), kids = +data.kids || 0;
         rows = [[L.name, data.name], [L.phone, data.phone.replace(/ /g, "\u00a0")], [L.service, svcSel.options[svcSel.selectedIndex].text],
@@ -1200,6 +1363,7 @@
     $("[data-form-reset]", success).addEventListener("click", function () {
       form.reset(); $$(".field", form).forEach(function (f) { f.classList.remove("has-error"); });
       if (form._update) { form._update(); syncExtraButtons(form); }
+      if (form._slots) form._slots();
       $$(".field__error", form).forEach(function (p) { p.textContent = ""; });
       success.hidden = true; form.hidden = false; form.elements.name.focus();
     });
@@ -1207,6 +1371,8 @@
     doc.addEventListener("click", function (e) {
       var a = e.target.closest("[data-service]"); if (!a) return;
       var sel = form.elements.service, id = a.getAttribute("data-service");
+      var mt = doc.querySelector('.menu .tab[data-cat="' + id + '"]'); if (mt) mt.click();
+      if (!sel) return;
       if ($('option[value="' + id + '"]', sel)) { sel.value = id; setError(form, "service", ""); sel.dispatchEvent(new Event("change", { bubbles: true })); }
       if (!form.hidden) setTimeout(function () { var nm = form.elements.name; if (!nm.value && window.innerWidth > 1024) nm.focus({ preventScroll: true }); }, reduceMotion ? 0 : 700);
     });
@@ -1237,8 +1403,9 @@
         if (sv && sv.value && $('option[value="' + sv.value + '"]', form.elements.service)) { form.elements.service.value = sv.value; setError(form, "service", ""); form.elements.service.dispatchEvent(new Event("change", { bubbles: true })); }
         if (fin && fin.value) { form.elements.date.value = fin.value; form.elements.date.dispatchEvent(new Event("change", { bubbles: true })); }
         if (fout && fout.value && form.elements.dateout) { form.elements.dateout.value = fout.value; form.elements.dateout.dispatchEvent(new Event("change", { bubbles: true })); }
+        var gs = g("guests"); if (gs && form.elements.guests) { form.elements.guests.value = gs.value; form.elements.guests.dispatchEvent(new Event("change", { bubbles: true })); }
         if (ad && form.elements.adults) { form.elements.adults.value = ad.value; form.elements.kids.value = 0; form.elements.adults.dispatchEvent(new Event("change", { bubbles: true })); }
-        if (tm && tm.value && form.elements.time) form.elements.time.value = tm.value;
+        if (tm && tm.value && form.elements.time) { if (form._slots) form._slots(); var op = $('option[value="' + tm.value + '"]', form.elements.time) || [].filter.call(form.elements.time.options, function (o) { return o.value === tm.value; })[0]; if (op && !op.disabled) form.elements.time.value = tm.value; }
         var target = form.closest("section"); if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
         setTimeout(function () { if (!form.hidden) { var nm = form.elements.name; if (!nm.value) nm.focus({ preventScroll: true }); } }, reduceMotion ? 0 : 700);
       });
@@ -1375,7 +1542,7 @@
     build();
     initHeader(); initDrawer(); initModal(); initHero(); initReviews(); initTabs();
     initBeforeAfter(); initSpotlight(); initCalc(); initFaq(); initReveal(); initCounters(); initBooking(); initFinder(); initCallback();
-    initExtras(); initLightbox(); initCopy();
+    initExtras(); initLightbox(); initCopy(); initOpenStatus();
     /* если в адресе есть #якорь — прокрутить после рендера */
     if (location.hash && location.hash.length > 1) { var t = doc.getElementById(location.hash.slice(1)); if (t) setTimeout(function () { t.scrollIntoView(); }, 0); }
   }

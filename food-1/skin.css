@@ -1,0 +1,7 @@
+/* =====================================================================
+   SKIN «Бульвар 17» — дополнения к базовому дизайну (стиль i-store).
+   Основная раскладка — в core/core.css, цвета — в theme.css.
+   ===================================================================== */
+.dish__media, .prog__media { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+.finder-section { padding-top: 24px; }
+.order__box { background: var(--color-accent-soft); }

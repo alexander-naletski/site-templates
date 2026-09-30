@@ -1,0 +1,79 @@
+/* =====================================================================
+   SKIN «Крошка» — дух парфюмерного дома (референс: сайт Diptyque):
+   шалфейная строка объявлений, логотип-антиква по центру и меню второй
+   строкой, герой — фото во всю ширину с белой «этикеткой» по центру,
+   изделия на кремовом фоне с подписью по центру, строгие чёрные кнопки,
+   ряд вертикальных «историй».
+   ===================================================================== */
+:root { --cream: #f6f1e7; --sage: #cfd8c6; }
+.section-title, .hero__title, h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; letter-spacing: .01em; }
+.section-title { font-size: clamp(32px, 3.8vw, 50px); line-height: 1.08; }
+.eyebrow { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--color-muted); background: none; padding: 0; }
+/* шапка */
+.announce { background: var(--sage); color: #1f2a1c; font-size: 14px; }
+.header--bar { background: #fff; border-bottom: 1px solid var(--color-border); }
+.logo__text { font-family: var(--font-heading); font-weight: 600; letter-spacing: .28em; font-size: 26px; padding-left: .28em; }
+@media (min-width: 1025px) {
+  .header--center .hbar { grid-template-rows: auto auto; row-gap: 4px; padding-block: 14px 6px; }
+  .header--center .logo { grid-column: 2; grid-row: 1; }
+  .header--center .header__actions { grid-row: 1; }
+  .header--center .hbar__nav { grid-column: 1 / -1; grid-row: 2; justify-content: center; gap: 36px; }
+  .hbar__nav a { font-size: 15px; letter-spacing: .02em; padding-block: 10px; }
+}
+/* кнопки */
+.btn { border-radius: 0; font-weight: 600; letter-spacing: .04em; font-size: 14px; }
+.btn--primary { background: #111; color: #fff; }
+.btn--primary:hover { background: #3a3a3a; }
+.btn--ghost, .btn--outline { border: 1px solid #111; color: #111; background: #fff; }
+/* герой: белая «этикетка» на фото */
+.hero--cover { min-height: min(86svh, 780px); }
+.hero--cover .hero__bg::after { background: rgba(0,0,0,.08) !important; }
+.hero--cover.hero--center .hero__content { background: #fff; color: #111; padding: clamp(28px, 4vw, 52px) clamp(24px, 4vw, 64px); max-width: 540px; margin-inline: auto; text-align: center; }
+.hero--cover .hero__title { color: #111; font-size: clamp(34px, 4.2vw, 56px); line-height: 1.05; text-shadow: none; }
+.hero--cover .hero__text { color: #444; text-shadow: none; }
+.hero--cover .hero__eyebrow { color: var(--color-muted); background: none; border: 0; padding: 0; letter-spacing: .2em; text-transform: uppercase; font-size: 12px; }
+.hero--cover .hero__status, .hero--cover .hero__status * { color: #444; text-shadow: none; }
+@media (max-width: 600px) { .hero--cover.hero--center .hero__content { margin-inline: 0; } }
+/* витрина: кремовый фон, подпись по центру */
+.menu__tabs { justify-content: center; gap: 32px; border-bottom: 1px solid var(--color-border); }
+.menu__tabs .tab { background: none !important; border: 0; border-radius: 0; padding: 12px 0; color: var(--color-muted); font-size: 16px; box-shadow: inset 0 -1px 0 transparent; }
+.menu__tabs .tab.is-active { color: #111; box-shadow: inset 0 -2px 0 #111; }
+.menu .section-head, .menu .menu__head { text-align: center; }
+.dish { border: 0; background: none; box-shadow: none; text-align: center; }
+.dish__media { background: var(--cream); aspect-ratio: 1 / 1; border-radius: 0; }
+.dish__media img { width: 100%; height: 100%; object-fit: cover; }
+.dish__body { align-items: center; padding-inline: 8px; }
+.dish__title { font-family: var(--font-heading); font-weight: 600; font-size: 21px; line-height: 1.15; }
+.dish__text { font-size: 14px; color: var(--color-muted); }
+.dish__foot { justify-content: center; gap: 10px; border: 0; }
+.dish__price { font-family: var(--font-main); font-weight: 600; font-size: 15px; }
+.dish__price::after { content: " BYN"; font-weight: 400; color: var(--color-muted); font-size: 13px; }
+.dish__tags { justify-content: center; }
+.dish__badge { background: var(--sage); color: #1f2a1c; border-radius: 0; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: 10px; }
+.dish__tag { border-radius: 0; background: #fff; }
+/* доставка */
+.order__box { background: var(--cream); border-radius: 0; }
+/* истории — ряд вертикальных фото */
+.gallery--stories .gallery__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.gallery--stories .work { border: 0; background: none; box-shadow: none; border-radius: 0; }
+.gallery--stories .gallery__img { aspect-ratio: 4 / 5; border-radius: 0; overflow: hidden; }
+.gallery--stories .work__body { padding: 14px 0 0; }
+.gallery--stories .work__title { font-family: var(--font-heading); font-size: 22px; font-weight: 600; }
+.gallery--stories .work__text { color: var(--color-muted); font-size: 14px; margin-top: 4px; }
+@media (max-width: 900px) { .gallery--stories .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .gallery--stories .gallery__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; } .gallery--stories .work { flex: 0 0 72%; scroll-snap-align: start; } }
+/* события, отзывы, FAQ */
+.prog, .review, .faq-item, .work, .card { border-radius: 0 !important; }
+.prog { border: 0; background: var(--cream); box-shadow: none; }
+.prog__title { font-family: var(--font-heading); font-size: 26px; font-weight: 600; }
+.prog__badge { background: var(--sage); color: #1f2a1c; border-radius: 0; }
+.prog--featured { box-shadow: none; outline: 1px solid #111; outline-offset: -1px; }
+.statement__text { font-family: var(--font-heading); }
+.review { background: var(--cream); border: 0; }
+.stat__value { font-family: var(--font-heading); font-weight: 500; }
+.booking__box { background: var(--cream); color: #111; border-radius: 0; }
+.booking__box .section-title, .booking__subtitle, .booking__perks li, .booking__call, .booking__call a { color: #111; }
+.field input, .field select, .field textarea, .select select, .finder input { border-radius: 0 !important; }
+.footer { background: var(--cream); }
+.menu .section-head { margin-inline: auto; max-width: 760px; text-align: center; }
+.menu .section-subtitle { margin-inline: auto; }

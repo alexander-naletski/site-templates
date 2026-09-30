@@ -199,13 +199,14 @@ window.SITE_CONFIG = {
     {
       type: "gallery",
       id: "works",
-      eyebrow: "Результаты",
-      title: "Было — стало",
-      subtitle: "Потяните ползунок, чтобы сравнить.",
-      note: "Изображения «до» — иллюстрация для демо-шаблона.",
+      eyebrow: "Оснащение",
+      title: "Как устроена клиника",
+      subtitle: "Нажмите на фото, чтобы посмотреть крупно.",
+      lightbox: true,
       items: [
-        { title: "Отбеливание за 1 визит", text: "Кабинетное отбеливание, 90 минут.", before: "assets/img/ba-close-before", after: "assets/img/ba-close-after" },
-        { title: "Гигиена + домашнее отбеливание", text: "Курс 2 недели с капами.", before: "assets/img/ba-wide-before", after: "assets/img/ba-wide-after" }
+        { title: "Кабинеты экспертного класса", text: "Современные установки и одноразовые наборы для каждого пациента.", image: "assets/img/eq-unit", alt: "Стоматологическое кресло и светильник в кабинете" },
+        { title: "Микроскоп и диагностика", text: "Точная диагностика и лечение под увеличением.", image: "assets/img/eq-microscope", alt: "Объективы микроскопа крупным планом" },
+        { title: "Детский и семейный кабинет", text: "Тёплый интерьер, где не страшно.", image: "assets/img/eq-cabinet", alt: "Стоматологический кабинет с синим креслом" }
       ]
     },
 

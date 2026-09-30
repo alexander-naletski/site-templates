@@ -1,0 +1,72 @@
+/* =====================================================================
+   THEME «Зерно» — «овсяная» тема напиточного бренда: белый и овсяный фон, чёрные рамки и кнопки, сливочно-жёлтые наклейки, узкий Oswald + «печатная машинка» IBM Plex Mono + рукописный Caveat.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   Шрифты Oswald (заголовки), IBM Plex Mono (текст) и Caveat (рукописные пометки) — SIL Open Font License (assets/fonts/OFL-LICENSE.txt).
+   ===================================================================== */
+@font-face { font-family: "Oswald"; font-style: normal; font-weight: 500 700; font-display: swap;
+  src: url(assets/fonts/oswald-500_700-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Oswald"; font-style: normal; font-weight: 500 700; font-display: swap;
+  src: url(assets/fonts/oswald-500_700-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(assets/fonts/ibmplexmono-400-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(assets/fonts/ibmplexmono-400-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(assets/fonts/ibmplexmono-500-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(assets/fonts/ibmplexmono-500-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url(assets/fonts/ibmplexmono-600-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url(assets/fonts/ibmplexmono-600-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Caveat"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url(assets/fonts/caveat-600-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Caveat"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url(assets/fonts/caveat-600-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент (кнопки, ссылки) --- */
+  --color-accent: #111111;
+  --color-accent-hover: #333333;
+  --color-accent-soft: #f6c945;
+  --color-on-accent: #ffffff;
+
+  /* --- Текст --- */
+  --color-heading: #111111;
+  --color-text: #222222;
+  --color-muted: #5f5f5a;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f3f0e6;
+  --color-surface: #ffffff;
+  --color-border: #111111;
+  --color-dark: #111111;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(255, 255, 255, .97);
+  --color-field-focus: #ffffff;
+
+  /* --- Статусы --- */
+  --color-success: #2f7d4a;
+  --color-error: #e5484d;
+  --color-rating: #111111;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #f3f0e6; --map-road: #ffffff; --map-park: #f6e3a1; --map-water: #dfe3e6;
+
+  /* --- Шрифты --- */
+  --font-main: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-heading: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --weight-heading: 700;
+
+  /* --- Скругления --- */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+  --radius-pill: 999px;
+
+  /* --- Размеры --- */
+  --container: 1360px;
+  --header-h: 64px;
+}

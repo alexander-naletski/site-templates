@@ -1,0 +1,70 @@
+/* =====================================================================
+   SKIN «Зерно» — дух напиточного бренда (референс: сайт овсяного бренда Oatly):
+   фон «в клетку», страница-лист в тонкой чёрной рамке, карточки в рамках
+   со смещённой тенью, заголовки ЗАГЛАВНЫМИ узким шрифтом, текст «печатной машинки»,
+   жёлтые ярлыки-наклейки и рукописные пометки.
+   ===================================================================== */
+:root { --frame: 1.5px solid #111; --drop: 4px 4px 0 #111; --paper: #fdfbf2; }
+body {
+  background-color: #efeee6;
+  background-image: linear-gradient(rgba(17,17,17,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,17,.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+main, .footer { background: var(--paper); max-width: 1440px; margin-inline: auto; border-inline: var(--frame); }
+@media (min-width: 1480px) { main { margin-top: 0; } }
+/* типографика */
+h1, h2, h3, .section-title, .hero__title, .dish__title, .prog__title, .work__title, .order__title, .faq-item summary, .footer__title { text-transform: uppercase; letter-spacing: .01em; }
+.section-title { font-size: clamp(30px, 4.4vw, 54px); line-height: 1.02; }
+.eyebrow, .hero__eyebrow { font-family: "Caveat", cursive; font-size: 24px; font-weight: 600; letter-spacing: 0; text-transform: none; color: #111; }
+/* шапка — строка в рамке */
+.header--bar { background: var(--paper); }
+.header--bar .hbar { border: var(--frame); border-top: 0; background: #fff; max-width: 1440px; }
+.hbar__nav a { text-transform: uppercase; font-size: 14px; letter-spacing: .04em; }
+.logo__text { font-family: var(--font-heading); font-weight: 700; letter-spacing: .08em; font-size: 26px; }
+.announce { background: #f6c945; color: #111; border-bottom: var(--frame); font-size: 13px; }
+/* кнопки: рамка и смещённая тень */
+.btn { border-radius: 0; border: var(--frame); box-shadow: var(--drop); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; transition: transform .15s, box-shadow .15s, background-color .15s; }
+.btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #111; }
+.btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #111; }
+.btn--ghost, .btn--outline, .btn--soft { background: #fff; color: #111; }
+.btn--ghost:hover, .btn--outline:hover, .btn--soft:hover { background: #f6c945; color: #111; }
+/* hero: заголовок слева, карточки-«новости» */
+.hero--editorial { padding-top: 40px; }
+.hero--editorial .hero__title { font-size: clamp(38px, 6.4vw, 92px); line-height: .98; max-width: 14ch; }
+.hero--editorial .hero__card { border: var(--frame); box-shadow: var(--drop); background: #fff; border-radius: 0; overflow: hidden; }
+.hero--editorial .hero__cap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border-top: var(--frame); text-transform: uppercase; font-size: 13px; }
+.hero--editorial .hero__cap-label, .dish__badge, .prog__badge { background: #f6c945; color: #111; border-radius: 0; padding: 3px 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; font-weight: 600; order: 2; }
+.hero__status { font-size: 14px; text-transform: uppercase; }
+/* бегущая строка — чёрная лента */
+.marquee { background: #111; color: #fff; border-block: var(--frame); }
+.marquee__item { font-family: var(--font-heading); text-transform: uppercase; font-size: 22px; letter-spacing: .03em; }
+/* карточки */
+.card, .dish, .prog, .work, .review, .order__box, .booking__box, .faq-item, .info-card { border: var(--frame) !important; border-radius: 0 !important; box-shadow: var(--drop); background: #fff; }
+.dish__media, .prog__media, .work .gallery__img { border-radius: 0; border-bottom: var(--frame); }
+.dish__media { aspect-ratio: 1 / 1; }
+.dish__media img { width: 100%; height: 100%; object-fit: cover; }
+.dish__price { font-family: var(--font-heading); font-size: 22px; }
+.dish__tag { border: 1px solid #111; border-radius: 0; background: #fff; }
+.menu__tabs .tab { border: var(--frame); border-radius: 0; text-transform: uppercase; font-size: 14px; letter-spacing: .04em; background: #fff; }
+.menu__tabs .tab.is-active, .menu__tabs .tab[aria-selected="true"] { background: #111; color: #fff; box-shadow: 3px 3px 0 #f6c945; }
+.menu__note { font-family: "Caveat", cursive; font-size: 22px; color: #111; }
+/* доставка — жёлтый лист */
+.order__box { background: #f6c945; overflow: hidden; }
+.order__media { border-left: var(--frame); }
+@media (max-width: 900px) { .order__media { border-left: 0; border-bottom: var(--frame); } }
+/* манифест */
+.statement__text { font-family: var(--font-heading); text-transform: uppercase; font-size: clamp(28px, 4.2vw, 58px); line-height: 1.05; }
+.statement__muted { font-family: "Caveat", cursive; text-transform: none; color: #111; background: linear-gradient(transparent 62%, #f6c945 62%); }
+/* бронь, отзывы, FAQ */
+.booking__box { background: #fff; color: #111; }
+.booking__box .section-title, .booking__box .booking__subtitle { color: #111; }
+.field input, .field select, .field textarea, .select select, .finder input { border-radius: 0 !important; border: var(--frame) !important; background: #fff; }
+.review .avatar { border-radius: 0; background: #f6c945; color: #111; border: 1px solid #111; }
+.stars .star.is-on { fill: #111; }
+.footer { border-top: var(--frame); }
+.footer__big { font-family: var(--font-heading); text-transform: uppercase; }
+.map__placeholder { border: var(--frame); border-radius: 0; }
+@media (max-width: 600px) { main, .footer { border-inline: 0; } .btn { box-shadow: 3px 3px 0 #111; } }
+.marquee, .marquee__item, .marquee__title { color: #fff; }
+.booking__call, .booking__call a, .booking__perks li { color: #111; }
+.booking__perks svg { color: #111; }

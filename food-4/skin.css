@@ -1,0 +1,71 @@
+/* =====================================================================
+   SKIN «Печь 900» — дух игровой студии (референс: сайт Supercell):
+   белая страница, чёрная плашка шапки внутри контейнера, герой — заголовок
+   по центру между двумя картинками, крупные карточки со скруглением
+   и «таблетками»-подписями, жирный гротеск, синие кнопки-пилюли.
+   ===================================================================== */
+body { background: #fff; }
+.section-title, .hero__title, h1, h2 { font-family: var(--font-heading); font-weight: 800; letter-spacing: -.01em; text-transform: uppercase; }
+.section-title { font-size: clamp(26px, 3.4vw, 44px); line-height: 1.08; }
+/* шапка — чёрная плашка внутри контейнера */
+.header--bar { background: #fff; padding-top: 0; }
+.header--bar .hbar { background: #111; color: #fff; border-radius: 0 0 var(--radius-md) var(--radius-md); max-width: 1320px; }
+.header--bar .hbar a, .header--bar .hbar button { color: #fff; }
+.header--bar .hbar .btn--primary { color: #fff; }
+.logo__text { font-family: var(--font-heading); font-weight: 900; letter-spacing: -.02em; }
+.logo__accent { color: #ffd21f; }
+.announce { background: #ffd21f; color: #111; font-weight: 600; }
+/* кнопки-пилюли */
+.btn { border-radius: 999px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; font-size: 14px; }
+.btn--ghost, .btn--outline { border: 2px solid #111; color: #111; background: #fff; }
+.btn--ghost:hover, .btn--outline:hover { background: #111; color: #fff; }
+/* герой */
+.hero--collage { --hero-bg: #fff; --hero-fg: #111; --hero-title: #111; padding-top: 16px; }
+.hero--collage .hero__pic { border-radius: var(--radius-xl); background: #f2f2f2; }
+.hero--collage-center .hero__pic--1 { transform: rotate(-2deg); }
+.hero--collage-center .hero__pic--2 { transform: rotate(2deg); }
+.hero--collage-center .hero__title { font-size: clamp(40px, 5.6vw, 88px); line-height: .95; }
+.hero__status { font-weight: 600; }
+/* карточки «что у нас» — 2 колонки, скругления и таблетки */
+.gallery--cards .gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.gallery--cards .work { border: 0; background: none; box-shadow: none; position: relative; border-radius: var(--radius-xl); overflow: hidden; }
+.gallery--cards .gallery__img { aspect-ratio: 16 / 10; border-radius: var(--radius-xl); overflow: hidden; }
+.gallery--cards .gallery__img img { transition: transform .5s ease; }
+.gallery--cards .work:hover .gallery__img img { transform: scale(1.04); }
+.gallery--cards .work__body { position: absolute; left: 16px; bottom: 16px; right: 16px; padding: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.gallery--cards .work__title { display: inline-block; background: #ff3e8a; color: #fff; border-radius: 999px; padding: 8px 18px; font-family: var(--font-heading); font-size: clamp(14px, 1.4vw, 18px); font-weight: 800; text-transform: uppercase; }
+.gallery--cards .work__text { background: #fff; color: #111; border-radius: 999px; padding: 6px 14px; font-size: 14px; margin: 0; }
+.gallery--cards .work:nth-child(2) .work__title { background: #1464ff; }
+.gallery--cards .work:nth-child(3) .work__title { background: #ffd21f; color: #111; }
+.gallery--cards .work:nth-child(4) .work__title { background: #18b56b; }
+@media (max-width: 700px) { .gallery--cards .gallery__grid { grid-template-columns: 1fr; gap: 14px; } .gallery--cards .work__text { display: none; } }
+/* меню */
+.dish { border-radius: var(--radius-lg); border: 0; background: #f4f4f4; overflow: hidden; }
+.dish__media { border-radius: var(--radius-lg); margin: 8px 8px 0; aspect-ratio: 1 / 1; overflow: hidden; }
+.dish__media img { width: 100%; height: 100%; object-fit: cover; }
+.dish__title { font-family: var(--font-heading); font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: -.01em; }
+.dish__price { font-family: var(--font-heading); font-weight: 800; font-size: 20px; }
+.dish__badge { background: #ff3e8a; color: #fff; border-radius: 999px; font-weight: 700; }
+.dish__tag { border-radius: 999px; background: #fff; }
+.menu__tabs .tab { border-radius: 999px; font-weight: 700; text-transform: uppercase; font-size: 14px; }
+.menu__tabs .tab.is-active { background: #111; color: #fff; }
+/* доставка — синий блок */
+.order__box { background: #1464ff; color: #fff; border-radius: var(--radius-xl); }
+.order__box .section-title, .order__box .order__text, .order__box .order__points, .order__box .eyebrow, .order__box .order__note { color: #fff; }
+.order__box .order__point-icon, .order__box .order__points svg { color: #ffd21f; }
+.order__box .btn--primary { background: #ffd21f; color: #111; }
+.order__box .btn--outline { background: transparent; color: #fff; border-color: #fff; }
+.order__media { border-radius: var(--radius-lg); overflow: hidden; }
+/* события, отзывы, галерея */
+.prog, .review, .work, .faq-item, .card { border-radius: var(--radius-lg); }
+.prog__media { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.prog__badge { background: #ffd21f; color: #111; border-radius: 999px; font-weight: 700; }
+.prog__title { font-family: var(--font-heading); text-transform: uppercase; font-size: 19px; }
+.gallery--zoom .gallery__img { border-radius: var(--radius-lg); overflow: hidden; }
+.statement__text { font-family: var(--font-heading); text-transform: uppercase; }
+.stat__value { font-family: var(--font-heading); font-weight: 900; }
+.booking__box { background: #111; border-radius: var(--radius-xl); }
+.order__box .order__points li { color: #fff; }
+.order__box .order__icon { background: rgba(255,255,255,.16); color: #ffd21f; }
+@media (max-width: 600px) { .section-title { font-size: clamp(20px, 6.4vw, 30px); } }
+@media (max-width: 400px) { .dish__title { font-size: 13px; } .dish__price { font-size: 17px; } }

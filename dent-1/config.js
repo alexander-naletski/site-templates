@@ -66,7 +66,7 @@ window.SITE_CONFIG = {
     { text: "Услуги", href: "#services" },
     { text: "Цены", href: "#prices" },
     { text: "Врачи", href: "#team" },
-    { text: "До и после", href: "#works" },
+    { text: "Клиника", href: "#works" },
     { text: "Отзывы", href: "#reviews" },
     { text: "Вопросы", href: "#faq" }
   ],
@@ -274,13 +274,14 @@ window.SITE_CONFIG = {
     {
       type: "gallery",
       id: "works",
-      title: "До и после: отбеливание",
-      subtitle: "Потяните ползунок, чтобы сравнить.",
-      note: "Изображения «до» — иллюстрация для демо-шаблона.",
+      eyebrow: "Оснащение",
+      title: "Клиника и оборудование",
+      subtitle: "Нажмите на фото, чтобы посмотреть крупно.",
+      lightbox: true,
       items: [
-        { title: "Кабинетное отбеливание", text: "Светлее на 6 тонов за один визит.", before: "assets/img/ba-smile-before", after: "assets/img/ba-smile-after" },
-        { title: "Профгигиена + отбеливание", text: "Убрали налёт и пигментацию, выровняли цвет.", before: "assets/img/ba-bright-before", after: "assets/img/ba-bright-after" },
-        { title: "Домашнее отбеливание", text: "Курс 14 дней с индивидуальными капами.", before: "assets/img/ba-joy-before", after: "assets/img/ba-joy-after" }
+        { title: "Кабинет терапии", text: "Стоматологическая установка с верхней подачей инструментов.", image: "assets/img/eq-chair", alt: "Светлый стоматологический кабинет с креслом" },
+        { title: "Операционный микроскоп", text: "Лечение каналов под увеличением до 25×.", image: "assets/img/eq-microscope", alt: "Оптический микроскоп крупным планом" },
+        { title: "Зона ожидания", text: "Светлый холл с детским уголком и водой.", image: "assets/img/eq-lounge", alt: "Светлый холл со столом и стульями" }
       ]
     },
 
@@ -355,7 +356,7 @@ window.SITE_CONFIG = {
       { title: "Пациентам", links: [
         { text: "Цены", href: "#prices" },
         { text: "Врачи", href: "#team" },
-        { text: "До и после", href: "#works" },
+        { text: "Клиника", href: "#works" },
         { text: "Отзывы", href: "#reviews" },
         { text: "Частые вопросы", href: "#faq" },
         { text: "Онлайн-запись", href: "#booking" }
