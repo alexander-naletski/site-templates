@@ -1,0 +1,59 @@
+/* =====================================================================
+   THEME «Клён» — светлая «бумажная» тема в стиле архитектурной студии.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   ===================================================================== */
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 400 600; font-display: swap;
+  src: url(assets/fonts/cormorant-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 400 600; font-display: swap;
+  src: url(assets/fonts/cormorant-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 300 700; font-display: swap;
+  src: url(assets/fonts/manrope-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 300 700; font-display: swap;
+  src: url(assets/fonts/manrope-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент (орех / олива) --- */
+  --color-accent: #6b5a45;            /* ссылки, иконки, кнопки */
+  --color-accent-hover: #54463a;
+  --color-accent-soft: rgba(107, 90, 69, .10);
+  --color-on-accent: #f7f4ee;
+
+  /* --- Текст --- */
+  --color-heading: #2f2d2a;
+  --color-text: #4f4b45;
+  --color-muted: #6f6a62;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #f4f1ea;                /* «бумага» */
+  --color-bg-soft: #ece7dc;           /* чуть темнее, для полос */
+  --color-surface: #f8f6f1;
+  --color-border: #d9d2c4;
+  --color-dark: #2a2724;
+  --color-on-dark: #f4f1ea;
+  --color-bar-bg: rgba(244, 241, 234, .96);
+  --color-field-focus: #fbfaf7;
+
+  /* --- Статусы --- */
+  --color-success: #5f7a55;
+  --color-error: #a4493d;
+  --color-rating: #8a7556;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #ebe6db; --map-road: #f8f6f1; --map-park: #dde0cf; --map-water: #d5dcdc;
+
+  /* --- Шрифты --- */
+  --font-main: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --weight-heading: 500;
+
+  /* --- Скругления: почти прямые углы --- */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+  --radius-pill: 0px;
+
+  /* --- Размеры --- */
+  --container: 1240px;
+  --header-h: 84px;
+}

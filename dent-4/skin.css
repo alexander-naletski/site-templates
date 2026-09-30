@@ -1,0 +1,215 @@
+/* =====================================================================
+   SKIN «Тишина» — оформление в духе премиальных отелей и спа
+   (референс по принципам: sixsenses.com — отели и спа-курорты).
+   Принципы: тёмное атмосферное фото на первом экране, светлая антиква
+   без капса, логотип по центру, кнопки-«таблетки» в шапке, заголовки
+   секций по центру с мелкой ссылкой капслоком, карусели карточек со
+   стрелками по бокам, молочный фон, сливовый акцент, медленные
+   плавные анимации.
+   ===================================================================== */
+:root { --section-y: 104px; --terra: var(--color-terra); }
+body { font-size: 16px; line-height: 1.65; font-weight: 400; }
+::selection { background: var(--color-accent); color: #fff; }
+h1, h2, .section-title, .banner__title, .hero__title { font-family: var(--font-heading); font-weight: 300; letter-spacing: -.005em; line-height: 1.15; }
+h3 { font-family: var(--font-heading); font-weight: 400; letter-spacing: 0; }
+.section-head { text-align: center; margin-left: auto; margin-right: auto; max-width: 720px; }
+.section-head--row { text-align: left; max-width: none; }
+.section-title { font-size: clamp(30px, 3.2vw, 42px); color: var(--color-heading); }
+.section-subtitle { margin-top: 12px; font-size: 16px; color: var(--color-text); }
+.section-eyebrow, .tile__label, .doc__role, .review__car, .footer__title, .field__label { font-family: var(--font-main); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.section-eyebrow { color: var(--terra); }
+.section--soft { background: var(--color-bg-soft); }
+.demo-badge { background: var(--color-accent-soft); color: var(--color-accent); font-family: var(--font-main); vertical-align: .4em; }
+
+/* logo: антиква с разрядкой */
+.logo { font-family: var(--font-heading); font-weight: 400; font-size: 26px; letter-spacing: .22em; text-transform: uppercase; gap: 10px; }
+.logo::before { content: ""; width: 22px; height: 12px; border-radius: 22px 22px 0 0; background: currentColor; opacity: .9; }
+
+/* buttons */
+.btn { font-family: var(--font-main); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; min-height: 46px; padding: 12px 28px; transition: background-color .4s, color .4s, border-color .4s; }
+.btn--sm { min-height: 38px; padding: 8px 20px; font-size: 11px; }
+.btn--primary:hover { box-shadow: none; }
+.btn--outline-light { border-width: 1px; background: rgba(255,255,255,.06); }
+.btn--soft { background: transparent; color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.btn--soft:hover { background: var(--color-accent); color: #fff; }
+.round-btn { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.12); color: var(--color-heading); }
+.round-btn:hover:not(:disabled) { background: var(--color-accent); color: #fff; }
+.chip { background: var(--color-bg-soft); }
+
+/* header: центрированный логотип, «таблетки» справа */
+.header.is-scrolled { box-shadow: 0 1px 0 var(--color-border); }
+.nav a { font-family: var(--font-main); font-weight: 700; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 8px 12px; }
+.nav a:hover, .nav a.is-active { background: none; color: var(--terra); }
+.header--overlay:not(.is-scrolled) .nav a:hover { color: #fff; opacity: .75; }
+.hbar__link { font-family: var(--font-main); font-weight: 700; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; padding: 9px 18px; border-radius: 50px; box-shadow: inset 0 0 0 1px currentColor; opacity: 1; }
+.header.is-scrolled .header__cta { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+.header.is-scrolled .hbar__link { color: var(--color-heading); }
+.drawer__nav a { font-family: var(--font-heading); font-weight: 300; font-size: 26px; }
+
+/* ---------- hero: атмосферное фото, светлая антиква ---------- */
+.hero--cover { min-height: min(100svh, 900px); --hero-overlay: linear-gradient(180deg, rgba(20,16,12,.55) 0%, rgba(20,16,12,.2) 35%, rgba(20,16,12,.72) 100%); }
+.hero--cover .hero__inner { padding-bottom: 88px; }
+.hero--cover .hero__content { max-width: 820px; }
+.hero--cover .hero__title { font-size: clamp(38px, 4.6vw, 64px); line-height: 1.12; font-weight: 300; letter-spacing: 0; }
+.hero--cover .hero__text { font-size: 17px; max-width: 540px; margin-top: 22px; opacity: .92; }
+.hero--cover .hero__buttons { margin-top: 32px; gap: 12px; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero__bg img { animation: ts-zoom 14s ease-out both; }
+  .hero--cover .hero__content > * { animation: ts-fade 1.6s cubic-bezier(.25,.6,.3,1) both; }
+  .hero--cover .hero__content > :nth-child(2) { animation-delay: .25s; }
+  .hero--cover .hero__content > :nth-child(3) { animation-delay: .5s; }
+}
+@keyframes ts-zoom { from { transform: scale(1.08); } to { transform: none; } }
+@keyframes ts-fade { from { opacity: 0; transform: translate3d(0, 16px, 0); } to { opacity: 1; transform: none; } }
+
+/* ---------- services: карусель карточек, стрелки по бокам ---------- */
+.services--tiles .section-head--row { flex-direction: column; align-items: center; text-align: center; }
+.services--tiles .section-head--row > div { max-width: 720px; }
+.services--tiles .container { display: flex; flex-direction: column; }
+.services--tiles .section-head--row { display: contents; }
+.services--tiles .section-head--row > div { align-self: center; margin-bottom: 48px; }
+.services--tiles .tiles { order: 2; }
+.services--tiles .carousel-arrows { order: 3; align-self: center; margin-top: 36px; gap: 14px; }
+.tiles { gap: 28px; grid-auto-columns: calc((100% - 56px) / 3); }
+.tile { aspect-ratio: auto; background: transparent; color: var(--color-text); display: flex; flex-direction: column; overflow: visible; }
+.tile__img { position: relative; inset: auto; z-index: 0; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 10px; }
+.tile__img::after { display: none; }
+.tile__img img { transition: transform 1.4s cubic-bezier(.25,.6,.3,1); }
+.tile:hover .tile__img img { transform: scale(1.05); }
+.tile__body { position: static; padding: 20px 4px 0; gap: 8px; }
+.tile__label { color: var(--color-muted); }
+.tile__title { color: var(--color-heading); font-size: 26px; font-weight: 300; }
+.tile__text { font-size: 15px; color: var(--color-text); }
+.tile__meta { font-size: 14px; color: var(--color-heading); font-weight: 600; opacity: 1; }
+.tile__link { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--terra); }
+.tile__link .icon { width: 14px; height: 14px; transition: transform .3s; }
+.tile:hover .tile__link .icon { transform: translateX(3px); }
+
+/* ---------- about: молочный фон, фото 4:5 ---------- */
+.about { background: var(--color-bg-soft); }
+.about__grid { align-items: center; }
+.about__media { aspect-ratio: 4 / 5; border-radius: 10px; max-width: 520px; }
+.about__body .section-title { font-size: clamp(30px, 3vw, 40px); }
+.checklist { gap: 0; margin-top: 24px; border-top: 1px solid var(--color-border); }
+.checklist li { padding: 14px 0; border-bottom: 1px solid var(--color-border); font-family: var(--font-main); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-heading); }
+.checklist .icon { background: none; color: var(--color-accent); }
+
+/* ---------- banner: во всю ширину, антиква по центру ---------- */
+.banner--full { min-height: min(86vh, 760px); }
+.banner::after { background: linear-gradient(180deg, rgba(20,16,12,.2), rgba(20,16,12,.6)); }
+.banner__eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; opacity: .9; }
+.banner__title { font-size: clamp(34px, 4.4vw, 60px); font-weight: 300; max-width: 820px; }
+@media (prefers-reduced-motion: no-preference) {
+  .banner__img { transform: scale(1.06); transition: transform 2.4s cubic-bezier(.25,.6,.3,1); }
+  .banner.is-visible .banner__img { transform: none; }
+}
+
+/* ---------- gallery «ритуалы» ---------- */
+.gallery__grid { gap: 28px; }
+.work.card { background: transparent; box-shadow: none; border-radius: 0; }
+.gallery__img { border-radius: 10px; aspect-ratio: 4 / 3; }
+.gallery__img img { transition: transform 1.4s cubic-bezier(.25,.6,.3,1); }
+.work:hover .gallery__img img { transform: scale(1.04); }
+.work__body { padding: 20px 4px 0; text-align: center; }
+.work__title { font-size: 24px; font-weight: 300; }
+.work__text { font-size: 15px; color: var(--color-text); }
+
+/* ---------- prices: три колонки ---------- */
+.prices--table { background: var(--color-bg-soft); }
+.price-col__title { font-size: 22px; font-weight: 300; border-bottom: 1px solid var(--color-accent); text-align: left; }
+.price-row__dots { display: none; }
+.price-row { justify-content: space-between; border-color: var(--color-border); }
+.price-row__value { font-weight: 600; color: var(--color-heading); }
+.prices__foot { justify-content: center; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+
+/* ---------- steps ---------- */
+.steps.section--soft { background: #fff; }
+@media (min-width: 1101px) { .steps__list { grid-template-columns: repeat(4, 1fr); gap: 28px; } }
+@media (max-width: 1100px) and (min-width: 701px) { .steps__list { grid-template-columns: repeat(2, 1fr); } }
+.step.card { background: transparent; box-shadow: none; text-align: center; padding: 8px 12px; }
+.step:hover { transform: none; box-shadow: none; }
+.step__num { background: transparent; color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); font-family: var(--font-heading); font-weight: 400; font-size: 18px; width: 52px; height: 52px; margin: 0 auto 18px; }
+.step__title { font-size: 22px; font-weight: 300; }
+.step__text { font-size: 15px; color: var(--color-text); }
+
+/* ---------- team: монограммы в сливовых кругах ---------- */
+.team { background: var(--color-bg-soft); }
+.team .section-head--row { flex-direction: column; align-items: center; text-align: center; }
+.doc { text-align: center; align-items: center; }
+.doc__media { aspect-ratio: 1; width: 78%; border-radius: 50%; background: var(--color-accent-soft); }
+.doc__mono { font-family: var(--font-heading); font-weight: 300; font-size: clamp(48px, 5vw, 72px); color: var(--color-accent); background: transparent; letter-spacing: .04em; }
+.doc__exp { left: 50%; transform: translateX(-50%); bottom: 10%; background: #fff; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-muted); }
+.doc__body { align-items: center; }
+.doc__name { font-size: 22px; font-weight: 300; }
+.doc__role { color: var(--terra); }
+.doc__link { color: var(--color-accent); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+
+/* ---------- reviews: цитаты антиквой ---------- */
+.reviews.section--soft { background: #fff; }
+.reviews .section-head--row { align-items: center; }
+.review.card { background: var(--color-bg-soft); box-shadow: none; border-radius: 10px; padding: 32px 28px; }
+.review__text { font-family: var(--font-heading); font-size: 19px; font-weight: 300; line-height: 1.5; color: var(--color-heading); }
+.avatar { background: var(--color-accent); color: #fff; font-family: var(--font-heading); font-weight: 400; }
+.star.is-on { fill: var(--terra); }
+
+/* ---------- faq ---------- */
+.faq__list { gap: 0; border-top: 1px solid var(--color-border); }
+.faq-item { background: none; border-radius: 0; border-bottom: 1px solid var(--color-border); }
+.faq-item[open] { background: none; box-shadow: none; }
+.faq-item summary { font-family: var(--font-heading); font-weight: 400; font-size: 20px; padding: 22px 4px; }
+.faq-item__a { padding: 0 4px 22px; }
+.faq__phone { font-family: var(--font-heading); font-weight: 300; font-size: 28px; color: var(--color-accent); }
+
+/* ---------- booking: тёмный блок с антиквой ---------- */
+.booking__box { background: var(--color-dark); border-radius: 10px; }
+.booking__box .section-title { font-size: clamp(32px, 3.4vw, 46px); }
+.booking__perks li { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.booking__perks .icon { color: #d7b7d3; }
+.booking__call a { font-family: var(--font-heading); font-weight: 300; font-size: 30px; }
+.booking__form-wrap { border-radius: 10px; }
+.field input, .field select, .field textarea { border-radius: 5px; background: var(--color-bg-soft); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent); }
+
+/* ---------- contacts & footer ---------- */
+.contacts.section--soft { background: var(--color-bg-soft); }
+.contacts__info.card { box-shadow: none; }
+.info-row__icon { background: var(--color-accent-soft); color: var(--color-accent); border-radius: 50%; }
+.map__pin { background: var(--color-accent); }
+.footer { background: var(--color-bg-soft); border-top: 1px solid var(--color-border); }
+.footer__title { color: var(--color-heading); }
+.footer__col a:hover { color: var(--color-accent); }
+
+/* ---------- анимация появления: медленная ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal .reveal { transform: translate3d(0, 18px, 0); transition: opacity 1.2s cubic-bezier(.25,.6,.3,1), transform 1.2s cubic-bezier(.25,.6,.3,1); transition-delay: var(--d, 0ms); }
+}
+
+/* ---------- адаптив ---------- */
+@media (max-width: 1024px) {
+  :root { --section-y: 80px; }
+  .tiles { grid-auto-columns: calc((100% - 28px) / 2); }
+  .about__media { aspect-ratio: 16 / 10; max-width: none; }
+  .header--center .header__actions .header__cta { display: none; }
+}
+@media (max-width: 600px) {
+  :root { --section-y: 64px; }
+  .logo { font-size: 20px; letter-spacing: .18em; }
+  .logo::before { width: 18px; height: 10px; }
+  .hero--cover .hero__inner { padding-bottom: 56px; }
+  .hero--cover .hero__title { font-size: clamp(32px, 9vw, 40px); }
+  .hero--cover .hero__text { font-size: 16px; }
+  .hero--cover .hero__buttons { width: 100%; flex-direction: column; }
+  .hero--cover .hero__buttons .btn { width: 100%; }
+  .section-title { font-size: clamp(28px, 8vw, 34px); }
+  .tiles { grid-auto-columns: 84%; gap: 16px; }
+  .services--tiles .carousel-arrows { display: none; }
+  .tile__title { font-size: 23px; }
+  .banner--full { min-height: 560px; }
+  .gallery__grid { gap: 36px; }
+  .doc__media { width: 86%; }
+  .review.card { padding: 24px 20px; }
+  .review__text { font-size: 17px; }
+  .faq-item summary { font-size: 18px; }
+}
+/* планшет: три «ритуала» в ряд, без одинокой карточки */
+@media (min-width: 701px) and (max-width: 1024px) { .gallery__grid { gap: 18px; } .gallery__grid .work__title { font-size: 19px; } }

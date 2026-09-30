@@ -1,0 +1,56 @@
+/* =====================================================================
+   THEME «Анатомия» — «музейная» тема: чёрный, белый, лайм, мята и циан, без скруглений.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   Шрифт Commissioner — SIL Open Font License (assets/fonts/OFL-LICENSE.txt).
+   ===================================================================== */
+@font-face { font-family: "Commissioner"; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url(assets/fonts/commissioner-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Commissioner"; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url(assets/fonts/commissioner-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент (кнопки, ссылки) --- */
+  --color-accent: #000000;
+  --color-accent-hover: #262626;
+  --color-accent-soft: #eeeeee;
+  --color-on-accent: #ffffff;
+
+  /* --- Текст --- */
+  --color-heading: #000000;
+  --color-text: #1a1a1a;
+  --color-muted: #5c5c5c;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #eeeeee;
+  --color-surface: #ffffff;
+  --color-border: #000000;
+  --color-dark: #000000;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(255, 255, 255, .97);
+  --color-field-focus: #ffffff;
+
+  /* --- Статусы --- */
+  --color-success: #2f6b00;
+  --color-error: #cf2929;
+  --color-rating: #000000;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #eeeeee; --map-road: #ffffff; --map-park: #8fc421; --map-water: #6bdcc5;
+
+  /* --- Шрифты --- */
+  --font-main: "Commissioner", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Commissioner", Arial, sans-serif;
+  --weight-heading: 900;
+
+  /* --- Скругления --- */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+  --radius-pill: 999px;
+
+  /* --- Размеры --- */
+  --container: 1440px;
+  --header-h: 76px;
+}

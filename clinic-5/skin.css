@@ -1,0 +1,105 @@
+/* =====================================================================
+   SKIN «Своя клиника» — оформление в духе мобильных банков
+   (референс по принципам: monzo.com — банк / финтех-приложение).
+   Принципы: тёмно-синий текст и тёмные блоки, горячий коралловый
+   акцент, мятные фоны, очень крупные скругления (32px), большая
+   скруглённая карточка-фото первым экраном, карточки «продуктов»
+   с иконкой, ценой-«таблеткой» и круглой стрелкой, лента плиток.
+   ===================================================================== */
+:root { --navy: #091723; --navy-2: #112231; --coral: var(--color-accent); --mint: #f2f8f3; --section-y: 96px; }
+body { font-size: 17px; }
+h1, h2, h3, .section-title, .hero__title, .banner__title, .band__title { font-weight: 700; letter-spacing: -.02em; color: var(--navy); }
+.section-title { font-size: clamp(34px, 4.2vw, 56px); line-height: 1.05; }
+.section-subtitle { color: var(--color-muted); font-size: 18px; }
+.section-eyebrow { color: var(--coral); text-transform: none; letter-spacing: 0; font-weight: 500; }
+.demo-badge { background: var(--color-accent-soft); color: var(--navy); }
+
+/* логотип: коралловый круг + строчный вордмарк */
+.logo { font-weight: 700; font-size: 23px; letter-spacing: -.03em; color: var(--navy); gap: 8px; }
+.logo::before { content: ""; width: 22px; height: 22px; border-radius: 50% 50% 50% 8px; background: var(--coral); flex: none; }
+
+.btn { font-weight: 500; letter-spacing: 0; }
+.btn--primary:hover { box-shadow: 0 8px 24px rgba(255,79,64,.3); }
+.btn--ghost, .btn--outline, .btn--soft { background: var(--mint); color: var(--navy); box-shadow: none; border: 0; }
+.btn--ghost:hover, .btn--outline:hover, .btn--soft:hover { background: var(--navy); color: #fff; }
+.round-btn { background: var(--mint); color: var(--navy); box-shadow: none; }
+.round-btn:hover:not(:disabled) { background: var(--coral); color: #fff; }
+
+.header { box-shadow: none; }
+.header.is-scrolled { box-shadow: 0 1px 0 var(--color-border); }
+.nav a { color: var(--navy); font-weight: 500; }
+.nav a:hover, .nav a.is-active { background: var(--mint); color: var(--navy); }
+
+/* ---------- hero: большая скруглённая карточка-фото ---------- */
+.hero--cover { width: calc(100% - 2 * var(--gutter)); max-width: calc(var(--container) + 160px); margin: 8px auto 0; border-radius: 32px; min-height: min(84svh, 720px); background: var(--navy); }
+.hero--cover .hero__bg::after { background: linear-gradient(90deg, rgba(9,23,35,.78) 0%, rgba(9,23,35,.35) 55%, rgba(9,23,35,0) 85%); }
+.hero--cover .hero__inner { padding-bottom: 64px; padding-left: 56px; padding-right: 56px; max-width: none; }
+.hero--cover .hero__title { color: #fff; font-size: clamp(40px, 5.4vw, 80px); line-height: 1; letter-spacing: -.03em; max-width: 760px; }
+.hero--cover .hero__text { font-size: 19px; max-width: 520px; }
+.hero--cover .hero__eyebrow { display: inline-flex; padding: 6px 14px; border-radius: 999px; background: var(--coral); color: #fff; opacity: 1; font-size: 14px; font-weight: 500; text-transform: none; letter-spacing: 0; }
+
+/* ---------- программы как «продукты» ---------- */
+.programs__grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.prog { background: var(--mint); box-shadow: none; border-radius: 32px; position: relative; transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.prog:hover { transform: translateY(-4px); }
+.prog--featured { background: var(--navy); }
+.prog--featured .prog__title, .prog--featured .prog__price strong, .prog--featured .prog__list { color: #fff; }
+.prog--featured .prog__for, .prog--featured .prog__price-label, .prog--featured .prog__time { color: rgba(255,255,255,.7); }
+.prog__body { padding: 28px 26px 26px; }
+.prog__icon { width: 52px; height: 52px; border-radius: 50%; background: #fff; color: var(--navy); }
+.prog--featured .prog__icon { background: var(--coral); color: #fff; }
+.prog__badge { background: var(--coral); color: #fff; font-weight: 500; }
+.prog__title { font-size: 26px; font-weight: 700; margin-top: 8px; }
+.prog__list .icon { color: var(--coral); }
+.prog__foot { flex-direction: row; align-items: center; }
+.prog__price { flex-direction: row-reverse; justify-content: flex-end; align-items: baseline; gap: 6px; }
+.prog__price strong { font-size: 30px; font-weight: 700; }
+.prog__btn { border-radius: 999px; }
+
+/* ---------- лента плиток услуг ---------- */
+.tiles { grid-auto-columns: calc((100% - 48px) / 4); }
+.tile { border-radius: 32px; }
+.tile__img::after { background: linear-gradient(180deg, rgba(9,23,35,0) 40%, rgba(9,23,35,.82)); }
+.tile__title { font-size: 24px; font-weight: 700; }
+.tile__text { font-size: 14px; opacity: .9; }
+.tile__meta { display: inline-flex; align-self: flex-start; margin-top: 6px; padding: 4px 12px; border-radius: 999px; background: #fff; color: var(--navy); opacity: 1; font-weight: 500; font-size: 13px; }
+.tile::after { content: ""; position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%; background: var(--coral) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E") center / 20px no-repeat; transition: transform .3s; }
+.tile:hover::after { transform: rotate(45deg); }
+
+/* ---------- панели ---------- */
+.about__media, .banner, .contacts__card, .booking__form, .review, .step, .lic, .faq__item, .card { border-radius: 32px; }
+.about { background: #fff; }
+.band__box { border-radius: 32px; background: var(--coral); color: #fff; }
+.band__title { color: #fff; }
+.band__link { background: #fff; color: var(--navy); padding: 12px 22px; border-radius: 999px; font-weight: 500; }
+.banner { background: var(--navy); }
+.banner__title { color: #fff; }
+.banner .btn { background: var(--coral); color: #fff; border: 0; }
+.section--soft, .reviews, .steps { background: var(--mint); }
+.review { box-shadow: none; }
+.doc__media { border-radius: 32px; }
+.doc__media:has(.doc__mono) { aspect-ratio: 1 / 1; }
+.doc__mono { background: var(--mint); color: var(--navy); font-weight: 700; }
+.team .doc:nth-child(odd) .doc__mono { background: var(--color-accent-soft); color: var(--coral); }
+.lic__icon { background: var(--mint); color: var(--navy); border-radius: 50%; }
+.avatar { background: var(--color-accent-soft); color: var(--coral); }
+
+@media (max-width: 1100px) { .programs__grid { grid-template-columns: repeat(2, 1fr); } .tiles { grid-auto-columns: calc((100% - 32px) / 3); } }
+@media (max-width: 700px) {
+  :root { --section-y: 68px; }
+  .hero--cover { border-radius: 24px; width: calc(100% - 20px); margin-top: 4px; min-height: min(84svh, 640px); }
+  .hero--cover .hero__bg::after { background: linear-gradient(0deg, rgba(9,23,35,.85) 0%, rgba(9,23,35,.35) 60%, rgba(9,23,35,.1) 100%); }
+  .hero--cover .hero__inner { padding: 0 20px 28px; }
+  .programs__grid { grid-template-columns: 1fr; }
+  .prog, .tile, .band__box, .about__media, .banner, .doc__media { border-radius: 24px; }
+  .tiles { grid-auto-columns: 78%; }
+}
+
+/* подвал: тёмный */
+.footer { background: var(--navy); color: rgba(255,255,255,.72); border-top: 0; }
+.footer .logo, .footer__title, .footer__phone, .footer__email, .footer__addr, .footer__copy { color: #fff; }
+.footer__tagline, .footer__hours, .footer__legal, .footer__demo { color: rgba(255,255,255,.6); }
+.footer__top { border-bottom-color: rgba(255,255,255,.16); }
+.footer__col a:hover { color: var(--coral); }
+.footer .social { background: rgba(255,255,255,.1); color: #fff; box-shadow: none; }
+.footer .social:hover { background: #fff; color: var(--navy); }

@@ -1,0 +1,56 @@
+/* =====================================================================
+   THEME «Питлейн» — белая «спортивная» тема: чёрный, белый и неон-лайм.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   ===================================================================== */
+@font-face { font-family: "Oswald"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(assets/fonts/oswald-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Oswald"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(assets/fonts/oswald-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент: чёрный (кнопки) + лайм (выделения) --- */
+  --color-accent: #111111;
+  --color-accent-hover: #3b3b3b;
+  --color-accent-soft: #f5f5f5;
+  --color-on-accent: #ffffff;
+  --color-volt: #d7ff35;              /* неоновый лайм: бегущая строка, метки */
+
+  /* --- Текст --- */
+  --color-heading: #111111;
+  --color-text: #39393b;
+  --color-muted: #707072;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f5;
+  --color-surface: #ffffff;
+  --color-border: #e5e5e5;
+  --color-dark: #111111;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(255, 255, 255, .96);
+  --color-field-focus: #ffffff;
+
+  /* --- Статусы --- */
+  --color-success: #007d48;
+  --color-error: #d30005;
+  --color-rating: #111111;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #f0f0f0; --map-road: #ffffff; --map-park: #e4ecd9; --map-water: #dde6ee;
+
+  /* --- Шрифты --- */
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --weight-heading: 600;
+
+  /* --- Скругления: плитки прямые, кнопки-«таблетки» --- */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+
+  /* --- Размеры --- */
+  --container: 1344px;
+  --header-h: 64px;
+}

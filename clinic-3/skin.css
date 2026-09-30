@@ -1,0 +1,114 @@
+/* =====================================================================
+   SKIN «Норма» — оформление в духе премиальных автобрендов
+   (референс по принципам: polestar.com — электромобили).
+   Принципы: чёрно-белая гамма и серые плоскости, почти прямые углы,
+   лёгкий гротеск (300) крупного кегля, тонкая полоса-объявление,
+   полноэкранное «кинематографичное» фото с текстом слева и контурными
+   кнопками, карточки 2 в ряд с тонкими рамками, огромный список ссылок
+   со стрелками, крошечный оранжевый сигнальный акцент.
+   ===================================================================== */
+:root { --signal: #f06e00; --section-y: 112px; }
+body { font-size: 16px; font-weight: 400; }
+h1, h2, .section-title, .hero__title, .banner__title { font-weight: 300; letter-spacing: -.035em; line-height: 1.04; }
+h3 { font-weight: 500; letter-spacing: -.01em; }
+.section-title { font-size: clamp(34px, 4.4vw, 60px); }
+.section-subtitle { color: var(--color-muted); font-size: 17px; max-width: 620px; }
+.section-eyebrow { color: var(--color-muted); text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 14px; }
+.section-eyebrow::before { content: ""; display: inline-block; width: 6px; height: 6px; background: var(--signal); margin-right: 8px; vertical-align: middle; }
+.demo-badge { background: var(--color-bg-soft); color: var(--color-heading); border-radius: 2px; font-weight: 400; }
+
+/* логотип: разреженные прописные + оранжевая точка */
+.logo { font-weight: 500; font-size: 20px; letter-spacing: .32em; color: #101010; }
+.logo::after { content: ""; width: 6px; height: 6px; background: var(--signal); margin-left: -2px; }
+
+/* кнопки: прямоугольные, тонкие */
+.btn { border-radius: 2px; font-weight: 400; letter-spacing: 0; min-height: 44px; padding: 10px 22px; }
+.btn--primary { background: #101010; color: #fff; }
+.btn--primary:hover { background: #333; box-shadow: none; }
+.btn--outline, .btn--ghost, .btn--soft { background: transparent; color: #101010; box-shadow: inset 0 0 0 1px #101010; border: 0; }
+.btn--outline:hover, .btn--ghost:hover, .btn--soft:hover { background: #101010; color: #fff; }
+.btn--outline-light { border-radius: 2px; border: 1px solid rgba(255,255,255,.85); background: transparent; }
+.round-btn { border-radius: 2px; background: transparent; box-shadow: inset 0 0 0 1px #101010; color: #101010; }
+.round-btn:hover:not(:disabled) { background: #101010; color: #fff; }
+.chip, .tab, .tabs button { border-radius: 2px; }
+
+/* шапка и объявление */
+.announce { background: #f0f0f0; color: #101010; font-size: 13px; }
+.announce a { text-decoration: none; }
+.announce a::after { content: " →"; }
+.header { box-shadow: 0 1px 0 #e6e6e3; }
+.nav a { font-weight: 400; color: #101010; border-radius: 2px; }
+.nav a:hover, .nav a.is-active { background: #f0f0f0; color: #101010; }
+
+/* ---------- hero: полноэкранное фото, текст слева сверху ---------- */
+.hero--cover { min-height: min(92svh, 860px); align-items: stretch; }
+.hero--cover .hero__bg::after { background: linear-gradient(90deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,.18) 55%, rgba(0,0,0,0) 80%), linear-gradient(180deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,.3) 100%); }
+.hero--cover .hero__inner { display: flex; flex-direction: column; justify-content: flex-start; padding-top: 72px; padding-bottom: 56px; }
+.hero--cover .hero__content { max-width: 1000px; }
+.hero--cover .hero__text, .hero--cover .hero__eyebrow { max-width: 560px; }
+.hero--cover .hero__title { font-size: clamp(40px, 5.6vw, 84px); font-weight: 300; }
+.hero--cover .hero__accent { display: block; color: rgba(255,255,255,.72); }
+.hero--cover .hero__text { font-size: 17px; margin-top: 20px; opacity: .9; }
+.hero--cover .hero__eyebrow { font-size: 14px; text-transform: none; letter-spacing: 0; }
+.hero--cover .hero__buttons { margin-top: 28px; }
+
+/* ---------- направления: 2 в ряд, тонкие рамки ---------- */
+.services__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.svc-card { border-radius: 3px; background: #fff; box-shadow: inset 0 0 0 1px #d9d9d6; }
+.svc-card:hover { transform: none; box-shadow: inset 0 0 0 1px #101010; background: #fff; }
+.svc-card__media { margin: 0; border-radius: 0; aspect-ratio: 16 / 9; }
+.svc-card__icon { display: none; }
+.svc-card__body { padding: 22px 24px 24px; }
+.svc-card__title { font-size: 24px; font-weight: 400; letter-spacing: -.02em; }
+.svc-card__foot .btn { box-shadow: none; padding: 0; min-height: 0; background: none; color: #101010; }
+.svc-card__foot .btn::after { content: "→"; margin-left: 8px; transition: transform .25s; }
+.svc-card__foot .btn:hover { background: none; color: #101010; }
+.svc-card__foot .btn:hover::after { transform: translateX(4px); }
+.svc-card__price { font-weight: 500; }
+
+/* ---------- огромный список ссылок ---------- */
+.links-block .links-list__text { font-weight: 300; }
+.links-list__item:hover .links-list__text { color: #6b6b6b; }
+.links-list__note { font-size: 14px; }
+
+/* ---------- тёмный баннер-обещание ---------- */
+.banner-section--full { padding-top: 0; padding-bottom: 0; }
+.banner--full .banner__title { font-weight: 300; font-size: clamp(32px, 4vw, 56px); max-width: 780px; }
+.banner--full .banner__eyebrow { text-transform: none; letter-spacing: 0; }
+
+/* ---------- программы: минимализм ---------- */
+.prog { border-radius: 3px; box-shadow: inset 0 0 0 1px #d9d9d6; }
+.prog--featured { box-shadow: inset 0 0 0 1px #101010; }
+.prog__badge { border-radius: 2px; background: var(--signal); color: #fff; font-weight: 400; }
+.prog__title { font-size: 28px; font-weight: 300; letter-spacing: -.03em; }
+.prog__list .icon { color: #101010; }
+.prog__price strong { font-weight: 300; font-size: 32px; letter-spacing: -.02em; }
+.prog--featured .prog__btn { background: #101010; color: #fff; }
+
+/* прочее */
+.section--soft, .reviews, .steps { background: #f0f0f0; }
+.review, .step, .card, .lic, .contacts__card, .booking__form { border-radius: 3px; box-shadow: none; }
+.doc__media { border-radius: 2px; }
+.doc__media:has(.doc__mono) { aspect-ratio: 1 / 1; background: #f0f0f0; }
+.doc__mono { font-weight: 300; color: #101010; letter-spacing: .08em; }
+.about__media, .about__img, .banner { border-radius: 0; }
+.lic__icon { border-radius: 2px; background: #f0f0f0; color: #101010; }
+.stars .star.is-on { fill: var(--signal); }
+
+@media (max-width: 800px) { .services__grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  :root { --section-y: 72px; }
+  .hero--cover .hero__inner { padding-top: 40px; padding-bottom: 32px; justify-content: space-between; }
+  .hero--cover .hero__bg::after { background: linear-gradient(180deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.35) 100%); }
+  .announce { font-size: 12px; }
+  .svc-card__title { font-size: 22px; }
+}
+
+/* подвал: тёмный */
+.footer { background: #101010; color: rgba(255,255,255,.72); border-top: 0; }
+.footer .logo, .footer__title, .footer__phone, .footer__email, .footer__addr, .footer__copy { color: #fff; }
+.footer__tagline, .footer__hours, .footer__legal, .footer__demo { color: rgba(255,255,255,.6); }
+.footer__top { border-bottom-color: rgba(255,255,255,.16); }
+.footer__col a:hover { color: #f06e00; }
+.footer .social { background: rgba(255,255,255,.1); color: #fff; box-shadow: none; }
+.footer .social:hover { background: #fff; color: #101010; }

@@ -1,0 +1,65 @@
+/* =====================================================================
+   THEME «мята» — скандинавская тема: шоколадный, бледно-голубой,
+   цветные блоки (жёлтый, голубой, глубокий зелёный).
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   ===================================================================== */
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 300 600; font-display: swap;
+  src: url(assets/fonts/jost-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 300 600; font-display: swap;
+  src: url(assets/fonts/jost-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент: шоколадный --- */
+  --color-accent: #4f3d3a;
+  --color-accent-hover: #2e2321;
+  --color-accent-soft: #efece8;
+  --color-on-accent: #ffffff;
+
+  /* --- Цветные блоки дизайна --- */
+  --block-brown: #4f3d3a;             /* первый экран */
+  --block-sky: #c9def2;               /* заголовок на коричневом, голубые секции */
+  --block-sky-soft: #e3eef8;
+  --block-yellow: #efe56d;
+  --block-green: #2d4a3e;
+  --block-sage: #b7d692;
+  --block-stone: #e9e7e4;
+
+  /* --- Текст --- */
+  --color-heading: #1c1c1c;
+  --color-text: #3a3a3a;
+  --color-muted: #77736f;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f4f3f1;
+  --color-surface: #ffffff;
+  --color-border: #e2e0dc;
+  --color-dark: #4f3d3a;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(255, 255, 255, .97);
+  --color-field-focus: #ffffff;
+
+  /* --- Статусы --- */
+  --color-success: #2d4a3e;
+  --color-error: #b3261e;
+  --color-rating: #4f3d3a;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #efece8; --map-road: #ffffff; --map-park: #dfe9d0; --map-water: #d7e5f2;
+
+  /* --- Шрифты --- */
+  --font-main: "Jost", "Futura", "Century Gothic", Arial, sans-serif;
+  --font-heading: "Jost", "Futura", "Century Gothic", Arial, sans-serif;
+  --weight-heading: 400;
+
+  /* --- Скругления: прямые фото, кнопки-«таблетки» --- */
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 2px;
+  --radius-pill: 60px;
+
+  /* --- Размеры --- */
+  --container: 1400px;
+  --header-h: 60px;
+}

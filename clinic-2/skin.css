@@ -1,0 +1,127 @@
+/* =====================================================================
+   SKIN «Азимут» — оформление в духе сайтов авиакомпаний
+   (референс по принципам: finnair.com — авиаперевозки).
+   Принципы: глубокий индиго в тексте, синие кнопки-«таблетки»,
+   фото первого экрана со скруглением и виджетом «поиска» поверх,
+   ряд быстрых ссылок-иконок, карточки программ как «направления»
+   (фото, подпись, крупная цена, контурная кнопка), песочные фоны.
+   ===================================================================== */
+:root { --indigo: var(--color-heading); --sand: #edebe6; --section-y: 88px; }
+body { font-size: 16px; }
+h1, h2, h3, .section-title { letter-spacing: -.015em; color: var(--indigo); }
+.section-title { font-size: clamp(30px, 3.4vw, 44px); font-weight: 700; line-height: 1.12; }
+.section-subtitle { color: var(--color-muted); font-size: 17px; }
+.section-eyebrow { color: var(--color-accent); text-transform: none; letter-spacing: 0; font-weight: 600; }
+.section--soft { background: var(--color-bg-soft); }
+.demo-badge { background: var(--color-accent-soft); color: var(--indigo); }
+
+/* логотип: круг-«компас» + строчный вордмарк */
+.logo { font-weight: 800; font-size: 25px; letter-spacing: -.03em; color: var(--indigo); gap: 8px; }
+.logo::before { content: ""; width: 24px; height: 24px; border-radius: 50%; background: conic-gradient(from 45deg, var(--color-accent) 0 25%, var(--indigo) 0 50%, var(--color-accent) 0 75%, var(--indigo) 0); flex: none; }
+
+/* кнопки */
+.btn { font-weight: 600; letter-spacing: 0; border-radius: 40px; }
+.btn--primary { background: var(--color-accent); }
+.btn--primary:hover { background: var(--color-accent-hover); box-shadow: none; }
+.btn--outline, .btn--ghost { box-shadow: inset 0 0 0 2px var(--indigo); color: var(--indigo); background: transparent; }
+.btn--outline:hover, .btn--ghost:hover { background: var(--indigo); color: #fff; }
+.round-btn { background: #fff; color: var(--indigo); box-shadow: inset 0 0 0 1.5px var(--indigo); }
+.round-btn:hover:not(:disabled) { background: var(--indigo); color: #fff; }
+
+/* шапка */
+.header { box-shadow: 0 1px 0 var(--color-border); }
+.nav a { color: var(--indigo); font-weight: 500; }
+.nav a:hover, .nav a.is-active { background: var(--color-accent-soft); color: var(--indigo); }
+
+/* ---------- hero: фото со скруглением + «поиск» ---------- */
+.hero--search { padding: 24px 0 8px; }
+.hero--search .hero__media { min-height: 500px; border-radius: 24px; }
+.hero--search .hero__media::after { background: linear-gradient(90deg, rgba(12,2,67,.78), rgba(12,2,67,.3) 55%, rgba(12,2,67,0) 80%); }
+.hero--search .hero__content { padding: 56px 56px 120px; max-width: 640px; }
+.hero--search .hero__title { font-weight: 700; font-size: clamp(34px, 4.2vw, 60px); line-height: 1.05; letter-spacing: -.02em; }
+.hero--search .hero__eyebrow { display: inline-flex; padding: 6px 14px; border-radius: 40px; background: rgba(255,255,255,.18); backdrop-filter: blur(6px); font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; }
+.finder { margin: -72px 40px 0; border-radius: 16px; box-shadow: 0 16px 48px rgba(12,2,67,.16); padding: 24px 28px 22px; }
+.finder__title { font-size: 20px; font-weight: 700; color: var(--indigo); }
+.finder input, .finder select { border: 1.5px solid #c9cbd9; border-radius: 8px; color: var(--indigo); font-weight: 500; }
+.finder input:focus, .finder select:focus { border-color: var(--color-accent); outline: 2px solid var(--color-accent-soft); }
+.finder__label { color: var(--indigo); font-weight: 600; }
+.finder__btn { padding-left: 28px; padding-right: 28px; }
+
+/* ---------- быстрые ссылки (features) — ряд иконок ---------- */
+#quick { background: transparent; padding: 40px 0 8px; }
+#quick .features__grid { grid-template-columns: repeat(5, 1fr); gap: 12px; }
+#quick .feature { background: transparent; box-shadow: none; border-radius: 12px; padding: 16px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: background-color .2s; }
+#quick .feature:hover { background: var(--color-accent-soft); transform: none; }
+#quick .feature__icon { width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-soft); color: var(--indigo); margin: 0 0 4px; }
+#quick .feature__title { font-size: 16px; font-weight: 700; color: var(--indigo); }
+#quick .feature__text { font-size: 14px; color: var(--color-muted); }
+
+/* ---------- программы как «направления» ---------- */
+.programs__grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.prog { box-shadow: none; border-radius: 0; background: transparent; overflow: visible; }
+.prog__media { border-radius: 8px; aspect-ratio: 4 / 3; }
+.prog__media img { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.prog:hover .prog__media img { transform: scale(1.04); }
+.prog__media .prog__badge { background: #fff; color: var(--indigo); }
+.prog__body { padding: 14px 0 0; gap: 4px; }
+.prog__title { font-size: 20px; font-weight: 700; }
+.prog__for { margin: 0; font-size: 14px; }
+.prog__foot { padding-top: 10px; margin-top: 4px; }
+.prog__price { flex-direction: row; align-items: baseline; gap: 6px; }
+.prog__price-label { font-size: 14px; color: var(--indigo); }
+.prog__price strong { font-size: 34px; font-weight: 800; color: var(--indigo); letter-spacing: -.02em; }
+.prog__btn { width: auto; align-self: flex-start; margin-top: 10px; min-height: 42px; padding: 8px 20px; }
+
+/* ---------- бенто: светло-голубые плитки ---------- */
+.bento__item { border-radius: 16px; background: var(--color-accent-soft); box-shadow: none; }
+.bento__item:hover { background: #d3e0f7; }
+.bento__icon { background: #fff; color: var(--indigo); }
+.bento__title { color: var(--indigo); font-weight: 700; }
+.bento__go { background: var(--color-accent); color: #fff; }
+
+/* баннер, цены, прочее */
+.banner { border-radius: 24px; }
+.prices .tabs button.is-active, .tab.is-active { background: var(--indigo); color: #fff; }
+.about__stats strong, .stat__value { color: var(--indigo); }
+.steps { background: var(--sand); }
+.step { border-radius: 16px; box-shadow: none; }
+.step__num { background: var(--indigo); color: #fff; }
+.reviews { background: var(--color-bg-soft); }
+.review { border-radius: 16px; box-shadow: none; }
+.doc__mono { background: var(--color-accent-soft); color: var(--indigo); font-weight: 800; }
+.lic { border-radius: 12px; }
+.lic__icon { background: var(--color-accent-soft); color: var(--indigo); }
+
+@media (max-width: 1100px) { .programs__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  #quick .features__grid { grid-template-columns: repeat(5, minmax(120px, 1fr)); overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); }
+}
+@media (max-width: 700px) {
+  .hero--search .hero__media { min-height: 420px; border-radius: 16px; }
+  .hero--search .hero__media::after { background: linear-gradient(0deg, rgba(12,2,67,.75), rgba(12,2,67,.05) 80%); }
+  .hero--search .hero__content { padding: 24px 20px 84px; }
+  .finder { margin: -60px 10px 0; padding: 18px 16px; }
+  .finder__title { font-size: 18px; }
+  #quick { padding-top: 28px; }
+  #quick .feature { padding: 10px 4px; }
+  #quick .feature__icon { width: 48px; height: 48px; }
+  .programs__grid { grid-template-columns: 1fr 1fr; gap: 20px 12px; }
+  .prog__title { font-size: 16px; }
+  .prog__price strong { font-size: 24px; }
+  .prog__price-label { font-size: 12px; }
+  .prog__time { display: none; }
+  .prog__btn { width: 100%; padding: 8px 10px; font-size: 14px; }
+}
+/* монограммы врачей — компактнее фото */
+.doc__media:has(.doc__mono) { aspect-ratio: 5 / 4; }
+.doc__mono { font-size: clamp(40px, 4vw, 56px); }
+
+/* подвал: тёмный */
+.footer { background: var(--indigo); color: rgba(255,255,255,.72); border-top: 0; }
+.footer .logo, .footer__title, .footer__phone, .footer__email, .footer__addr, .footer__copy { color: #fff; }
+.footer .logo::before { background: conic-gradient(from 45deg, var(--color-accent) 0 25%, #fff 0 50%, var(--color-accent) 0 75%, #fff 0); }
+.footer__tagline, .footer__hours, .footer__legal, .footer__demo { color: rgba(255,255,255,.6); }
+.footer__top { border-bottom-color: rgba(255,255,255,.16); }
+.footer__col a:hover { color: #9dbcf2; }
+.footer .social { background: rgba(255,255,255,.1); color: #fff; box-shadow: none; }
+.footer .social:hover { background: #fff; color: var(--indigo); }

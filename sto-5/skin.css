@@ -1,0 +1,215 @@
+/* =====================================================================
+   SKIN «Чистая линия» — оформление в духе fashion-журналов и
+   люксового e-commerce (референс по принципам: ssense.com).
+   Принципы: чисто белый фон, чёрный текст, огромный гротеск капслоком,
+   антиква для подписей и подзаголовков, логотип по центру, мелкая
+   навигация капслоком, фото без рамок и теней, тонкие чёрные линии,
+   почти нулевые скругления, анимация только прозрачностью.
+   ===================================================================== */
+body { font-size: 15px; line-height: 1.55; }
+h1, h2, h3 { text-transform: uppercase; letter-spacing: -.02em; font-weight: 400; }
+::selection { background: #000; color: #fff; }
+:root { --section-y: 104px; }
+.section--soft { background: transparent; }
+.section-head { max-width: none; margin-bottom: 40px; text-align: center; }
+.section-head--row { text-align: left; }
+.section-title { font-size: clamp(34px, 5.2vw, 76px); line-height: .98; letter-spacing: -.035em; }
+.section-subtitle { font-family: var(--font-serif); font-size: 17px; color: var(--color-text); margin: 16px auto 0; max-width: 620px; }
+.section-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 14px; }
+.section-note { font-family: var(--font-serif); font-style: italic; font-size: 13px; color: var(--color-muted); }
+.demo-badge { background: transparent; box-shadow: inset 0 0 0 1px #000; color: #000; border-radius: 0; font-size: 10px; letter-spacing: .06em; vertical-align: middle; }
+.card { background: transparent; box-shadow: none; }
+
+/* logo */
+.logo { font-size: 21px; font-weight: 500; letter-spacing: .06em; }
+
+/* buttons: тонкие прямоугольники капслоком */
+.btn { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; min-height: 38px; padding: 8px 20px; border-width: 1px; }
+.btn--lg { min-height: 48px; font-size: 12px; }
+.btn--sm { min-height: 32px; padding: 6px 14px; font-size: 11px; }
+.btn--primary:hover { background: #333; box-shadow: none; }
+.btn--outline { border-color: #000; }
+.btn--soft { background: transparent; color: #000; box-shadow: inset 0 0 0 1px #000; }
+.btn--soft:hover { background: #000; color: #fff; }
+.round-btn { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px #000; color: #000; width: 40px; height: 40px; }
+.round-btn:hover:not(:disabled) { background: #000; color: #fff; }
+.chip { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px var(--color-border); text-transform: uppercase; font-size: 11px; letter-spacing: .04em; }
+.chip:hover { background: #000; color: #fff; }
+
+/* header: мелкая навигация, логотип по центру */
+.header { box-shadow: none; }
+.header.is-scrolled { box-shadow: 0 1px 0 #000; }
+.nav a, .hbar__link { font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: 6px 10px; }
+.nav a:hover, .nav a.is-active { color: #000; text-decoration: underline; text-underline-offset: 4px; }
+.hbar__nav a:first-child { margin-left: -10px; }
+.hbar__phone { font-size: 11px; font-weight: 500; letter-spacing: .04em; }
+.hbar__phone .icon { display: none; }
+.header__cta { min-height: 30px; padding: 5px 14px; }
+.drawer__panel, .drawer__head { background: #fff; }
+.drawer__nav a { text-transform: uppercase; font-size: 22px; letter-spacing: -.01em; }
+
+/* ---------- hero: журнальная обложка ---------- */
+.hero--editorial { padding-top: 40px; text-align: center; }
+.hero--editorial .hero__eyebrow { display: block; background: none; padding: 0; margin: 0 0 18px; color: var(--color-muted); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+.hero--editorial .hero__title { font-size: clamp(44px, 8.4vw, 136px); line-height: .9; letter-spacing: -.045em; font-weight: 400; max-width: 1300px; margin: 0 auto; text-wrap: balance; }
+.hero__row { justify-content: center; flex-direction: column; align-items: center; gap: 22px; margin-top: 26px; }
+.hero--editorial .hero__text { font-family: var(--font-serif); font-size: clamp(17px, 1.6vw, 22px); line-height: 1.4; max-width: 640px; color: #000; }
+.hero__grid { gap: 32px; margin-top: 56px; padding: 0 5%; text-align: left; }
+.hero__img { aspect-ratio: 4 / 5; background: #f4f4f4; }
+.hero__cap { margin-top: 12px; gap: 20px; font-size: 13px; }
+.hero__cap-label { font-family: var(--font-serif); text-transform: none; color: var(--color-text); font-size: 13px; min-width: 70px; }
+.hero__card:hover .hero__cap span:last-child { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- services: редакционная сетка ---------- */
+.services__grid { gap: 48px 32px; }
+.svc-card, .svc-card:hover { background: transparent; box-shadow: none; transform: none; border-radius: 0; }
+.svc-card__media { margin: 0; border-radius: 0; aspect-ratio: 4 / 5; background: #f4f4f4; }
+.svc-card:hover .svc-card__media img { transform: scale(1.02); }
+.svc-card__icon { display: none; }
+.svc-card__body { padding: 14px 0 0; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; }
+.svc-card__title { font-size: 15px; font-weight: 500; letter-spacing: -.01em; margin-bottom: 4px; grid-column: 1; }
+.svc-card__text { font-family: var(--font-serif); font-size: 14px; color: var(--color-muted); margin-bottom: 14px; grid-column: 1; }
+.svc-card__foot { grid-column: 1 / -1; border-top: 1px solid #000; padding-top: 10px; }
+.svc-card__price { font-size: 13px; font-weight: 500; text-transform: uppercase; }
+.svc-card__meta { flex-direction: row; gap: 12px; align-items: baseline; }
+.svc-card__time { font-family: var(--font-serif); font-size: 13px; }
+.svc-card__time .icon { display: none; }
+
+/* ---------- statement: крупный манифест ---------- */
+.statement { text-align: center; padding: 120px 0; border-top: 1px solid #000; border-bottom: 1px solid #000; margin: 40px var(--gutter) 0; }
+.statement .container { display: flex; flex-direction: column; align-items: center; }
+.statement__text { font-size: clamp(38px, 6.4vw, 104px); line-height: .95; letter-spacing: -.045em; text-transform: uppercase; font-weight: 400; max-width: 1200px; text-wrap: balance; }
+.statement__sub { font-family: var(--font-serif); font-size: clamp(18px, 1.8vw, 26px); line-height: 1.35; color: #000; margin: 28px auto 0; max-width: 720px; }
+.statement__btn { margin-top: 34px; }
+
+/* ---------- about ---------- */
+.about__media { border-radius: 0; aspect-ratio: 4 / 5; }
+.about__text { font-family: var(--font-serif); font-size: 18px; line-height: 1.5; color: #000; }
+.checklist li { font-size: 14px; }
+.checklist .icon { background: none; color: #000; border-radius: 0; }
+.stats { grid-template-columns: repeat(3, 1fr); border-color: #000; }
+.stat__value { font-size: clamp(44px, 4.6vw, 72px); font-weight: 400; letter-spacing: -.04em; }
+.stat__label { font-family: var(--font-serif); font-size: 13px; }
+
+/* ---------- prices: таблица с чёрными линиями ---------- */
+.price-col__title { font-size: 15px; font-weight: 500; border-bottom: 1px solid #000; }
+.price-col .price-row { border-color: var(--color-border); }
+.price-col .price-row__name { font-family: var(--font-serif); font-size: 15px; }
+.price-row__value { font-size: 13px; font-weight: 500; white-space: nowrap; }
+.price-row__dots { display: none; }
+.price-col .price-row { justify-content: space-between; }
+.prices--table .prices__foot { border-top: 1px solid #000; padding-top: 20px; }
+.prices__note { font-family: var(--font-serif); font-style: italic; font-size: 13px; color: var(--color-muted); }
+
+/* ---------- steps: строки-колонки ---------- */
+.steps__list { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.step.card { border-top: 1px solid #000; border-radius: 0; padding: 16px 0 0; }
+.step__num { width: auto; height: auto; background: none; color: var(--color-muted); font-size: 11px; font-weight: 500; letter-spacing: .06em; margin-bottom: 36px; border-radius: 0; }
+.step__num::before { content: "0"; }
+.step__title { font-size: clamp(22px, 2vw, 30px); letter-spacing: -.03em; margin-bottom: 8px; }
+.step__text { font-family: var(--font-serif); font-size: 15px; color: var(--color-text); }
+
+/* ---------- gallery ---------- */
+.work.card { background: transparent; box-shadow: none; border-radius: 0; }
+.ba { border-radius: 0; }
+.ba__label { border-radius: 0; background: #fff; color: #000; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
+.ba__knob { background: #fff; color: #000; border-radius: 0; }
+.work__body { padding: 12px 0 0; display: flex; gap: 20px; align-items: baseline; }
+.work__title { font-size: 14px; font-weight: 500; }
+.work__text { font-family: var(--font-serif); font-size: 13px; color: var(--color-muted); }
+
+/* ---------- reviews: колонки-цитаты ---------- */
+.reviews__grid { gap: 32px; }
+.review.card { border-top: 1px solid #000; border-radius: 0; padding: 20px 0 0; }
+.review__text { font-family: var(--font-serif); font-size: 20px; line-height: 1.4; color: #000; }
+.review__author { border: 0; padding-top: 16px; }
+.avatar { display: none; }
+.review__name { font-size: 12px; text-transform: uppercase; font-weight: 500; letter-spacing: .02em; }
+.review__car { font-family: var(--font-serif); font-size: 13px; }
+.star { width: 12px; height: 12px; fill: #dcdcdc; } .star.is-on { fill: #000; }
+.review__date { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ---------- faq ---------- */
+.faq__list { gap: 0; border-top: 1px solid #000; }
+.faq-item { background: transparent; border-radius: 0; border-bottom: 1px solid var(--color-border); }
+.faq-item[open] { background: transparent; box-shadow: none; }
+.faq-item summary { padding: 20px 0; font-size: 15px; font-weight: 500; text-transform: uppercase; letter-spacing: -.005em; }
+.faq-item__a { padding: 0 0 22px; font-family: var(--font-serif); font-size: 16px; max-width: 680px; color: #000; }
+.faq__head { text-align: left; }
+.faq__phone { font-size: 22px; font-weight: 400; letter-spacing: -.02em; }
+
+/* ---------- booking: белый с чёрной рамкой ---------- */
+.booking__box { background: #fff; color: var(--color-text); border: 1px solid #000; border-radius: 0; }
+.booking__box .section-title { color: #000; }
+.booking__subtitle { font-family: var(--font-serif); opacity: 1; font-size: 18px; }
+.booking__perks li { font-weight: 400; }
+.booking__perks .icon { color: #000; }
+.booking__call a { color: #000; font-weight: 400; letter-spacing: -.02em; }
+.booking__form-wrap { background: #f4f4f4; border-radius: 0; }
+.field__label { font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+.field__opt { text-transform: none; letter-spacing: 0; }
+.field input, .field select, .field textarea { border-radius: 0; border-color: #000; background: #fff; min-height: 44px; }
+.field input:focus, .field select:focus, .field textarea:focus { box-shadow: 0 0 0 1px #000; }
+.checkbox__box { border-radius: 0; border-color: #000; }
+
+/* ---------- contacts ---------- */
+.contacts__info.card { border: 1px solid #000; border-radius: 0; }
+.info-row__icon { background: none; border-radius: 0; color: #000; box-shadow: none; }
+.info-row__label { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.social { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px #000; }
+.map { border-radius: 0; filter: grayscale(1); }
+.map__card { border-radius: 0; box-shadow: 0 0 0 1px #000; }
+.map__pin { background: #000; }
+
+/* ---------- footer: минимальный ---------- */
+.footer { background: #fff; border-top: 1px solid #000; }
+.footer__title { font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: #000; }
+.footer__col a { font-size: 12px; text-transform: uppercase; letter-spacing: .02em; color: #000; }
+.footer__col a:hover { text-decoration: underline; }
+.footer__tagline { font-family: var(--font-serif); font-size: 15px; color: #000; }
+.footer__top, .footer__bottom { border-color: #000; }
+.footer__legal, .footer__demo { font-size: 11px; text-transform: uppercase; letter-spacing: .02em; }
+.footer__copy { font-size: 11px; text-transform: uppercase; font-weight: 500; }
+.social { color: #000; }
+
+.mobile-bar { box-shadow: 0 -1px 0 #000; }
+
+/* ---------- анимация: только прозрачность ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal .reveal { transform: none; transition: opacity .7s ease; transition-delay: var(--d, 0ms); }
+  .hero--editorial .hero__title, .hero--editorial .hero__eyebrow, .hero__row, .hero__grid { animation: cl-fade .9s ease both; }
+  .hero__row { animation-delay: .15s; } .hero__grid { animation-delay: .3s; }
+}
+@keyframes cl-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- адаптив ---------- */
+@media (max-width: 1280px) { .hbar__phone { display: none; } }
+@media (max-width: 1024px) {
+  :root { --section-y: 80px; }
+  .steps__list { grid-template-columns: 1fr 1fr; }
+  .hero__grid { padding: 0; }
+  .statement { padding: 88px 0; }
+}
+@media (max-width: 600px) {
+  :root { --section-y: 64px; }
+  .logo { font-size: 17px; }
+  .hero--editorial { padding-top: 28px; }
+  .hero--editorial .hero__title { font-size: clamp(36px, 10.6vw, 56px); }
+  .hero--editorial .hero__buttons .btn { width: 100%; }
+  .hero__grid { gap: 24px; margin-top: 36px; }
+  .hero__img { aspect-ratio: 4 / 4.4; }
+  .services__grid { grid-template-columns: 1fr 1fr; gap: 28px 12px; }
+  .svc-card__body { display: block; }
+  .svc-card__title { font-size: 13px; }
+  .svc-card__text { font-size: 13px; margin-bottom: 10px; }
+  .svc-card__foot { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .svc-card__meta { flex-direction: column; gap: 0; }
+  .svc-card .btn { width: 100%; }
+  .statement { margin: 16px 16px 0; padding: 64px 0; }
+  .statement__text { font-size: 40px; }
+  .steps__list { grid-template-columns: 1fr; gap: 20px; }
+  .step__num { margin-bottom: 14px; }
+  .review__text { font-size: 18px; }
+  .stat__value { font-size: 44px; }
+}
+@media (max-width: 1024px) and (min-width: 601px) { .about__media { aspect-ratio: 16 / 10; } }

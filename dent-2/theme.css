@@ -1,0 +1,56 @@
+/* =====================================================================
+   THEME «Дентаплан» — яркая «финтех»-тема: лайм + тёмно-зелёный.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   ===================================================================== */
+@font-face { font-family: "Inter Tight"; font-style: normal; font-weight: 500 900; font-display: swap;
+  src: url(assets/fonts/intertight-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Inter Tight"; font-style: normal; font-weight: 500 900; font-display: swap;
+  src: url(assets/fonts/intertight-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент: лайм (кнопки) + тёмно-зелёный (текст, тёмные блоки) --- */
+  --color-accent: #9fe870;
+  --color-accent-hover: #80e142;
+  --color-accent-soft: #e2f6d5;
+  --color-on-accent: #163300;
+  --color-forest: #163300;            /* тёмно-зелёный: заголовки, тёмные карточки */
+
+  /* --- Текст --- */
+  --color-heading: #0e0f0c;
+  --color-text: #454745;
+  --color-muted: #6a6c6a;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f2f4ef;
+  --color-surface: #ffffff;
+  --color-border: #e0e3dc;
+  --color-dark: #163300;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(255, 255, 255, .97);
+  --color-field-focus: #ffffff;
+
+  /* --- Статусы --- */
+  --color-success: #2f5711;
+  --color-error: #cf2929;
+  --color-rating: #163300;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #eef1ea; --map-road: #ffffff; --map-park: #d7f1c4; --map-water: #dbe7e4;
+
+  /* --- Шрифты --- */
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Inter Tight", "Inter", Arial, sans-serif;
+  --weight-heading: 900;
+
+  /* --- Скругления: мягкие карточки, кнопки-«таблетки» --- */
+  --radius-xl: 40px;
+  --radius-lg: 30px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  --radius-pill: 999px;
+
+  /* --- Размеры --- */
+  --container: 1280px;
+  --header-h: 72px;
+}

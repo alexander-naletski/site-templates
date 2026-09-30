@@ -1,0 +1,56 @@
+/* =====================================================================
+   THEME «Своя клиника» — дружелюбная «банковская» тема: тёмно-синий, коралловый акцент, мятный фон, крупные скругления.
+   Меняйте цвета и шрифты здесь. Раскладка и эффекты — в skin.css.
+   Шрифт Rubik — SIL Open Font License (assets/fonts/OFL-LICENSE.txt).
+   ===================================================================== */
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(assets/fonts/rubik-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(assets/fonts/rubik-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцент (кнопки, ссылки) --- */
+  --color-accent: #ff4f40;
+  --color-accent-hover: #e83a2c;
+  --color-accent-soft: #ffe3df;
+  --color-on-accent: #ffffff;
+
+  /* --- Текст --- */
+  --color-heading: #091723;
+  --color-text: #2b3844;
+  --color-muted: #5d6975;
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f2f8f3;
+  --color-surface: #ffffff;
+  --color-border: #dfe7e1;
+  --color-dark: #091723;
+  --color-on-dark: #ffffff;
+  --color-bar-bg: rgba(255, 255, 255, .97);
+  --color-field-focus: #ffffff;
+
+  /* --- Статусы --- */
+  --color-success: #1d7a4f;
+  --color-error: #cf2929;
+  --color-rating: #ff4f40;
+
+  /* --- Карта-заглушка --- */
+  --map-bg: #eef5f0; --map-road: #ffffff; --map-park: #d3ecd9; --map-water: #d9e7f2;
+
+  /* --- Шрифты --- */
+  --font-main: "Rubik", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: "Rubik", Arial, sans-serif;
+  --weight-heading: 700;
+
+  /* --- Скругления --- */
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;
+
+  /* --- Размеры --- */
+  --container: 1280px;
+  --header-h: 72px;
+}
