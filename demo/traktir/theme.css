@@ -1,0 +1,50 @@
+/* =====================================================================
+   THEME «Трактиръ на Парковой» (демо, на базе «Бульвар 17») — тёмно-коричневый #230900 и красный рушник с текущего сайта traktir.by, тёплый молочный фон, заголовки антиквой Literata (SIL OFL, assets/fonts/OFL-LICENSE.txt).
+   Чтобы перекрасить сайт, меняйте значения только в этом файле.
+   Цвета можно задавать в любом формате: #0071e3, rgb(), hsl().
+   ===================================================================== */
+@font-face { font-family: "Literata"; font-style: normal; font-weight: 300 500; font-display: swap;
+  src: url(assets/fonts/literata-300_500-cyrillic.woff2) format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Literata"; font-style: normal; font-weight: 300 500; font-display: swap;
+  src: url(assets/fonts/literata-300_500-latin.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  /* --- Акцентный цвет (кнопки, ссылки, иконки) --- */
+  --color-accent: #9e2a1f;
+  --color-accent-hover: #7f1f16;     /* цвет кнопки при наведении */
+  --color-accent-soft: #f6e7dc;       /* светлая подложка под иконками */
+  --color-on-accent: #ffffff;         /* текст на акцентных кнопках */
+
+  /* --- Текст --- */
+  --color-heading: #2a1408;           /* заголовки */
+  --color-text: #4a3b33;              /* основной текст */
+  --color-muted: #7d6d63;             /* второстепенный текст */
+
+  /* --- Фоны и рамки --- */
+  --color-bg: #ffffff;                /* фон страницы */
+  --color-bg-soft: #f7efe4;           /* фон серых секций и плиток */
+  --color-border: #eadfd2;            /* рамки карточек */
+  --color-dark: #230900;              /* тёмная верхняя полоса и футер-акценты */
+  --color-on-dark: #f5ece0;           /* текст на тёмном фоне */
+
+  /* --- Статусы --- */
+  --color-success: #1f9d55;
+  --color-error: #d93025;
+  --color-rating: #ffb400;            /* звёзды в отзывах */
+
+  /* --- Шрифты --- */
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Literata", Georgia, "Times New Roman", serif;
+  --weight-heading: 500;
+
+  /* --- Скругления --- */
+  --radius-xl: 28px;                  /* hero-баннер */
+  --radius-lg: 24px;                  /* карточки */
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;               /* кнопки-«пилюли» */
+
+  /* --- Размеры --- */
+  --container: 1360px;                /* максимальная ширина контента */
+  --header-h: 72px;                   /* высота липкой шапки (десктоп) */
+}

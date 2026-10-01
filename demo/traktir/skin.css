@@ -1,0 +1,13 @@
+/* =====================================================================
+   SKIN «Трактиръ» (демо на базе «Бульвар 17») — дополнения к базовому дизайну (стиль i-store).
+   Основная раскладка — в core/core.css, цвета — в theme.css.
+   ===================================================================== */
+.dish__media, .prog__media { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+.finder-section { padding-top: 24px; }
+.order__box { background: var(--color-accent-soft); }
+
+/* демо «Трактиръ»: золотистая линия-«рушник» над футером, антиква в заголовках категорий */
+.menu__cat { font-family: var(--font-heading); }
+.footer { border-top: 3px solid #c9a14a; }
+.dish__weight { overflow-wrap: anywhere; min-width: 0; }
+#signature .menu__cat { display: none; }
