@@ -6,7 +6,7 @@
   Установка (один раз, в папке сайта):  npm i puppeteer
   Запуск:                               node tools/prerender.js
 
-  После любого изменения config.js запустите снова. Если забыть — не страшно:
+  После любого изменения config.js запустите снова (обновит и SEO: tools/seo.js). Если забыть — не страшно:
   сайт заметит, что config.js изменился, и отрисует актуальный контент сам.
 */
 const fs = require("fs"), path = require("path");
@@ -41,4 +41,6 @@ const START = "<!--APP:START-->", END = "<!--APP:END-->";
   if (r.og && !src.includes('property="og:image"')) src = src.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="website">\n  <meta property="og:title" content="' + escAttr(r.title) + '">\n  <meta property="og:description" content="' + escAttr(r.desc) + '">\n  <meta property="og:image" content="' + escAttr(r.og) + '">');
   fs.writeFileSync(file, src);
   console.log("OK: index.html пререндерен (hash " + r.hash + ", " + Math.round(r.html.length / 1024) + " КБ разметки)");
+  /* v1.7: заодно обновляем SEO-блок, sitemap.xml и robots.txt (если есть tools/seo.js) */
+  if (fs.existsSync(path.join(__dirname, "seo.js"))) require("./seo.js");
 })().catch(e => { console.error(e); process.exit(1); });

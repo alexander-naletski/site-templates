@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Сайт пока закрыт от индексации метатегом noindex в index.html (config.js → seo.indexing: false).
+# Обход не запрещён намеренно: иначе поисковик не увидит noindex.

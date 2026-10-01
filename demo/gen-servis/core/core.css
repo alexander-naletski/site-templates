@@ -1345,3 +1345,29 @@ fieldset.field legend { padding: 0; margin-bottom: 8px; }
 .stars--frac .stars__base, .stars--frac .stars__fill { display: inline-flex; gap: 2px; }
 .stars--frac .stars__fill { position: absolute; left: 0; top: 0; overflow: hidden; white-space: nowrap; }
 .stars--frac .star { flex: none; }
+
+/* ===== v1.7: подключаемые формы, карта с действиями, отзывы-цитаты, пометка концепта ===== */
+.hp { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip-path: inset(50%) !important; white-space: nowrap; opacity: 0; pointer-events: none; }
+.hp label, .hp input { display: block; width: 1px; height: 1px; overflow: hidden; padding: 0; border: 0; font-size: 16px; }
+.form__status a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.form__status.is-warning { color: var(--color-text); background: var(--color-bg-soft, #f5f5f7); border: 1px solid var(--color-border); border-radius: var(--radius-md, 12px); padding: 12px 14px; text-align: left; line-height: 1.5; }
+.form__status.is-error { color: var(--color-error); background: color-mix(in srgb, var(--color-error) 7%, transparent); border-radius: var(--radius-md, 12px); padding: 12px 14px; text-align: left; line-height: 1.5; }
+.booking__alt { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+.booking__alt-link { color: #fff; border-color: rgba(255,255,255,.35); }
+.booking__alt-link:hover { border-color: #fff; }
+.map-wrap { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.map-wrap .map { flex: 1; }
+.map__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.reviews__foot { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+.reviews__note { margin: 0; font-size: 14px; color: var(--color-muted); max-width: 640px; }
+.review__source { display: block; }
+.footer__concept { color: var(--color-muted); }
+.prices__cat-note { margin: 14px 0 0; font-size: 13px; color: var(--color-muted); line-height: 1.5; }
+.reviews__foot .btn, .map__actions .btn { max-width: 100%; white-space: normal; text-align: center; height: auto; min-height: 44px; }
+/* v1.7.1 — кнопки «открыть Telegram / SMS / позвонить» под формой без сервера */
+.form__prefill { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.form__prefill .btn { min-height: 44px; }
+.form__status .form__prefill { justify-content: center; }
+.form__status .form__prefill a.btn { text-decoration: none; }
+.form__status .form__prefill .btn--primary { color: #fff; }
+.form__status .form__prefill .btn--soft { color: var(--color-accent); }

@@ -44,6 +44,10 @@
   function eyebrow(s) { return s.eyebrow ? '<p class="section-eyebrow">' + esc(s.eyebrow) + "</p>" : ""; }
   /* Согласие на обработку ПД: по умолчанию НЕ отмечено + ссылка на политику (privacy.html) */
   function privacyHref() { return (C.privacy && C.privacy.href) || "privacy.html"; }
+  /* v1.7: куда отправлять заявки. Порядок: endpoint секции → C.forms.endpoint. Пусто = форма не подключена. */
+  function formEndpoint(s) { return (s && s.endpoint) || (C.forms && C.forms.endpoint) || ""; }
+  /* скрытое поле-ловушка для ботов (имя _gotcha понимает Formspree) */
+  function honeypot() { return '<div class="hp" aria-hidden="true"><label>Не заполняйте это поле<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>'; }
   function consentBox(text) {
     return '<label class="checkbox checkbox--consent"><input type="checkbox" name="consent" required><span class="checkbox__box">' + icon("check") + "</span><span>" +
       esc(text || "Согласен(на) на обработку персональных данных") + ' в соответствии с <a class="checkbox__link" href="' + esc(privacyHref()) + '" target="_blank" rel="noopener">Политикой обработки персональных данных</a></span></label>';
@@ -335,7 +339,7 @@
         cats.map(function (c, i) {
           return '<div class="prices__panel" role="tabpanel" id="ppanel-' + i + '" aria-labelledby="ptab-' + i + '"' + (i === 0 ? "" : " hidden") + '><ul class="price-list">' +
             (c.rows || []).map(function (r) { return '<li class="price-row"><span class="price-row__name">' + esc(r[0]) + '</span><span class="price-row__dots" aria-hidden="true"></span><span class="price-row__value">' + esc(r[1]) + "</span></li>"; }).join("") +
-            "</ul></div>";
+            "</ul>" + (c.note ? '<p class="prices__cat-note">' + esc(c.note) + "</p>" : "") + "</div>";
         }).join("") +
         '<div class="prices__foot">' + (s.note ? '<p class="prices__note">' + esc(s.note) + "</p>" : "") + btn({ text: s.buttonText || "Записаться", href: "#booking" }) + "</div>" +
       "</div></div></section>";
@@ -387,7 +391,9 @@
           : s.lightbox ? '<button type="button" class="gallery__img gallery__zoom" data-lb data-lb-title="' + esc(g.title) + '" aria-label="Открыть фото: ' + esc(g.title) + '">' + img(g.image, g.alt || g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + '<span class="gallery__zoom-icon" aria-hidden="true">' + icon("expand") + "</span></button>"
           : '<div class="gallery__img">' + img(g.image, g.alt || g.title, { sizes: "(max-width: 700px) 100vw, 33vw", w: 1024, h: 683 }) + "</div>";
         return '<figure class="work card reveal' + (g.size ? " work--" + esc(g.size) : "") + '" style="--d:' + (i % 4) * 60 + 'ms">' + media + '<figcaption class="work__body"><h3 class="work__title">' + (g.href && !s.lightbox ? '<a class="work__link" href="' + esc(g.href) + '">' + esc(g.title) + "</a>" : esc(g.title)) + "</h3>" + (g.text ? '<p class="work__text">' + esc(g.text) + "</p>" : "") + "</figcaption></figure>";
-      }).join("") + "</div></div></section>";
+      }).join("") + "</div>" +
+      (s.buttonText ? '<div class="reviews__foot reveal">' + (s.foot ? '<p class="reviews__note">' + esc(s.foot) + "</p>" : "") + '<a class="btn btn--soft" href="' + esc(s.buttonHref || "#") + '" target="_blank" rel="noopener">' + (s.buttonIcon ? icon(s.buttonIcon) : "") + esc(s.buttonText) + icon("arrowRight") + "</a></div>" : "") +
+      "</div></section>";
   };
 
   function stars(n) {
@@ -399,13 +405,15 @@
     var initials = String(r.name || "?").split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2);
     return '<article class="review card"><div class="review__top">' + stars(r.rating || 5) + (r.date ? '<span class="review__date">' + esc(r.date) + "</span>" : "") + "</div>" +
       '<p class="review__text">' + esc(r.text) + "</p>" +
-      '<div class="review__author"><span class="avatar" aria-hidden="true">' + esc(initials) + '</span><span><span class="review__name">' + esc(r.name) + "</span>" + (r.car ? '<span class="review__car">' + esc(r.car) + "</span>" : "") + "</span></div></article>";
+      '<div class="review__author"><span class="avatar" aria-hidden="true">' + esc(initials) + '</span><span><span class="review__name">' + esc(r.name) + "</span>" + (r.car ? '<span class="review__car">' + esc(r.car) + "</span>" : "") + (r.source ? '<span class="review__car review__source">' + esc(r.source) + "</span>" : "") + "</span></div></article>";
   }
   R.reviews = function (s) {
     if (s.variant === "grid") {
       return '<section class="section section--soft reviews reviews--grid" id="' + esc(s.id) + '"><div class="container">' +
         '<div class="section-head reveal">' + eyebrow(s) + '<h2 class="section-title">' + esc(s.title) + demoBadge() + "</h2>" + (s.subtitle ? '<p class="section-subtitle">' + esc(s.subtitle) + "</p>" : "") + "</div>" +
-        '<div class="reviews__grid">' + (s.items || []).map(function (r, i) { return reviewCard(r).replace('class="review card"', 'class="review card reveal" style="--d:' + (i % 3) * 60 + 'ms"'); }).join("") + "</div></div></section>";
+        '<div class="reviews__grid">' + (s.items || []).map(function (r, i) { return reviewCard(r).replace('class="review card"', 'class="review card reveal" style="--d:' + (i % 3) * 60 + 'ms"'); }).join("") + "</div>" +
+        (s.note || s.buttonText ? '<div class="reviews__foot reveal">' + (s.note ? '<p class="reviews__note">' + esc(s.note) + "</p>" : "") + (s.buttonText ? '<a class="btn btn--soft" href="' + esc(s.buttonHref || "#") + '" target="_blank" rel="noopener">' + esc(s.buttonText) + icon("arrowRight") + "</a>" : "") + "</div>" : "") +
+        "</div></section>";
     }
     return '<section class="section section--soft reviews" id="' + esc(s.id) + '"><div class="container">' +
       '<div class="section-head section-head--row reveal"><div>' + eyebrow(s) + '<h2 class="section-title">' + esc(s.title) + demoBadge() + "</h2>" + (s.subtitle ? '<p class="section-subtitle">' + esc(s.subtitle) + "</p>" : "") + "</div>" +
@@ -475,9 +483,10 @@
         (s.subtitle ? '<p class="booking__subtitle">' + esc(s.subtitle) + "</p>" : "") +
         (s.perks ? '<ul class="booking__perks">' + s.perks.map(function (p) { return "<li>" + icon("checkCircle") + "<span>" + esc(p) + "</span></li>"; }).join("") + "</ul>" : "") +
         (contacts().phone ? '<div class="booking__call"><span>Или позвоните:</span>' + tel(contacts().phoneHref, contacts().phone) + "</div>" : "") +
+        (s.altLinks ? '<div class="booking__alt">' + s.altLinks.map(function (a) { return '<a class="btn btn--ghost btn--sm booking__alt-link" href="' + esc(a.url) + '"' + (/^https?:/.test(a.url) ? ' target="_blank" rel="noopener"' : "") + ">" + (a.icon ? icon(a.icon) : "") + esc(a.text) + "</a>"; }).join("") + "</div>" : "") +
       "</div>" +
       '<div class="booking__form-wrap">' +
-      '<form class="form" id="booking-form" novalidate data-endpoint="' + esc(s.endpoint || "") + '">' +
+      '<form class="form" id="booking-form" novalidate data-form="booking" data-endpoint="' + esc(formEndpoint(s)) + '">' + honeypot() +
         field("name", L.name, '<input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="60" placeholder="Иван">') +
         field("phone", L.phone, '<input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="' + esc(s.phoneMask || "+375 (__) ___-__-__") + '" data-mask="' + esc(s.phoneMask || "") + '">') +
         (s.carField === false || stay ? "" : field("car", L.car, '<input id="f-car" name="car" type="text"' + (s.carOptional ? "" : " required") + ' minlength="2" maxlength="80" placeholder="' + esc(s.carPlaceholder || "") + '"' + (s.carError ? ' data-error="' + esc(s.carError) + '"' : "") + ">", s.carOptional)) +
@@ -493,7 +502,7 @@
         '<p class="field__error" data-error-for="consent" role="alert"></p>' +
         '<button class="btn btn--primary btn--lg btn--block" type="submit"><span class="btn__label">' + esc(s.submitText || "Отправить") + '</span><span class="btn__spinner" aria-hidden="true"></span></button>' +
         '<p class="form__status" role="status" aria-live="polite"></p>' +
-        (C.demo && !s.endpoint ? '<p class="form__demo">Демо-режим: заявка не отправляется, данные никуда не передаются.</p>' : "") +
+        (C.demo && !formEndpoint(s) ? '<p class="form__demo">Демо-режим: заявка не отправляется, данные никуда не передаются.</p>' : "") +
       "</form>" +
       '<div class="form-success" hidden tabindex="-1"><span class="form-success__icon">' + icon("check") + '</span><h3 class="form-success__title">' + esc(s.successTitle || "Спасибо!") + '</h3><p class="form-success__text">' + esc(s.successText || "") + '</p><dl class="form-success__summary"></dl><button type="button" class="btn btn--soft" data-form-reset>Новая заявка</button></div>' +
       "</div></div></div></section>";
@@ -536,7 +545,7 @@
   R.contacts = function (s) {
     var c = contacts();
     var map = c.mapEmbed
-      ? '<iframe class="map__frame" src="' + esc(c.mapEmbed) + '" title="Карта проезда" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>'
+      ? '<iframe class="map__frame" src="' + esc(c.mapEmbed) + '" title="' + esc(c.mapTitle || "Карта проезда") + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>'
       : '<div class="map__placeholder" role="img" aria-label="Карта (заглушка)"><div class="map__grid" aria-hidden="true"></div><span class="map__pin">' + icon("pin") + '</span><div class="map__card"><strong>' + esc(c.address || "") + "</strong>" + (c.addressNote ? "<span>" + esc(c.addressNote) + "</span>" : "") + (c.mapLink ? '<a class="btn btn--primary btn--sm" href="' + esc(c.mapLink) + '" target="_blank" rel="noopener">' + icon("navigation") + "Открыть на карте</a>" : "") + "</div></div>";
     return '<section class="section section--soft contacts" id="' + esc(s.id) + '"><div class="container">' + head(s) +
       '<div class="contacts__grid">' +
@@ -548,7 +557,9 @@
           socials("contacts__socials") +
           '<a class="btn btn--primary btn--block" href="#booking">' + esc((C.cta && C.cta.text) || "Записаться") + "</a>" +
         "</div>" +
-        '<div class="map reveal">' + map + "</div>" +
+        (c.mapEmbed && (c.routeLink || c.mapLink)
+          ? '<div class="map-wrap reveal"><div class="map">' + map + '</div><div class="map__actions">' + (c.routeLink ? '<a class="btn btn--primary btn--sm" href="' + esc(c.routeLink) + '" target="_blank" rel="noopener">' + icon("navigation") + "Построить маршрут</a>" : "") + (c.mapLink && c.mapLinkButton ? '<a class="btn btn--soft btn--sm" href="' + esc(c.mapLink) + '" target="_blank" rel="noopener">' + esc(c.mapLinkButton) + "</a>" : "") + "</div></div>"
+          : '<div class="map reveal">' + map + "</div>") +
       "</div></div></section>";
   };
   function infoRow(ic, label, html) {
@@ -884,6 +895,7 @@
         '<p class="footer__copy">© <span data-year>' + new Date().getFullYear() + "</span> " + esc(f.copyright || "") + "</p>" +
         (C.demo && f.demoNote ? '<p class="footer__demo">' + esc(f.demoNote) + "</p>" : "") +
         (C.pitch ? '<p class="footer__pitch">' + esc(C.pitch) + "</p>" : "") +
+        (C.conceptNote ? '<p class="footer__pitch footer__concept">' + esc(C.conceptNote) + "</p>" : "") +
       "</div>" + (f.bigText ? '<p class="footer__big" aria-hidden="true">' + esc(f.bigText) + "</p>" : "") + "</div></footer>";
   }
 
@@ -902,7 +914,7 @@
       '<div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="cb-title" tabindex="-1">' +
         '<button class="icon-btn modal__close" type="button" aria-label="Закрыть" data-close-modal>' + icon("close") + "</button>" +
         '<h3 class="modal__title" id="cb-title">' + esc(cb.title || "Заказать звонок") + '</h3><p class="modal__text">' + esc(cb.text || "Оставьте номер — перезвоним в ближайшее время.") + "</p>" +
-        '<form class="form" id="callback-form" novalidate>' +
+        '<form class="form" id="callback-form" novalidate data-form="callback" data-endpoint="' + esc(formEndpoint(cb)) + '">' + honeypot() +
           '<div class="field" data-field="cbname"><label class="field__label" for="f-cbname">Имя</label><input id="f-cbname" name="cbname" type="text" autocomplete="name" required minlength="2" maxlength="60" placeholder="Иван"><p class="field__error" data-error-for="cbname" role="alert"></p></div>' +
           '<div class="field" data-field="cbphone"><label class="field__label" for="f-cbphone">Телефон</label><input id="f-cbphone" name="cbphone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="' + mask + '" data-mask="' + mask + '"><p class="field__error" data-error-for="cbphone" role="alert"></p></div>' +
           '<div class="field field--consent" data-field="consent">' + consentBox(cb.consentText || bk.consentText) + '<p class="field__error" data-error-for="consent" role="alert"></p></div>' +
@@ -920,7 +932,7 @@
     if (C.header && C.header.overlay) doc.documentElement.classList.add("hdr-overlay");
     setMeta("description", m.description);
     setMeta("theme-color", m.themeColor);
-    setMeta("robots", m.robots);
+    setMeta("robots", C.seo ? (C.seo.indexing ? "index, follow" : "noindex, nofollow") : m.robots);
     setMeta("og:title", m.title, true); setMeta("og:description", m.description, true);
     if (m.ogImage) setMeta("og:image", m.ogImage, true);
 
@@ -945,7 +957,7 @@
   /* v1.6: пометка «демо-концепт» для питч-демо (C.pitch = "текст") — тонкая полоса над шапкой + строка в футере */
   function pitchNote() { return C.pitch ? '<div class="pitch-note" role="note"><div class="container">' + esc(C.pitch) + "</div></div>" : ""; }
   function isoDate(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-  var CORE_VERSION = "1.6.0";
+  var CORE_VERSION = "1.7.0";
   function configHash() {
     var str = CORE_VERSION + JSON.stringify(C), h = 5381;
     for (var i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
@@ -1346,12 +1358,71 @@
       });
       var endpoint = form.getAttribute("data-endpoint");
       var submit = $('[type="submit"]', form);
-      submit.disabled = true; submit.classList.add("is-loading");
-      var done = function () { submit.disabled = false; submit.classList.remove("is-loading"); onSuccess(data); };
+      var F = C.forms || {};
+      var setStatus = function (html, cls) { if (!status) return; status.innerHTML = html; status.classList.remove("is-success", "is-warning", "is-error"); if (cls) status.classList.add(cls); };
+      var reachLinks = function () {
+        var c = contacts(), out = [];
+        if (c.phone) out.push('<a href="tel:' + esc(c.phoneHref) + '">' + esc(c.phone) + "</a>");
+        if (F.messengerUrl) out.push('<a href="' + esc(F.messengerUrl) + '" target="_blank" rel="noopener">' + esc(F.messengerText || "Telegram") + "</a>");
+        return out.join(" или ");
+      };
+      /* ловушка для ботов: делаем вид, что всё ушло */
+      var hp = data._gotcha; delete data._gotcha;
+      if (hp) { onSuccess(data); return; }
+      /* форма не подключена (C.forms.endpoint пуст) и это не демо — честно говорим, как связаться */
+      if (!endpoint && !C.demo) {
+        /* v1.7.1: без сервера — открываем Telegram (или SMS) с готовым текстом заявки. Настройка: C.forms.prefill */
+        var P = F.prefill || {};
+        if (P.telegram || P.sms) {
+          var lines = [form.getAttribute("data-form") === "callback" ? (P.callbackGreeting || "Здравствуйте! Прошу перезвонить.") : (P.greeting || "Здравствуйте! Заявка с сайта:")];
+          $$("input, select, textarea", form).forEach(function (el) {
+            if (!el.name || el.name === "_gotcha" || el.type === "checkbox" || el.type === "hidden") return;
+            var v = el.tagName === "SELECT" ? (el.value && el.selectedIndex > -1 ? el.options[el.selectedIndex].text : "") : el.value.trim();
+            if (!v) return;
+            if (el.type === "date") v = v.split("-").reverse().join(".");
+            var lb = el.id && form.querySelector('label[for="' + el.id + '"]');
+            lines.push((lb ? lb.textContent.replace(/\s*(необязательно|\*)\s*$/i, "").trim() : el.name) + ": " + v);
+          });
+          var text = lines.join("\n"), enc = encodeURIComponent(text);
+          var tg = P.telegram ? "https://t.me/" + P.telegram + "?text=" + enc : "";
+          var sms = P.sms ? "sms:" + P.sms + "?&body=" + enc : "";
+          if (tg) { var w = window.open(tg, "_blank"); if (w) { try { w.opener = null; } catch (er) {} } }
+          var c0 = contacts(), links = [];
+          if (tg) links.push('<a class="btn btn--primary btn--sm" href="' + esc(tg) + '" target="_blank" rel="noopener">Открыть Telegram</a>');
+          if (sms) links.push('<a class="btn btn--soft btn--sm" href="' + esc(sms) + '">Отправить по SMS</a>');
+          if (c0.phone) links.push('<a class="btn btn--soft btn--sm" href="tel:' + esc(c0.phoneHref) + '">Позвонить</a>');
+          links.push('<button type="button" class="btn btn--soft btn--sm" data-copy-prefill>Скопировать текст</button>');
+          setStatus(esc(P.doneText || "Открыли Telegram с готовым текстом заявки — нажмите «Отправить». Не открылся? Выберите другой способ:") + '<span class="form__prefill">' + links.join("") + "</span>", "is-success");
+          var cb = status && $("[data-copy-prefill]", status);
+          if (cb) cb.addEventListener("click", function () {
+            var ok = function () { cb.textContent = "Скопировано"; };
+            if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, ok);
+            else { var ta = doc.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; doc.body.appendChild(ta); ta.select(); try { doc.execCommand("copy"); ok(); } catch (er) {} doc.body.removeChild(ta); }
+          });
+          return;
+        }
+        setStatus(esc(F.notConfiguredText || "Онлайн-заявки пока не подключены. Пожалуйста, позвоните или напишите нам:") + " " + reachLinks(), "is-warning");
+        return;
+      }
+      submit.disabled = true; submit.classList.add("is-loading"); setStatus("", null);
+      var unlock = function () { submit.disabled = false; submit.classList.remove("is-loading"); };
+      var done = function () { unlock(); setStatus("", null); onSuccess(data); };
       if (endpoint) {
-        fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) })
-          .then(function (r) { if (!r.ok) throw new Error(r.status); done(); })
-          .catch(function () { submit.disabled = false; submit.classList.remove("is-loading"); if (status) status.textContent = "Не удалось отправить заявку. Позвоните нам: " + (contacts().phone || ""); });
+        /* человекочитаемые значения select-ов (например, название услуги) */
+        var payload = {};
+        Object.keys(data).forEach(function (k) { payload[k] = data[k]; });
+        $$("select", form).forEach(function (el) { if (el.name && el.selectedIndex > -1 && el.value) payload[el.name + "Title"] = el.options[el.selectedIndex].text; });
+        payload.form = form.getAttribute("data-form") || form.id;
+        payload._subject = (F.subject || "Заявка с сайта") + (payload.form === "callback" ? " — обратный звонок" : " — запись");
+        payload.page = location.href.split("#")[0];
+        var ctrl = window.AbortController ? new AbortController() : null;
+        var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, F.timeoutMs || 15000);
+        fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload), signal: ctrl ? ctrl.signal : undefined })
+          .then(function (r) {
+            clearTimeout(timer);
+            return r.text().then(function (t) { var j = null; try { j = JSON.parse(t); } catch (er) { /* не JSON — ок, смотрим на статус */ } if (!r.ok || (j && j.ok === false)) throw new Error(r.status); done(); });
+          })
+          .catch(function () { clearTimeout(timer); unlock(); setStatus(esc(F.errorText || "Не удалось отправить заявку — проверьте интернет и попробуйте ещё раз, или свяжитесь с нами напрямую:") + " " + reachLinks(), "is-error"); });
       } else {
         setTimeout(done, reduceMotion ? 0 : 700); /* демо-режим */
       }
